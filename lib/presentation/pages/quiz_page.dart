@@ -18,12 +18,16 @@ class QuizPage extends StatelessWidget {
           }
           if (state is QuizCompleted) {
             return Center(
-              child: Text('Quiz completed: ${state.correctAnswers}/${state.totalQuestions}'),
+              child: Text(
+                'Quiz completed: ${state.correctAnswers}/${state.totalQuestions}',
+              ),
             );
           }
           if (state is QuizLoaded) {
             final current = state.words[state.currentIndex];
-            final controller = TextEditingController(text: state.userAnswer ?? '');
+            final controller = TextEditingController(
+              text: state.userAnswer ?? '',
+            );
             return Padding(
               padding: const EdgeInsets.all(16),
               child: SingleChildScrollView(
@@ -32,7 +36,10 @@ class QuizPage extends StatelessWidget {
                     const SizedBox(height: 40),
                     Text(
                       current.englishWord,
-                      style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 24),
                     TextField(
@@ -56,7 +63,8 @@ class QuizPage extends StatelessWidget {
                       Text('Ответ: ${current.russianWord}'),
                       const SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: () => context.read<QuizCubit>().nextQuestion(),
+                        onPressed: () =>
+                            context.read<QuizCubit>().nextQuestion(),
                         child: const Text('Далее'),
                       ),
                     ],
