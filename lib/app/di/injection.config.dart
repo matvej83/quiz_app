@@ -12,6 +12,7 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:quiz_app/app/di/modules/database_module.dart' as _i1034;
+import 'package:quiz_app/app/di/modules/shared_pref_module.dart' as _i775;
 import 'package:quiz_app/app/router/app_router.dart' as _i223;
 import 'package:quiz_app/features/dictionary/data/data_sources/dictionary_asset_data_source.dart'
     as _i976;
@@ -25,6 +26,16 @@ import 'package:quiz_app/features/dictionary/services/dictionary_service.dart'
     as _i457;
 import 'package:quiz_app/features/quiz/presentation/bloc/quiz_cubit.dart'
     as _i3;
+import 'package:quiz_app/theme/cubit/cubit.dart' as _i29;
+import 'package:quiz_app/theme/data/data_sources/theme_local_data_source.dart'
+    as _i593;
+import 'package:quiz_app/theme/data/repository/theme_repository_impl.dart'
+    as _i496;
+import 'package:quiz_app/theme/domain/repository/theme_repository.dart' as _i37;
+import 'package:quiz_app/theme/domain/usecases/get_theme_usecase.dart' as _i575;
+import 'package:quiz_app/theme/domain/usecases/set_theme_usecase.dart'
+    as _i1061;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -33,7 +44,12 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    final sharedPrefModule = _$SharedPrefModule();
     final databaseModule = _$DatabaseModule();
+    await gh.factoryAsync<_i460.SharedPreferences>(
+      () => sharedPrefModule.prefs,
+      preResolve: true,
+    );
     gh.lazySingleton<_i223.AppRouter>(() => _i223.AppRouter());
     gh.lazySingleton<_i976.DictionaryAssetDataSource>(
       () => _i976.DictionaryAssetDataSource(),
@@ -49,11 +65,33 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i3.QuizCubit>(
       () => _i3.QuizCubit(gh<_i66.DictionaryLocalDataSource>()),
     );
+    gh.lazySingleton<_i593.ThemeLocalDataSource>(
+      () => _i593.ThemeLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
+    );
     gh.lazySingleton<_i457.DictionaryService>(
       () => _i457.DictionaryService(gh<_i976.DictionaryAssetDataSource>()),
+    );
+    gh.lazySingleton<_i37.ThemeRepository>(
+      () => _i496.ThemeRepositoryImpl(
+        themeLocalDataSource: gh<_i593.ThemeLocalDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i575.GetThemeUseCase>(
+      () => _i575.GetThemeUseCase(gh<_i37.ThemeRepository>()),
+    );
+    gh.lazySingleton<_i1061.SetThemeUseCase>(
+      () => _i1061.SetThemeUseCase(gh<_i37.ThemeRepository>()),
+    );
+    gh.lazySingleton<_i29.ThemeCubit>(
+      () => _i29.ThemeCubit(
+        getThemeUseCase: gh<_i575.GetThemeUseCase>(),
+        setThemeUseCase: gh<_i1061.SetThemeUseCase>(),
+      ),
     );
     return this;
   }
 }
+
+class _$SharedPrefModule extends _i775.SharedPrefModule {}
 
 class _$DatabaseModule extends _i1034.DatabaseModule {}
