@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz_app/domain/repository/quiz_state.dart';
-import 'package:quiz_app/presentation/bloc/quiz_cubit.dart';
+
+import '../bloc/quiz_cubit.dart';
+import '../bloc/quiz_state.dart';
 
 class QuizPage extends StatelessWidget {
   const QuizPage({super.key});
@@ -13,6 +16,7 @@ class QuizPage extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       body: BlocBuilder<QuizCubit, QuizState>(
         builder: (context, state) {
+          log(state.toString());
           if (state is QuizLoading) {
             return const Center(child: CircularProgressIndicator());
           }

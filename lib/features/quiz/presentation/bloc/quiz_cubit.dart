@@ -1,10 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz_app/data/repository/quiz_repository_impl.dart';
-import 'package:quiz_app/domain/repository/quiz_state.dart';
+import 'package:injectable/injectable.dart';
 
+import '../../../dictionary/data/data_sources/dictionary_local_data_source.dart';
+import 'quiz_state.dart';
+
+@lazySingleton
 class QuizCubit extends Cubit<QuizState> {
   QuizCubit(this.repository) : super(QuizInitial());
-  final QuizRepository repository;
+  final DictionaryLocalDataSource repository;
 
   void loadWords() async {
     try {
