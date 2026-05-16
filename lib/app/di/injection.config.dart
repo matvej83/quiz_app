@@ -12,6 +12,7 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:quiz_app/app/di/modules/database_module.dart' as _i1034;
+import 'package:quiz_app/app/router/app_router.dart' as _i223;
 import 'package:quiz_app/features/dictionary/data/data_sources/dictionary_asset_data_source.dart'
     as _i976;
 import 'package:quiz_app/features/dictionary/data/data_sources/dictionary_local_data_source.dart'
@@ -33,6 +34,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final databaseModule = _$DatabaseModule();
+    gh.lazySingleton<_i223.AppRouter>(() => _i223.AppRouter());
     gh.lazySingleton<_i976.DictionaryAssetDataSource>(
       () => _i976.DictionaryAssetDataSource(),
     );
