@@ -16,7 +16,7 @@ class AppRouter {
   AppRouter();
 
   late final GoRouter router = GoRouter(
-    initialLocation: AppRoutes.tests,
+    initialLocation: AppRoutes.splash,
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
     redirect: (context, state) {
@@ -24,6 +24,10 @@ class AppRouter {
       return null;
     },
     routes: [
+      GoRoute(
+        path: AppRoutes.splash,
+        builder: (context, state) => const SplashPage(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return MainScreen(navigationShell: navigationShell, state: state);
@@ -54,10 +58,6 @@ class AppRouter {
             ],
           ),
         ],
-      ),
-      GoRoute(
-        path: AppRoutes.splash,
-        builder: (context, state) => const SplashPage(),
       ),
     ],
   );
