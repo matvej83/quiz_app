@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:quiz_app/app/constants/app_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class ThemeLocalDataSource {
@@ -13,15 +14,13 @@ class ThemeLocalDataSourceImpl implements ThemeLocalDataSource {
 
   final SharedPreferences sharedPreferences;
 
-  static const _key = 'theme_mode';
-
   @override
   Future<void> setTheme(String value) async {
-    await sharedPreferences.setString(_key, value);
+    await sharedPreferences.setString(AppConstants.themeKey, value);
   }
 
   @override
   String? getTheme() {
-    return sharedPreferences.getString(_key);
+    return sharedPreferences.getString(AppConstants.themeKey);
   }
 }

@@ -24,6 +24,20 @@ import 'package:quiz_app/features/dictionary/data/providers/database_provider.da
     as _i451;
 import 'package:quiz_app/features/dictionary/services/dictionary_service.dart'
     as _i457;
+import 'package:quiz_app/features/profile/data/data_sources/profile_local_data_source.dart'
+    as _i146;
+import 'package:quiz_app/features/profile/data/repository/profile_repository_impl.dart'
+    as _i102;
+import 'package:quiz_app/features/profile/domain/repository/profile_repository.dart'
+    as _i1049;
+import 'package:quiz_app/features/profile/domain/usecases/delete_profile_usecase.dart'
+    as _i519;
+import 'package:quiz_app/features/profile/domain/usecases/fetch_profile_usecase.dart'
+    as _i89;
+import 'package:quiz_app/features/profile/domain/usecases/save_profile_usecase.dart'
+    as _i235;
+import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart'
+    as _i504;
 import 'package:quiz_app/features/quiz/presentation/bloc/quiz_cubit.dart'
     as _i3;
 import 'package:quiz_app/theme/cubit/cubit.dart' as _i29;
@@ -50,7 +64,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPrefModule.prefs,
       preResolve: true,
     );
-    gh.lazySingleton<_i223.AppRouter>(() => _i223.AppRouter());
     gh.lazySingleton<_i976.DictionaryAssetDataSource>(
       () => _i976.DictionaryAssetDataSource(),
     );
@@ -68,13 +81,30 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i593.ThemeLocalDataSource>(
       () => _i593.ThemeLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
+    gh.lazySingleton<_i146.ProfileLocalDataSource>(
+      () => _i146.ProfileLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
+    );
     gh.lazySingleton<_i457.DictionaryService>(
       () => _i457.DictionaryService(gh<_i976.DictionaryAssetDataSource>()),
+    );
+    gh.lazySingleton<_i1049.ProfileRepository>(
+      () => _i102.ProfileRepositoryImpl(
+        profileLocalDataSource: gh<_i146.ProfileLocalDataSource>(),
+      ),
     );
     gh.lazySingleton<_i37.ThemeRepository>(
       () => _i496.ThemeRepositoryImpl(
         themeLocalDataSource: gh<_i593.ThemeLocalDataSource>(),
       ),
+    );
+    gh.lazySingleton<_i519.DeleteProfileUseCase>(
+      () => _i519.DeleteProfileUseCase(gh<_i1049.ProfileRepository>()),
+    );
+    gh.lazySingleton<_i89.FetchProfileUseCase>(
+      () => _i89.FetchProfileUseCase(gh<_i1049.ProfileRepository>()),
+    );
+    gh.lazySingleton<_i235.SaveProfileUseCase>(
+      () => _i235.SaveProfileUseCase(gh<_i1049.ProfileRepository>()),
     );
     gh.lazySingleton<_i575.GetThemeUseCase>(
       () => _i575.GetThemeUseCase(gh<_i37.ThemeRepository>()),
@@ -87,6 +117,16 @@ extension GetItInjectableX on _i174.GetIt {
         getThemeUseCase: gh<_i575.GetThemeUseCase>(),
         setThemeUseCase: gh<_i1061.SetThemeUseCase>(),
       ),
+    );
+    gh.lazySingleton<_i504.ProfileCubit>(
+      () => _i504.ProfileCubit(
+        fetchProfileUseCase: gh<_i89.FetchProfileUseCase>(),
+        saveProfileUseCase: gh<_i235.SaveProfileUseCase>(),
+        deleteProfileUseCase: gh<_i519.DeleteProfileUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i223.AppRouter>(
+      () => _i223.AppRouter(gh<_i504.ProfileCubit>()),
     );
     return this;
   }

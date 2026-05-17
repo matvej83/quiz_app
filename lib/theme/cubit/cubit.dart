@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:quiz_app/core/usecases/usecase.dart';
 import 'package:quiz_app/theme/cubit/state.dart';
 
 import '../../app/theme/app_theme.dart';
@@ -17,7 +18,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   final SetThemeUseCase setThemeUseCase;
 
   Future<void> loadTheme() async {
-    final mode = getThemeUseCase.repository.getTheme();
+    final mode = await getThemeUseCase(NoParams());
     mode.fold(
       (l) {
         emit(
@@ -43,7 +44,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   }
 
   Future<void> changeTheme(AppThemeMode mode) async {
-    await setThemeUseCase.repository.setTheme(mode: mode);
+    await setThemeUseCase(SetThemeParams(mode: mode));
     emit(state.copyWith(theme: _mapToFlutter(mode), mode: mode));
   }
 

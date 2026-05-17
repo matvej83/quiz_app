@@ -7,12 +7,19 @@ class TestsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          context.go('${AppRoutes.tests}/${AppRoutes.translate}');
-        },
-        child: const Text('Перевод слов'),
+    final theme = Theme.of(context);
+    return ColoredBox(
+      color: theme.scaffoldBackgroundColor,
+      child: Column(
+        mainAxisAlignment: .center,
+        children: [
+          OutlinedButton(
+            onPressed: () {
+              context.go('${AppRoutes.tests}/${AppRoutes.translate}');
+            },
+            child: const Text('Перевод слов'),
+          ),
+        ],
       ),
     );
   }

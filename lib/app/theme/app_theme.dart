@@ -146,6 +146,26 @@ class AppTheme {
         ),
       ),
     ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: WidgetStatePropertyAll(appColors.surfaceTint),
+        foregroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return appColors.unselectedWidget;
+          }
+          return appColors.primary;
+        }),
+        side: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return BorderSide(color: appColors.unselectedWidget, width: 1);
+          }
+          return BorderSide(color: appColors.primary, width: 1);
+        }),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+        ),
+      ),
+    ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
@@ -328,6 +348,26 @@ class AppTheme {
         disabledForegroundColor: appColors.secondaryText,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: WidgetStatePropertyAll(appColors.surfaceTint),
+        foregroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return appColors.unselectedWidget;
+          }
+          return appColors.primary;
+        }),
+        side: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) {
+            return BorderSide(color: appColors.unselectedWidget, width: 2.0);
+          }
+          return BorderSide(color: appColors.primary, width: 2.0);
+        }),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         ),
       ),
     ),

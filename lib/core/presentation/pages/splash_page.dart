@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/app/constants/asset_paths.dart';
-
-import '../../../app/router/app_routes.dart';
+import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -12,22 +11,24 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  late ProfileCubit cubit;
+
   @override
   void initState() {
     super.initState();
-    _initialize();
-  }
-
-  Future<void> _initialize() async {
-    await Future.delayed(const Duration(seconds: 2));
-
-    if (!mounted) return;
-
-    context.go(AppRoutes.tests);
+    cubit = context.read<ProfileCubit>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 1), () {
+        cubit.loadProfile();
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Image.asset(AssetPaths.splashLogo)));
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(child: Image.asset(AssetPaths.splashLogo)),
+    );
   }
 }

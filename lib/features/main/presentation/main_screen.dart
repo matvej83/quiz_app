@@ -28,6 +28,9 @@ class MainScreen extends StatelessWidget {
           centerTitle: true,
           leading: MainScreenUtils.showBackButton(context)
               ? BackButton(
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                  ),
                   onPressed: () {
                     if (context.canPop()) {
                       context.pop();
