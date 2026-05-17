@@ -1,17 +1,20 @@
-# quiz_app
+## Quiz App [Under development]
 
-A new Flutter project.
+### About
 
-## Getting Started
+Quiz App is a mobile application for learning English vocabulary through quizzes, flashcards, and interactive practice.
 
-This project is a starting point for a Flutter application.
+The app helps users improve their vocabulary, memorize translations, and track learning progress in a simple and
+convenient way.
 
-A few resources to get you started if this is your first Flutter project:
+Built with Flutter.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+Copyright 2026 KvaytG
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Licensed under the Apache License, Version 2.0.
+You may obtain a copy of the License at:
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Dataset:
+https://huggingface.co/datasets/KvaytG/en-ru-filtered-dict-20m-corpus
