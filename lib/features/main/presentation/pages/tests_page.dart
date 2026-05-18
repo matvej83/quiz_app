@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quiz_app/app/constants/asset_paths.dart';
 import 'package:quiz_app/app/router/app_routes.dart';
+import 'package:quiz_app/enums/app_enums.dart';
+import 'package:quiz_app/features/quiz/presentation/bloc/quiz_cubit.dart';
 
 class TestsPage extends StatelessWidget {
   const TestsPage({super.key});
@@ -12,12 +17,37 @@ class TestsPage extends StatelessWidget {
       color: theme.scaffoldBackgroundColor,
       child: Column(
         mainAxisAlignment: .center,
+        spacing: 16.0,
         children: [
           OutlinedButton(
             onPressed: () {
+              context.read<QuizCubit>().loadWords(type: TranslationType.enRu);
               context.go('${AppRoutes.tests}/${AppRoutes.translate}');
             },
-            child: const Text('Перевод слов'),
+            child: Row(
+              mainAxisSize: .min,
+              spacing: 4.0,
+              children: [
+                const Text('Перевод слов'),
+                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
+                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
+              ],
+            ),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              context.read<QuizCubit>().loadWords(type: TranslationType.ruEn);
+              context.go('${AppRoutes.tests}/${AppRoutes.translate}');
+            },
+            child: Row(
+              mainAxisSize: .min,
+              spacing: 4.0,
+              children: [
+                const Text('Перевод слов'),
+                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
+                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
+              ],
+            ),
           ),
         ],
       ),

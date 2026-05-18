@@ -24,6 +24,8 @@ import 'package:quiz_app/features/dictionary/data/providers/database_provider.da
     as _i451;
 import 'package:quiz_app/features/dictionary/services/dictionary_service.dart'
     as _i457;
+import 'package:quiz_app/features/dictionary/services/tts_service.dart'
+    as _i192;
 import 'package:quiz_app/features/profile/data/data_sources/profile_local_data_source.dart'
     as _i146;
 import 'package:quiz_app/features/profile/data/repository/profile_repository_impl.dart'
@@ -64,6 +66,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPrefModule.prefs,
       preResolve: true,
     );
+    gh.singleton<_i192.TtsService>(() => _i192.TtsService());
     gh.lazySingleton<_i976.DictionaryAssetDataSource>(
       () => _i976.DictionaryAssetDataSource(),
     );
@@ -75,9 +78,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i66.DictionaryLocalDataSource>(
       () => _i66.DictionaryLocalDataSource(gh<_i316.AppDatabase>()),
     );
-    gh.lazySingleton<_i3.QuizCubit>(
-      () => _i3.QuizCubit(gh<_i66.DictionaryLocalDataSource>()),
-    );
     gh.lazySingleton<_i593.ThemeLocalDataSource>(
       () => _i593.ThemeLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
@@ -86,6 +86,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i457.DictionaryService>(
       () => _i457.DictionaryService(gh<_i976.DictionaryAssetDataSource>()),
+    );
+    gh.lazySingleton<_i3.QuizCubit>(
+      () => _i3.QuizCubit(
+        gh<_i66.DictionaryLocalDataSource>(),
+        gh<_i192.TtsService>(),
+      ),
     );
     gh.lazySingleton<_i1049.ProfileRepository>(
       () => _i102.ProfileRepositoryImpl(
