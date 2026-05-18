@@ -40,7 +40,7 @@ class AppTextFormField extends StatelessWidget {
       enabled: enabled,
       onTap: onTap,
       keyboardType: keyboardType,
-      textAlignVertical: TextAlignVertical.center,
+      textAlignVertical: .center,
       inputFormatters: inputFormatters,
       decoration:
           decoration ?? InputDecoration(labelText: labelText, prefix: prefix),

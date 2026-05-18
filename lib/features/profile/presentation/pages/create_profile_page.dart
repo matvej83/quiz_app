@@ -54,7 +54,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
           final isLoading = state.isLoading;
           return Center(
             child: SingleChildScrollView(
-              padding: EdgeInsetsGeometry.only(
+              padding: .only(
                 top: 24.0,
                 left: 24.0,
                 right: 24.0,
@@ -63,14 +63,14 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
               child: Form(
                 key: _formKey,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: .start,
+                  crossAxisAlignment: .stretch,
                   spacing: 16.0,
                   children: [
                     AppTextFormField(
                       controller: _firstNameController,
                       enabled: !isLoading,
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: .name,
                       decoration: const InputDecoration(hintText: 'Имя'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -82,7 +82,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                     AppTextFormField(
                       controller: _lastNameController,
                       enabled: !isLoading,
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: .name,
                       decoration: const InputDecoration(hintText: 'Фамилия'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {

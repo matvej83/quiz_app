@@ -1,16 +1,25 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:quiz_app/app/constants/asset_paths.dart';
+import 'package:quiz_app/enums/app_enums.dart';
 
 import '../../../dictionary/data/data_sources/dictionary_local_data_source.dart';
+import '../../../dictionary/services/tts_service.dart';
 import 'quiz_state.dart';
 
 @lazySingleton
 class QuizCubit extends Cubit<QuizState> {
-  QuizCubit(this.repository) : super(QuizInitial());
+  QuizCubit(this.repository, this.ttsService) : super(QuizInitial());
   final DictionaryLocalDataSource repository;
+  final TtsService ttsService;
+  TranslationType? type;
 
-  void loadWords() async {
+  void loadWords({required TranslationType type}) async {
     try {
+      this.type = type;
+      await ttsService.setLanguage(
+        type == TranslationType.enRu ? 'en-US' : 'ru-Ru',
+      );
       emit(QuizLoading());
       final words = await repository.getQuizWords(10);
       if (words.isEmpty) {
@@ -35,9 +44,10 @@ class QuizCubit extends Cubit<QuizState> {
     if (state is! QuizLoaded) return;
     final loadedState = state as QuizLoaded;
     final currentWord = loadedState.words[loadedState.currentIndex];
-    final isCorrect =
-        userAnswer.trim().toLowerCase() ==
-        currentWord.russianWord.toLowerCase();
+    final correctAnswer = type == TranslationType.enRu
+        ? currentWord.russianWord.toLowerCase()
+        : currentWord.englishWord.toLowerCase();
+    final isCorrect = userAnswer.trim().toLowerCase() == correctAnswer;
     emit(
       QuizLoaded(
         words: loadedState.words,
@@ -48,6 +58,17 @@ class QuizCubit extends Cubit<QuizState> {
         correctCount: loadedState.correctCount,
       ),
     );
+  }
+
+  String getCup({required int total, required int correct}) {
+    final percent = (correct / total);
+    if (percent >= 0.8) {
+      return AssetPaths.goldenCup;
+    }
+    if (percent >= 0.6) {
+      return AssetPaths.silverCup;
+    }
+    return AssetPaths.bronzeCup;
   }
 
   void nextQuestion() {
@@ -77,5 +98,9 @@ class QuizCubit extends Cubit<QuizState> {
         ),
       );
     }
+  }
+
+  Future<void> pronounceWord(String word) async {
+    await ttsService.speak(word);
   }
 }

@@ -17,11 +17,16 @@ class DictionaryLocalDataSource {
         .get();
   }
 
-  Future<List<Word>> getQuizWords(int limit) {
-    return (database.select(database.words)
-          ..where((tbl) => tbl.probability.isBiggerThanValue(0.7))
-          ..orderBy([(t) => OrderingTerm.desc(t.count)])
-          ..limit(limit))
-        .get();
+  Future<List<Word>> getQuizWords(int limit) async {
+    final words =
+        await (database.select(database.words)
+              ..where((tbl) => tbl.probability.isBiggerThanValue(0.7))
+              ..orderBy([(t) => OrderingTerm.desc(t.count)])
+              ..limit(100))
+            .get();
+
+    words.shuffle();
+
+    return words.take(limit).toList();
   }
 }

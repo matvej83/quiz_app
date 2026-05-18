@@ -20,7 +20,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<QuizCubit>()..loadWords(),
+      create: (_) => getIt<QuizCubit>(),
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
