@@ -71,7 +71,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                       controller: _firstNameController,
                       enabled: !isLoading,
                       keyboardType: .name,
-                      decoration: const InputDecoration(hintText: 'Имя'),
+                      hintText: 'Имя',
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return AppConstants.fieldIsRequired;
@@ -83,7 +83,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                       controller: _lastNameController,
                       enabled: !isLoading,
                       keyboardType: .name,
-                      decoration: const InputDecoration(hintText: 'Фамилия'),
+                      hintText: 'Фамилия',
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return AppConstants.fieldIsRequired;
