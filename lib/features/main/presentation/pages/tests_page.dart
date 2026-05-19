@@ -56,7 +56,14 @@ class TestsPage extends StatelessWidget {
               context.read<QuizCubit>().loadWords(type: TranslationType.enRu);
               context.go('${AppRoutes.tests}/${AppRoutes.flashcards}');
             },
-            child: Text('Карточки', style: textStyle),
+            child: Row(
+              mainAxisSize: .min,
+              spacing: 4.0,
+              children: [
+                Text('Карточки', style: textStyle),
+                SvgPicture.asset(AssetPaths.cardsStack, height: 20.0),
+              ],
+            ),
           ),
         ],
       ),
