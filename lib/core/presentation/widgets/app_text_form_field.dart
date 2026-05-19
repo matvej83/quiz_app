@@ -10,6 +10,7 @@ class AppTextFormField extends StatelessWidget {
     this.keyboardType,
     this.validator,
     this.labelText,
+    this.hintText,
     this.decoration,
     this.prefix,
     this.onTap,
@@ -24,6 +25,7 @@ class AppTextFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final String? labelText;
+  final String? hintText;
   final InputDecoration? decoration;
   final Widget? prefix;
   final VoidCallback? onTap;
@@ -33,6 +35,7 @@ class AppTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return TextFormField(
       focusNode: focusNode,
       controller: controller,
@@ -42,8 +45,15 @@ class AppTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       textAlignVertical: .center,
       inputFormatters: inputFormatters,
+      style: textTheme.bodyMedium,
       decoration:
-          decoration ?? InputDecoration(labelText: labelText, prefix: prefix),
+          decoration ??
+          InputDecoration(
+            labelText: labelText,
+            prefix: prefix,
+            hintText: hintText,
+            hintStyle: textTheme.bodyMedium,
+          ),
       onTapOutside: unfocusOnTapOutside
           ? (PointerDownEvent event) {
               FocusManager.instance.primaryFocus?.unfocus();
