@@ -12,6 +12,7 @@ import 'package:quiz_app/features/quiz/presentation/pages/quiz_page.dart';
 import '../../core/presentation/pages/splash_page.dart';
 import '../../features/main/presentation/main_screen.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/quiz/presentation/pages/flashcards_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -77,6 +78,10 @@ class AppRouter {
                   GoRoute(
                     path: AppRoutes.translate,
                     builder: (context, state) => const QuizPage(),
+                  ),
+                  GoRoute(
+                    path: AppRoutes.flashcards,
+                    builder: (context, state) => const FlashcardsPage(),
                   ),
                 ],
               ),

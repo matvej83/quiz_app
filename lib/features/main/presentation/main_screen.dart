@@ -42,7 +42,7 @@ class MainScreen extends StatelessWidget {
         body: SafeArea(
           left: true,
           right: true,
-          minimum: const EdgeInsets.only(left: 10, right: 10),
+          minimum: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: navigationShell,
         ),
         bottomNavigationBar: BottomNavBar(

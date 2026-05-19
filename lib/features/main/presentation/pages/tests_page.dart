@@ -13,10 +13,12 @@ class TestsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final textStyle = theme.textTheme.bodyMedium;
     return ColoredBox(
       color: theme.scaffoldBackgroundColor,
       child: Column(
         mainAxisAlignment: .center,
+        crossAxisAlignment: .stretch,
         spacing: 16.0,
         children: [
           OutlinedButton(
@@ -28,7 +30,7 @@ class TestsPage extends StatelessWidget {
               mainAxisSize: .min,
               spacing: 4.0,
               children: [
-                const Text('Перевод слов'),
+                Text('Перевод слов', style: textStyle),
                 SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
                 SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
               ],
@@ -43,11 +45,18 @@ class TestsPage extends StatelessWidget {
               mainAxisSize: .min,
               spacing: 4.0,
               children: [
-                const Text('Перевод слов'),
+                Text('Перевод слов', style: textStyle),
                 SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
                 SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
               ],
             ),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              context.read<QuizCubit>().loadWords(type: TranslationType.enRu);
+              context.go('${AppRoutes.tests}/${AppRoutes.flashcards}');
+            },
+            child: Text('Карточки', style: textStyle),
           ),
         ],
       ),

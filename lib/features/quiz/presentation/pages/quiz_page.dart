@@ -9,6 +9,7 @@ import 'package:quiz_app/enums/app_enums.dart';
 import '../../../../app/theme/app_semantic_colors.dart';
 import '../bloc/quiz_cubit.dart';
 import '../bloc/quiz_state.dart';
+import '../widgets/pronounce_button.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
@@ -37,7 +38,7 @@ class _QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
+    return ColoredBox(
       color: theme.scaffoldBackgroundColor,
       child: BlocBuilder<QuizCubit, QuizState>(
         builder: (context, state) {
@@ -116,15 +117,14 @@ class _QuizPageState extends State<QuizPage> {
                               : current.russianWord,
                           style: theme.textTheme.headlineLarge,
                         ),
-                        IconButton(
-                          onPressed: () {
+                        PronounceButton(
+                          onTap: () {
                             context.read<QuizCubit>().pronounceWord(
                               cubit.type == TranslationType.enRu
                                   ? current.englishWord
                                   : current.russianWord,
                             );
                           },
-                          icon: const Icon(Icons.mic),
                         ),
                       ],
                     ),
