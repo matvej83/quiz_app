@@ -4,8 +4,9 @@ import 'app_semantic_colors.dart';
 import 'app_theme_colors.dart';
 
 class AppTheme {
-  static ThemeData dark(AppThemeColors appColors) =>
-      ThemeData.dark(useMaterial3: true).copyWith(
+  static ThemeData getThemeData(AppThemeColors appColors, bool isDark) {
+    if (isDark) {
+      return ThemeData.dark(useMaterial3: true).copyWith(
         scaffoldBackgroundColor: appColors.scaffoldBackground,
         unselectedWidgetColor: appColors.unselectedWidget,
         canvasColor: appColors.canvas,
@@ -105,15 +106,15 @@ class AppTheme {
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(
               borderRadius: .circular(10.0),
-              borderSide: BorderSide(color: appColors.onPrimary),
+              borderSide: BorderSide(color: appColors.fieldBorder),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: .circular(10.0),
-              borderSide: BorderSide(color: appColors.onPrimary),
+              borderSide: BorderSide(color: appColors.fieldBorder),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: .circular(10.0),
-              borderSide: BorderSide(color: appColors.primary),
+              borderSide: BorderSide(color: appColors.fieldBorderFocussed),
             ),
             contentPadding: const .symmetric(horizontal: 8.0, vertical: 4.0),
             prefixIconConstraints: const BoxConstraints(maxHeight: 24.0),
@@ -122,7 +123,7 @@ class AppTheme {
             backgroundColor: .all(appColors.scaffoldBackground),
             surfaceTintColor: .resolveWith((states) {
               if (states.contains(WidgetState.selected)) {
-                return appColors.unselectedWidget;
+                return appColors.fieldBorder;
               }
               return appColors.surfaceTint;
             }),
@@ -149,9 +150,12 @@ class AppTheme {
             }),
             side: .resolveWith((states) {
               if (states.contains(WidgetState.disabled)) {
-                return BorderSide(color: appColors.unselectedWidget, width: 1);
+                return BorderSide(
+                  color: appColors.unselectedWidget,
+                  width: 2.0,
+                );
               }
-              return BorderSide(color: appColors.primary, width: 1);
+              return BorderSide(color: appColors.primary, width: 2.0);
             }),
             shape: WidgetStatePropertyAll(
               RoundedRectangleBorder(borderRadius: .circular(12.0)),
@@ -197,13 +201,12 @@ class AppTheme {
           }),
         ),
       );
-
-  static ThemeData light(AppThemeColors appColors) =>
-      ThemeData.light(useMaterial3: true).copyWith(
+    } else {
+      return ThemeData.light(useMaterial3: true).copyWith(
         scaffoldBackgroundColor: appColors.scaffoldBackground,
+        unselectedWidgetColor: appColors.unselectedWidget,
         canvasColor: appColors.canvas,
         splashColor: appColors.splash,
-        unselectedWidgetColor: appColors.unselectedWidget,
         extensions: [AppSemanticColors(success: appColors.success)],
         colorScheme: const ColorScheme.light().copyWith(
           brightness: Brightness.light,
@@ -297,15 +300,15 @@ class AppTheme {
         dropdownMenuTheme: DropdownMenuThemeData(
           inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(
-              borderRadius: .circular(10),
+              borderRadius: .circular(10.0),
               borderSide: BorderSide(color: appColors.fieldBorder),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: .circular(10),
+              borderRadius: .circular(10.0),
               borderSide: BorderSide(color: appColors.fieldBorder),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: .circular(10),
+              borderRadius: .circular(10.0),
               borderSide: BorderSide(color: appColors.fieldBorderFocussed),
             ),
             contentPadding: const .symmetric(horizontal: 8.0, vertical: 4.0),
@@ -393,4 +396,6 @@ class AppTheme {
           }),
         ),
       );
+    }
+  }
 }

@@ -30,7 +30,7 @@ class ThemeProvider with ChangeNotifier {
     result.fold(
       (l) {
         _currentMode = AppThemeMode.dark;
-        _currentTheme = AppTheme.dark(AppThemeColors.dark);
+        _currentTheme = AppTheme.getThemeData(AppThemeColors.dark, true);
       },
       (r) {
         _currentMode = r ?? AppThemeMode.dark;
@@ -50,13 +50,13 @@ class ThemeProvider with ChangeNotifier {
 
   /// Returns the current theme data.
   ThemeData getThemeData() {
-    return _currentTheme ?? AppTheme.dark(AppThemeColors.dark);
+    return _currentTheme ?? AppTheme.getThemeData(AppThemeColors.dark, true);
   }
 
   ThemeData _mapToThemeData(AppThemeMode mode) {
     final colors = AppThemeColors.fromMode(mode);
     return mode == AppThemeMode.light
-        ? AppTheme.light(colors)
-        : AppTheme.dark(colors);
+        ? AppTheme.getThemeData(colors, false)
+        : AppTheme.getThemeData(colors, true);
   }
 }
