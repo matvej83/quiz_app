@@ -61,7 +61,23 @@ class TestsPage extends StatelessWidget {
               spacing: 4.0,
               children: [
                 Text('Карточки', style: textStyle),
-                SvgPicture.asset(AssetPaths.cardsStack, height: 20.0),
+                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
+                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
+              ],
+            ),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              context.read<QuizCubit>().loadWords(type: TranslationType.ruEn);
+              context.go('${AppRoutes.tests}/${AppRoutes.flashcards}');
+            },
+            child: Row(
+              mainAxisSize: .min,
+              spacing: 4.0,
+              children: [
+                Text('Карточки', style: textStyle),
+                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
+                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
               ],
             ),
           ),
