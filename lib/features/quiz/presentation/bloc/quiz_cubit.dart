@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:quiz_app/app/constants/asset_paths.dart';
 import 'package:quiz_app/enums/app_enums.dart';
 
+import '../../../../app/constants/app_constants.dart';
 import '../../../dictionary/data/data_sources/dictionary_local_data_source.dart';
 import '../../../dictionary/services/tts_service.dart';
 import 'quiz_state.dart';
@@ -18,7 +19,9 @@ class QuizCubit extends Cubit<QuizState> {
     try {
       this.type = type;
       await ttsService.setLanguage(
-        type == TranslationType.enRu ? 'en-US' : 'ru-Ru',
+        type == TranslationType.enRu
+            ? AppConstants.enLocale
+            : AppConstants.ruLocale,
       );
       emit(QuizLoading());
       final words = await repository.getQuizWords(10);
@@ -100,7 +103,27 @@ class QuizCubit extends Cubit<QuizState> {
     }
   }
 
-  Future<void> pronounceWord(String word) async {
+  void previousQuestion() {
+    if (state is! QuizLoaded) return;
+    final loadedState = state as QuizLoaded;
+    if (loadedState.currentIndex == 0) return;
+    final previousIndex = loadedState.currentIndex - 1;
+    emit(
+      QuizLoaded(
+        words: loadedState.words,
+        currentIndex: previousIndex,
+        answered: false,
+        userAnswer: null,
+        correct: false,
+        correctCount: loadedState.correctCount,
+      ),
+    );
+  }
+
+  Future<void> pronounceWord(String word, {String? language}) async {
+    if (language != null) {
+      await ttsService.setLanguage(language);
+    }
     await ttsService.speak(word);
   }
 }

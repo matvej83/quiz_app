@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/constants/app_constants.dart';
 import '../../../../app/theme/app_semantic_colors.dart';
 import '../../../../core/presentation/widgets/smooth_flip_card.dart';
 import '../../../../enums/app_enums.dart';
@@ -54,11 +55,8 @@ class FlashcardsPage extends StatelessWidget {
             return Padding(
               padding: const .all(16.0),
               child: Column(
+                crossAxisAlignment: .center,
                 children: [
-                  Text(
-                    '${state.currentIndex + 1} / ${state.words.length}',
-                    style: theme.textTheme.bodyLarge,
-                  ),
                   SmoothFlipCard(
                     front: (flip) {
                       return GestureDetector(
@@ -72,29 +70,28 @@ class FlashcardsPage extends StatelessWidget {
                                 .disabledBorder
                                 ?.borderSide
                                 .color,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            child: Row(
+                              spacing: 8.0,
+                              mainAxisAlignment: .center,
                               children: [
-                                Row(
-                                  spacing: 8.0,
-                                  mainAxisAlignment: .center,
-                                  children: [
-                                    Text(
+                                Text(
+                                  cubit.type == TranslationType.enRu
+                                      ? current.englishWord
+                                      : current.russianWord,
+                                  style: theme.textTheme.headlineLarge,
+                                ),
+                                PronounceButton(
+                                  onTap: () {
+                                    context.read<QuizCubit>().pronounceWord(
                                       cubit.type == TranslationType.enRu
                                           ? current.englishWord
                                           : current.russianWord,
-                                      style: theme.textTheme.headlineLarge,
-                                    ),
-                                    PronounceButton(
-                                      onTap: () {
-                                        context.read<QuizCubit>().pronounceWord(
+                                      language:
                                           cubit.type == TranslationType.enRu
-                                              ? current.englishWord
-                                              : current.russianWord,
-                                        );
-                                      },
-                                    ),
-                                  ],
+                                          ? AppConstants.enLocale
+                                          : AppConstants.ruLocale,
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -114,14 +111,28 @@ class FlashcardsPage extends StatelessWidget {
                                 .disabledBorder
                                 ?.borderSide
                                 .color,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            child: Row(
+                              spacing: 8.0,
+                              mainAxisAlignment: .center,
                               children: [
                                 Text(
                                   cubit.type == TranslationType.enRu
                                       ? current.russianWord
                                       : current.englishWord,
                                   style: theme.textTheme.headlineLarge,
+                                ),
+                                PronounceButton(
+                                  onTap: () {
+                                    context.read<QuizCubit>().pronounceWord(
+                                      cubit.type == TranslationType.enRu
+                                          ? current.russianWord
+                                          : current.englishWord,
+                                      language:
+                                          cubit.type == TranslationType.enRu
+                                          ? AppConstants.ruLocale
+                                          : AppConstants.enLocale,
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -130,9 +141,25 @@ class FlashcardsPage extends StatelessWidget {
                       );
                     },
                   ),
-                  ElevatedButton(
-                    onPressed: () => context.read<QuizCubit>().nextQuestion(),
-                    child: const Text('Далее'),
+                  Row(
+                    spacing: 16.0,
+                    mainAxisAlignment: .spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () =>
+                            context.read<QuizCubit>().previousQuestion(),
+                        child: const Icon(Icons.arrow_back_outlined),
+                      ),
+                      Text(
+                        '${state.currentIndex + 1} / ${state.words.length}',
+                        style: theme.textTheme.bodyLarge,
+                      ),
+                      ElevatedButton(
+                        onPressed: () =>
+                            context.read<QuizCubit>().nextQuestion(),
+                        child: const Icon(Icons.arrow_forward_outlined),
+                      ),
+                    ],
                   ),
                 ],
               ),
