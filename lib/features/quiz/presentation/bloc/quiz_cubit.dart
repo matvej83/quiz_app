@@ -103,6 +103,7 @@ class QuizCubit extends Cubit<QuizState> {
     }
   }
 
+  /// uses for flashcards only
   void previousQuestion() {
     if (state is! QuizLoaded) return;
     final loadedState = state as QuizLoaded;

@@ -56,6 +56,7 @@ class FlashcardsPage extends StatelessWidget {
               padding: const .all(16.0),
               child: Column(
                 crossAxisAlignment: .center,
+                mainAxisAlignment: .center,
                 children: [
                   SmoothFlipCard(
                     front: (flip) {

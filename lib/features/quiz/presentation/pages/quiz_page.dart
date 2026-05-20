@@ -103,69 +103,63 @@ class _QuizPageState extends State<QuizPage> {
             );
             return Padding(
               padding: const .all(16),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 40),
-                    Row(
-                      spacing: 8.0,
-                      mainAxisAlignment: .center,
-                      children: [
-                        Text(
-                          cubit.type == TranslationType.enRu
-                              ? current.englishWord
-                              : current.russianWord,
-                          style: theme.textTheme.headlineLarge,
-                        ),
-                        PronounceButton(
-                          onTap: () {
-                            context.read<QuizCubit>().pronounceWord(
-                              cubit.type == TranslationType.enRu
-                                  ? current.englishWord
-                                  : current.russianWord,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
-                    AppTextFormField(
-                      controller: controller,
-                      keyboardType: .text,
-                      decoration: const InputDecoration(
-                        hintText: 'Введите перевод',
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        context.read<QuizCubit>().checkAnswer(controller.text);
-                      },
-                      child: const Text('Проверить'),
-                    ),
-                    const SizedBox(height: 24),
-                    if (state.answered) ...[
+              child: Column(
+                mainAxisAlignment: .center,
+                spacing: 16.0,
+                children: [
+                  Row(
+                    spacing: 8.0,
+                    mainAxisAlignment: .center,
+                    children: [
                       Text(
-                        state.correct ? 'Правильно' : 'Неправильно',
-                        style: TextStyle(
-                          color: state.correct
-                              ? theme.extension<AppSemanticColors>()!.success
-                              : theme.colorScheme.error,
-                        ),
+                        cubit.type == TranslationType.enRu
+                            ? current.englishWord
+                            : current.russianWord,
+                        style: theme.textTheme.headlineLarge,
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Ответ: ${cubit.type == TranslationType.enRu ? current.russianWord : current.englishWord}',
-                      ),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () =>
-                            context.read<QuizCubit>().nextQuestion(),
-                        child: const Text('Далее'),
+                      PronounceButton(
+                        onTap: () {
+                          context.read<QuizCubit>().pronounceWord(
+                            cubit.type == TranslationType.enRu
+                                ? current.englishWord
+                                : current.russianWord,
+                          );
+                        },
                       ),
                     ],
+                  ),
+                  AppTextFormField(
+                    controller: controller,
+                    keyboardType: .text,
+                    decoration: const InputDecoration(
+                      hintText: 'Введите перевод',
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<QuizCubit>().checkAnswer(controller.text);
+                    },
+                    child: const Text('Проверить'),
+                  ),
+                  if (state.answered) ...[
+                    Text(
+                      state.correct ? 'Правильно' : 'Неправильно',
+                      style: TextStyle(
+                        color: state.correct
+                            ? theme.extension<AppSemanticColors>()!.success
+                            : theme.colorScheme.error,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Ответ: ${cubit.type == TranslationType.enRu ? current.russianWord : current.englishWord}',
+                    ),
+                    ElevatedButton(
+                      onPressed: () => context.read<QuizCubit>().nextQuestion(),
+                      child: const Text('Далее'),
+                    ),
                   ],
-                ),
+                ],
               ),
             );
           }
