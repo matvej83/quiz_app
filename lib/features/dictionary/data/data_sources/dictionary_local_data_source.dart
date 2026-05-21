@@ -9,12 +9,8 @@ class DictionaryLocalDataSource {
 
   final AppDatabase database;
 
-  Future<List<Word>> searchWords(String query) {
-    return (database.select(database.words)
-          ..where((tbl) => tbl.englishWord.like('$query%'))
-          ..orderBy([(t) => OrderingTerm.desc(t.count)])
-          ..limit(20))
-        .get();
+  Future<List<Word>> getWords(int limit) {
+    return (database.select(database.words)..limit(limit * 4)).get();
   }
 
   Future<List<Word>> getQuizWords(int limit) async {

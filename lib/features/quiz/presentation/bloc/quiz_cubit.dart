@@ -5,6 +5,7 @@ import 'package:quiz_app/enums/app_enums.dart';
 
 import '../../../../app/constants/app_constants.dart';
 import '../../../dictionary/data/data_sources/dictionary_local_data_source.dart';
+import '../../../dictionary/data/database/app_database.dart';
 import '../../../dictionary/services/tts_service.dart';
 import 'quiz_state.dart';
 
@@ -15,8 +16,12 @@ class QuizCubit extends Cubit<QuizState> {
   final TtsService ttsService;
   TranslationType? type;
 
-  void loadWords({required TranslationType type}) async {
+  void loadWords({
+    required TranslationType type,
+    bool loadAdditionalWords = false,
+  }) async {
     try {
+      List<String> additionalWords = [];
       this.type = type;
       await ttsService.setLanguage(
         type == TranslationType.enRu
@@ -25,12 +30,17 @@ class QuizCubit extends Cubit<QuizState> {
       );
       emit(QuizLoading());
       final words = await repository.getQuizWords(10);
+      if (loadAdditionalWords) {
+        final list = await repository.getWords(10);
+        additionalWords = getAdditionalWords(list);
+      }
       if (words.isEmpty) {
         emit(const QuizCompleted(correctAnswers: 0, totalQuestions: 0));
       } else {
         emit(
           QuizLoaded(
             words: words,
+            additionalWords: additionalWords,
             currentIndex: 0,
             answered: false,
             correct: false,
@@ -41,6 +51,15 @@ class QuizCubit extends Cubit<QuizState> {
     } catch (e) {
       emit(QuizError('Failed to load words: $e'));
     }
+  }
+
+  List<String> getAdditionalWords(List<Word> words) {
+    List<String> result = [];
+    final list = List<Word>.from(words)..shuffle();
+    for (final e in list) {
+      result.add(type == TranslationType.enRu ? e.russianWord : e.englishWord);
+    }
+    return result;
   }
 
   void checkAnswer(String userAnswer) {
@@ -54,6 +73,7 @@ class QuizCubit extends Cubit<QuizState> {
     emit(
       QuizLoaded(
         words: loadedState.words,
+        additionalWords: loadedState.additionalWords,
         currentIndex: loadedState.currentIndex,
         answered: true,
         correct: isCorrect,
@@ -92,6 +112,7 @@ class QuizCubit extends Cubit<QuizState> {
       emit(
         QuizLoaded(
           words: loadedState.words,
+          additionalWords: loadedState.additionalWords,
           currentIndex: nextIndex,
           answered: false,
           userAnswer: null,
@@ -112,6 +133,7 @@ class QuizCubit extends Cubit<QuizState> {
     emit(
       QuizLoaded(
         words: loadedState.words,
+        additionalWords: loadedState.additionalWords,
         currentIndex: previousIndex,
         answered: false,
         userAnswer: null,

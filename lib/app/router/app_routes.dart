@@ -3,6 +3,7 @@ class AppRoutes {
   static const createProfile = '/create-profile';
   static const translate = 'translate';
   static const flashcards = 'flashcards';
+  static const test = 'test';
 
   /// Shell routes
   static const tests = '/tests';

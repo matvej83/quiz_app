@@ -137,8 +137,9 @@ class FlashcardsPage extends StatelessWidget {
                 mainAxisAlignment: .spaceBetween,
                 children: [
                   ElevatedButton(
-                    onPressed: () =>
-                        context.read<QuizCubit>().previousQuestion(),
+                    onPressed: state.currentIndex != 0
+                        ? () => context.read<QuizCubit>().previousQuestion()
+                        : null,
                     child: const Icon(Icons.arrow_back_outlined),
                   ),
                   Text(
@@ -146,7 +147,9 @@ class FlashcardsPage extends StatelessWidget {
                     style: theme.textTheme.bodyLarge,
                   ),
                   ElevatedButton(
-                    onPressed: () => context.read<QuizCubit>().nextQuestion(),
+                    onPressed: state.currentIndex != state.words.length - 1
+                        ? () => context.read<QuizCubit>().nextQuestion()
+                        : null,
                     child: const Icon(Icons.arrow_forward_outlined),
                   ),
                 ],
