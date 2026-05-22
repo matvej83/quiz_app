@@ -17,6 +17,7 @@ class QuizLoaded extends QuizState {
   const QuizLoaded({
     required this.words,
     required this.additionalWords,
+    required this.answers,
     required this.currentIndex,
     required this.answered,
     required this.correct,
@@ -26,6 +27,7 @@ class QuizLoaded extends QuizState {
 
   final List<Word> words;
   final List<String> additionalWords;
+  final List<String> answers;
   final int currentIndex;
   final bool answered;
   final bool correct;
@@ -35,6 +37,7 @@ class QuizLoaded extends QuizState {
   QuizLoaded copyWith({
     List<Word>? words,
     List<String>? additionalWords,
+    List<String>? answers,
     int? currentIndex,
     bool? answered,
     bool? correct,
@@ -44,6 +47,7 @@ class QuizLoaded extends QuizState {
     return QuizLoaded(
       words: words ?? this.words,
       additionalWords: additionalWords ?? this.additionalWords,
+      answers: answers ?? this.answers,
       currentIndex: currentIndex ?? this.currentIndex,
       answered: answered ?? this.answered,
       correct: correct ?? this.correct,
@@ -56,6 +60,7 @@ class QuizLoaded extends QuizState {
   List<dynamic> get props => [
     words,
     additionalWords,
+    answers,
     currentIndex,
     answered,
     correct,

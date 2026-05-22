@@ -33,13 +33,6 @@ class TestPage extends StatelessWidget {
       },
       onLoaded: (state) {
         final current = state.words[state.currentIndex];
-        final answer = cubit.type == TranslationType.enRu
-            ? current.russianWord
-            : current.englishWord;
-        final tmp = [...state.additionalWords]..shuffle();
-        final additionalWords = tmp.take(3).toList();
-        additionalWords.add(answer);
-        additionalWords.shuffle();
         return Column(
           crossAxisAlignment: .center,
           mainAxisAlignment: .center,
@@ -77,13 +70,15 @@ class TestPage extends StatelessWidget {
               Text('Выбранный ответ: ${state.userAnswer}'),
               Text('Правильный ответ: ${current.answerFor(cubit.type)}'),
               ElevatedButton(
-                onPressed: cubit.nextQuestion,
+                onPressed: () {
+                  cubit.nextQuestion(loadAdditionalWords: true);
+                },
                 child: const Text('Далее'),
               ),
             ] else ...[
               Text('Выберите ответ:', style: theme.textTheme.bodyMedium),
               AnswersBlock(
-                words: additionalWords,
+                words: state.answers,
                 onSelected: (word) {
                   cubit.checkAnswer(word);
                 },
