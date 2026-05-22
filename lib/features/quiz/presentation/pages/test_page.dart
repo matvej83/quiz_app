@@ -94,6 +94,10 @@ class TestPage extends StatelessWidget {
                 },
               ),
             ],
+            Text(
+              '${state.currentIndex + 1} / ${state.words.length}',
+              style: theme.textTheme.bodyLarge,
+            ),
           ],
         );
       },

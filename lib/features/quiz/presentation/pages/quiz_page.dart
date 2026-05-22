@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/presentation/widgets/app_text_form_field.dart';
-import 'package:quiz_app/enums/app_enums.dart';
+import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/completed_widget.dart';
 
 import '../../../../app/theme/app_semantic_colors.dart';
@@ -43,33 +43,29 @@ class QuizPage extends StatelessWidget {
                 mainAxisAlignment: .center,
                 children: [
                   Text(
-                    cubit.type == TranslationType.enRu
-                        ? current.englishWord
-                        : current.russianWord,
+                    current.questionFor(cubit.type),
                     style: theme.textTheme.headlineLarge,
                   ),
                   PronounceButton(
                     onTap: () {
-                      context.read<QuizCubit>().pronounceWord(
-                        cubit.type == TranslationType.enRu
-                            ? current.englishWord
-                            : current.russianWord,
-                      );
+                      cubit.pronounceWord(current.questionFor(cubit.type));
                     },
                   ),
                 ],
               ),
               AppTextFormField(
+                enabled: !state.answered,
                 controller: controller,
                 keyboardType: .text,
                 decoration: const InputDecoration(hintText: 'Введите перевод'),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  context.read<QuizCubit>().checkAnswer(controller.text);
-                },
-                child: const Text('Проверить'),
-              ),
+              if (!state.answered)
+                ElevatedButton(
+                  onPressed: () {
+                    cubit.checkAnswer(controller.text);
+                  },
+                  child: const Text('Проверить'),
+                ),
               if (state.answered) ...[
                 Text(
                   state.correct ? 'Правильно' : 'Неправильно',
@@ -79,12 +75,9 @@ class QuizPage extends StatelessWidget {
                         : theme.colorScheme.error,
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'Ответ: ${cubit.type == TranslationType.enRu ? current.russianWord : current.englishWord}',
-                ),
+                Text('Правильный ответ: ${current.answerFor(cubit.type)}'),
                 ElevatedButton(
-                  onPressed: () => context.read<QuizCubit>().nextQuestion(),
+                  onPressed: cubit.nextQuestion,
                   child: const Text('Далее'),
                 ),
               ],

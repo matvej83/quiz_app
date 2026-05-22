@@ -17,7 +17,7 @@ class QuizCubit extends Cubit<QuizState> {
   QuizCubit(this.dataSource, this.ttsService) : super(QuizInitial());
   final DictionaryLocalDataSource dataSource;
   final TtsService ttsService;
-  TranslationType? type;
+  TranslationType type = TranslationType.enRu;
 
   void loadWords({
     required TranslationType type,
@@ -60,14 +60,14 @@ class QuizCubit extends Cubit<QuizState> {
   List<String> getAdditionalWords(List<Word> words) {
     final shuffled = List<Word>.from(words)..shuffle();
 
-    return shuffled.map((e) => e.answerFor(type!)).toList();
+    return shuffled.map((e) => e.answerFor(type)).toList();
   }
 
   void checkAnswer(String userAnswer) {
     if (state is! QuizLoaded) return;
     final loadedState = state as QuizLoaded;
     final currentWord = loadedState.words[loadedState.currentIndex];
-    final correctAnswer = currentWord.answerFor(type!).normalize();
+    final correctAnswer = currentWord.answerFor(type).normalize();
     final isCorrect = userAnswer.normalize() == correctAnswer;
     emit(
       loadedState.copyWith(

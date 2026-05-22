@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/page_wrapper.dart';
 
 import '../../../../app/constants/app_constants.dart';
@@ -68,17 +69,13 @@ class FlashcardsPage extends StatelessWidget {
                           mainAxisAlignment: .center,
                           children: [
                             Text(
-                              cubit.type == TranslationType.enRu
-                                  ? current.englishWord
-                                  : current.russianWord,
+                              current.questionFor(cubit.type),
                               style: theme.textTheme.headlineLarge,
                             ),
                             PronounceButton(
                               onTap: () {
-                                context.read<QuizCubit>().pronounceWord(
-                                  cubit.type == TranslationType.enRu
-                                      ? current.englishWord
-                                      : current.russianWord,
+                                cubit.pronounceWord(
+                                  current.questionFor(cubit.type),
                                   language: cubit.type == TranslationType.enRu
                                       ? AppConstants.enLocale
                                       : AppConstants.ruLocale,
@@ -108,17 +105,13 @@ class FlashcardsPage extends StatelessWidget {
                           mainAxisAlignment: .center,
                           children: [
                             Text(
-                              cubit.type == TranslationType.enRu
-                                  ? current.russianWord
-                                  : current.englishWord,
+                              current.answerFor(cubit.type),
                               style: theme.textTheme.headlineLarge,
                             ),
                             PronounceButton(
                               onTap: () {
-                                context.read<QuizCubit>().pronounceWord(
-                                  cubit.type == TranslationType.enRu
-                                      ? current.russianWord
-                                      : current.englishWord,
+                                cubit.pronounceWord(
+                                  current.answerFor(cubit.type),
                                   language: cubit.type == TranslationType.enRu
                                       ? AppConstants.ruLocale
                                       : AppConstants.enLocale,
@@ -138,7 +131,7 @@ class FlashcardsPage extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: state.currentIndex != 0
-                        ? () => context.read<QuizCubit>().previousQuestion()
+                        ? cubit.previousQuestion
                         : null,
                     child: const Icon(Icons.arrow_back_outlined),
                   ),
@@ -147,9 +140,7 @@ class FlashcardsPage extends StatelessWidget {
                     style: theme.textTheme.bodyLarge,
                   ),
                   ElevatedButton(
-                    onPressed: state.currentIndex != state.words.length - 1
-                        ? () => context.read<QuizCubit>().nextQuestion()
-                        : null,
+                    onPressed: cubit.nextQuestion,
                     child: const Icon(Icons.arrow_forward_outlined),
                   ),
                 ],
