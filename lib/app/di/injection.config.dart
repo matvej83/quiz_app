@@ -84,14 +84,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i146.ProfileLocalDataSource>(
       () => _i146.ProfileLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
-    gh.lazySingleton<_i457.DictionaryService>(
-      () => _i457.DictionaryService(gh<_i976.DictionaryAssetDataSource>()),
-    );
     gh.lazySingleton<_i3.QuizCubit>(
       () => _i3.QuizCubit(
         gh<_i66.DictionaryLocalDataSource>(),
         gh<_i192.TtsService>(),
       ),
+    );
+    gh.lazySingleton<_i457.DictionaryService>(
+      () => _i457.DictionaryService(gh<_i976.DictionaryAssetDataSource>()),
     );
     gh.lazySingleton<_i1049.ProfileRepository>(
       () => _i102.ProfileRepositoryImpl(

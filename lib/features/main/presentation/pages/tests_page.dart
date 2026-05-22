@@ -81,6 +81,42 @@ class TestsPage extends StatelessWidget {
               ],
             ),
           ),
+          OutlinedButton(
+            onPressed: () {
+              context.read<QuizCubit>().loadWords(
+                type: TranslationType.enRu,
+                loadAdditionalWords: true,
+              );
+              context.go('${AppRoutes.tests}/${AppRoutes.test}');
+            },
+            child: Row(
+              mainAxisSize: .min,
+              spacing: 4.0,
+              children: [
+                Text('Тест', style: textStyle),
+                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
+                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
+              ],
+            ),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              context.read<QuizCubit>().loadWords(
+                type: TranslationType.ruEn,
+                loadAdditionalWords: true,
+              );
+              context.go('${AppRoutes.tests}/${AppRoutes.test}');
+            },
+            child: Row(
+              mainAxisSize: .min,
+              spacing: 4.0,
+              children: [
+                Text('Тест', style: textStyle),
+                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
+                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
+              ],
+            ),
+          ),
         ],
       ),
     );

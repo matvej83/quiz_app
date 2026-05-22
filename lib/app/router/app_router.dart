@@ -8,6 +8,7 @@ import 'package:quiz_app/features/main/presentation/pages/tests_page.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/pages/create_profile_page.dart';
 import 'package:quiz_app/features/quiz/presentation/pages/quiz_page.dart';
+import 'package:quiz_app/features/quiz/presentation/pages/test_page.dart';
 
 import '../../core/presentation/pages/splash_page.dart';
 import '../../features/main/presentation/main_screen.dart';
@@ -82,6 +83,10 @@ class AppRouter {
                   GoRoute(
                     path: AppRoutes.flashcards,
                     builder: (context, state) => const FlashcardsPage(),
+                  ),
+                  GoRoute(
+                    path: AppRoutes.test,
+                    builder: (context, state) => const TestPage(),
                   ),
                 ],
               ),

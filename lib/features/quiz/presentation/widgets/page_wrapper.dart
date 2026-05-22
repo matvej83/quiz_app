@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/quiz_cubit.dart';
+import '../bloc/quiz_state.dart';
+
+class PageWrapper extends StatelessWidget {
+  const PageWrapper({
+    super.key,
+    required this.backgroundColor,
+    required this.onCompleted,
+    required this.onLoaded,
+  });
+
+  final Color backgroundColor;
+  final Widget Function(QuizCompleted) onCompleted;
+  final Widget Function(QuizLoaded) onLoaded;
+
+  @override
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: backgroundColor,
+      child: BlocBuilder<QuizCubit, QuizState>(
+        builder: (context, state) {
+          if (state is QuizLoading) {
+            return const Center(child: CircularProgressIndicator.adaptive());
+          }
+          if (state is QuizCompleted) {
+            return onCompleted(state);
+          }
+          if (state is QuizLoaded) {
+            return onLoaded(state);
+          }
+          return const SizedBox.shrink();
+        },
+      ),
+    );
+  }
+}

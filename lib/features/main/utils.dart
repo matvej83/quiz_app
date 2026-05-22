@@ -9,6 +9,12 @@ class MainScreenUtils {
       if (location.pathSegments.last == AppRoutes.translate) {
         return 'Перевод';
       }
+      if (location.pathSegments.last == AppRoutes.flashcards) {
+        return 'Карточки';
+      }
+      if (location.pathSegments.last == AppRoutes.test) {
+        return 'Тест';
+      }
     }
     return switch (location.toString()) {
       AppRoutes.tests => 'Тесты',
