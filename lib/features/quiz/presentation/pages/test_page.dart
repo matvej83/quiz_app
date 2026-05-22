@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/completed_widget.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/page_wrapper.dart';
 
@@ -49,17 +50,13 @@ class TestPage extends StatelessWidget {
               mainAxisAlignment: .center,
               children: [
                 Text(
-                  cubit.type == TranslationType.enRu
-                      ? current.englishWord
-                      : current.russianWord,
+                  current.questionFor(cubit.type),
                   style: theme.textTheme.headlineLarge,
                 ),
                 PronounceButton(
                   onTap: () {
                     cubit.pronounceWord(
-                      cubit.type == TranslationType.enRu
-                          ? current.englishWord
-                          : current.russianWord,
+                      current.questionFor(cubit.type),
                       language: cubit.type == TranslationType.enRu
                           ? AppConstants.enLocale
                           : AppConstants.ruLocale,
@@ -78,9 +75,7 @@ class TestPage extends StatelessWidget {
                 ),
               ),
               Text('Выбранный ответ: ${state.userAnswer}'),
-              Text(
-                'Правильный ответ: ${cubit.type == TranslationType.enRu ? current.russianWord : current.englishWord}',
-              ),
+              Text('Правильный ответ: ${current.answerFor(cubit.type)}'),
               ElevatedButton(
                 onPressed: cubit.nextQuestion,
                 child: const Text('Далее'),
