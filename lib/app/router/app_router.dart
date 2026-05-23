@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:quiz_app/app/router/app_routes.dart';
+import 'package:quiz_app/features/history/presentation/pages/history_page.dart';
 import 'package:quiz_app/features/main/presentation/pages/tests_page.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/pages/create_profile_page.dart';
@@ -63,6 +64,10 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.createProfile,
         builder: (context, state) => const CreateProfilePage(),
+      ),
+      GoRoute(
+        path: AppRoutes.history,
+        builder: (context, state) => const HistoryPage(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

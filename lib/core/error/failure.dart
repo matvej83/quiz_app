@@ -9,6 +9,8 @@ class CacheFailure extends Failure {}
 
 class NoProfileFailure extends Failure {}
 
+class NoHistoryFailure extends Failure {}
+
 class AssetFailure extends Failure {}
 
 class UnknownFailure extends Failure {

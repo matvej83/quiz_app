@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/utils/extensions.dart';
+import 'package:quiz_app/features/history/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/completed_widget.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/page_wrapper.dart';
 
@@ -29,6 +30,13 @@ class TestPage extends StatelessWidget {
           cup: cup,
           correctAnswers: state.correctAnswers,
           totalQuestions: state.totalQuestions,
+          onTap: () {
+            context.read<HistoryCubit>().addHistoryItem(
+              testType: TestType.test,
+              correctAnswers: state.correctAnswers,
+              totalAnswers: state.totalQuestions,
+            );
+          },
         );
       },
       onLoaded: (state) {

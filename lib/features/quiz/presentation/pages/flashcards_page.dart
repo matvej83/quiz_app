@@ -8,6 +8,7 @@ import '../../../../app/constants/app_constants.dart';
 import '../../../../app/theme/app_semantic_colors.dart';
 import '../../../../core/presentation/widgets/smooth_flip_card.dart';
 import '../../../../enums/app_enums.dart';
+import '../../../history/presentation/cubit/cubit.dart';
 import '../bloc/quiz_cubit.dart';
 import '../widgets/pronounce_button.dart';
 
@@ -33,6 +34,11 @@ class FlashcardsPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
+                  context.read<HistoryCubit>().addHistoryItem(
+                    testType: TestType.flashcards,
+                    correctAnswers: state.correctAnswers,
+                    totalAnswers: state.totalQuestions,
+                  );
                   if (context.canPop()) {
                     context.pop();
                   }
