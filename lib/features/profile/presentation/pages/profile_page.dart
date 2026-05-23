@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:quiz_app/app/router/app_routes.dart';
 
 import '../../../../core/presentation/widgets/app_dialog.dart';
+import '../../../history/presentation/cubit/cubit.dart';
 import '../cubit/cubit.dart';
 import '../cubit/state.dart';
 import '../widgets/theme_selector.dart';
@@ -14,6 +17,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  late HistoryCubit historyCubit;
   late ProfileCubit cubit;
   final _showSelector = ValueNotifier<bool>(false);
 
@@ -21,6 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     cubit = context.read<ProfileCubit>();
+    historyCubit = context.read<HistoryCubit>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         _showSelector.value = true;
@@ -61,6 +66,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       : const SizedBox(height: 56.0);
                 },
               ),
+              OutlinedButton(
+                onPressed: () {
+                  context.push(AppRoutes.history);
+                },
+                child: const Text('История'),
+              ),
               TextButton(
                 style: TextButton.styleFrom(
                   foregroundColor: theme.colorScheme.error,
@@ -70,11 +81,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     context,
                     title: 'Удаление профиля',
                     text:
-                        'Вы действительно хотите удалить профиль? Это действие необратимо',
+                        'Вы действительно хотите удалить профиль? Это действие необратимо и удалит все данные пользователя',
                     cancelText: 'Отмена',
                     okText: 'ОК',
                   );
                   if (result) {
+                    historyCubit.deleteHistory();
                     cubit.deleteProfile();
                   }
                 },

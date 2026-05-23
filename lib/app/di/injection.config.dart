@@ -26,6 +26,20 @@ import 'package:quiz_app/features/dictionary/services/dictionary_service.dart'
     as _i457;
 import 'package:quiz_app/features/dictionary/services/tts_service.dart'
     as _i192;
+import 'package:quiz_app/features/history/data/data_sources/history_local_data_source.dart'
+    as _i731;
+import 'package:quiz_app/features/history/data/repository/history_repository_impl.dart'
+    as _i878;
+import 'package:quiz_app/features/history/domain/repository/history_repository.dart'
+    as _i427;
+import 'package:quiz_app/features/history/domain/usecases/delete_history_usecase.dart'
+    as _i471;
+import 'package:quiz_app/features/history/domain/usecases/fetch_history_usecase.dart'
+    as _i876;
+import 'package:quiz_app/features/history/domain/usecases/save_history_usecase.dart'
+    as _i1051;
+import 'package:quiz_app/features/history/presentation/cubit/cubit.dart'
+    as _i61;
 import 'package:quiz_app/features/profile/data/data_sources/profile_local_data_source.dart'
     as _i146;
 import 'package:quiz_app/features/profile/data/repository/profile_repository_impl.dart'
@@ -78,6 +92,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i66.DictionaryLocalDataSource>(
       () => _i66.DictionaryLocalDataSource(gh<_i316.AppDatabase>()),
     );
+    gh.lazySingleton<_i731.HistoryLocalDataSource>(
+      () => _i731.HistoryLocalDataSourceImpl(gh<_i316.AppDatabase>()),
+    );
     gh.lazySingleton<_i593.ThemeLocalDataSource>(
       () => _i593.ThemeLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
@@ -96,6 +113,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1049.ProfileRepository>(
       () => _i102.ProfileRepositoryImpl(
         profileLocalDataSource: gh<_i146.ProfileLocalDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i427.HistoryRepository>(
+      () => _i878.HistoryRepositoryImpl(
+        historyLocalDataSource: gh<_i731.HistoryLocalDataSource>(),
       ),
     );
     gh.lazySingleton<_i37.ThemeRepository>(
@@ -122,6 +144,22 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i29.ThemeCubit(
         getThemeUseCase: gh<_i575.GetThemeUseCase>(),
         setThemeUseCase: gh<_i1061.SetThemeUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i471.DeleteHistoryUseCase>(
+      () => _i471.DeleteHistoryUseCase(gh<_i427.HistoryRepository>()),
+    );
+    gh.lazySingleton<_i876.FetchHistoryUseCase>(
+      () => _i876.FetchHistoryUseCase(gh<_i427.HistoryRepository>()),
+    );
+    gh.lazySingleton<_i1051.SaveHistoryUseCase>(
+      () => _i1051.SaveHistoryUseCase(gh<_i427.HistoryRepository>()),
+    );
+    gh.lazySingleton<_i61.HistoryCubit>(
+      () => _i61.HistoryCubit(
+        fetchHistoryUseCase: gh<_i876.FetchHistoryUseCase>(),
+        saveHistoryUseCase: gh<_i1051.SaveHistoryUseCase>(),
+        deleteHistoryUseCase: gh<_i471.DeleteHistoryUseCase>(),
       ),
     );
     gh.lazySingleton<_i504.ProfileCubit>(

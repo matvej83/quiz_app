@@ -11,11 +11,13 @@ class CompletedWidget extends StatefulWidget {
     required this.cup,
     required this.correctAnswers,
     required this.totalQuestions,
+    required this.onTap,
   });
 
   final String cup;
   final int correctAnswers;
   final int totalQuestions;
+  final VoidCallback onTap;
 
   @override
   State<CompletedWidget> createState() => _CompletedWidgetState();
@@ -72,6 +74,7 @@ class _CompletedWidgetState extends State<CompletedWidget> {
             ),
             ElevatedButton(
               onPressed: () {
+                widget.onTap();
                 if (context.canPop()) {
                   context.pop();
                 }

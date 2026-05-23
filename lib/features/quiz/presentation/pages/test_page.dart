@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/utils/extensions.dart';
+import 'package:quiz_app/features/history/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/completed_widget.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/page_wrapper.dart';
 
@@ -29,17 +30,17 @@ class TestPage extends StatelessWidget {
           cup: cup,
           correctAnswers: state.correctAnswers,
           totalQuestions: state.totalQuestions,
+          onTap: () {
+            context.read<HistoryCubit>().addHistoryItem(
+              testType: TestType.test,
+              correctAnswers: state.correctAnswers,
+              totalAnswers: state.totalQuestions,
+            );
+          },
         );
       },
       onLoaded: (state) {
         final current = state.words[state.currentIndex];
-        final answer = cubit.type == TranslationType.enRu
-            ? current.russianWord
-            : current.englishWord;
-        final tmp = [...state.additionalWords]..shuffle();
-        final additionalWords = tmp.take(3).toList();
-        additionalWords.add(answer);
-        additionalWords.shuffle();
         return Column(
           crossAxisAlignment: .center,
           mainAxisAlignment: .center,
@@ -77,13 +78,15 @@ class TestPage extends StatelessWidget {
               Text('Выбранный ответ: ${state.userAnswer}'),
               Text('Правильный ответ: ${current.answerFor(cubit.type)}'),
               ElevatedButton(
-                onPressed: cubit.nextQuestion,
+                onPressed: () {
+                  cubit.nextQuestion(loadAdditionalWords: true);
+                },
                 child: const Text('Далее'),
               ),
             ] else ...[
               Text('Выберите ответ:', style: theme.textTheme.bodyMedium),
               AnswersBlock(
-                words: additionalWords,
+                words: state.answers,
                 onSelected: (word) {
                   cubit.checkAnswer(word);
                 },

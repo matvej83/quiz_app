@@ -5,6 +5,8 @@ import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/completed_widget.dart';
 
 import '../../../../app/theme/app_semantic_colors.dart';
+import '../../../../enums/app_enums.dart';
+import '../../../history/presentation/cubit/cubit.dart';
 import '../bloc/quiz_cubit.dart';
 import '../widgets/page_wrapper.dart';
 import '../widgets/pronounce_button.dart';
@@ -27,6 +29,13 @@ class QuizPage extends StatelessWidget {
           cup: cup,
           correctAnswers: state.correctAnswers,
           totalQuestions: state.totalQuestions,
+          onTap: () {
+            context.read<HistoryCubit>().addHistoryItem(
+              testType: TestType.translate,
+              correctAnswers: state.correctAnswers,
+              totalAnswers: state.totalQuestions,
+            );
+          },
         );
       },
       onLoaded: (state) {

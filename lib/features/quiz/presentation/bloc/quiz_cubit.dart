@@ -25,6 +25,7 @@ class QuizCubit extends Cubit<QuizState> {
   }) async {
     try {
       List<String> additionalWords = [];
+      List<String> answers = [];
       this.type = type;
       await ttsService.setLanguage(
         type == TranslationType.enRu
@@ -36,6 +37,10 @@ class QuizCubit extends Cubit<QuizState> {
       if (loadAdditionalWords) {
         final list = await dataSource.getWords(10);
         additionalWords = getAdditionalWords(list);
+        answers = getAnswers(
+          current: words.first,
+          additionalWords: additionalWords,
+        );
       }
       if (words.isEmpty) {
         emit(const QuizCompleted(correctAnswers: 0, totalQuestions: 0));
@@ -44,6 +49,7 @@ class QuizCubit extends Cubit<QuizState> {
           QuizLoaded(
             words: words,
             additionalWords: additionalWords,
+            answers: answers,
             currentIndex: 0,
             answered: false,
             correct: false,
@@ -61,6 +67,18 @@ class QuizCubit extends Cubit<QuizState> {
     final shuffled = List<Word>.from(words)..shuffle();
 
     return shuffled.map((e) => e.answerFor(type)).toList();
+  }
+
+  List<String> getAnswers({
+    required Word current,
+    required List<String> additionalWords,
+  }) {
+    final answer = current.answerFor(type);
+    final tmp = [...additionalWords]..shuffle();
+    final answers = tmp.take(3).toList();
+    answers.add(answer);
+    answers.shuffle();
+    return answers;
   }
 
   void checkAnswer(String userAnswer) {
@@ -89,7 +107,7 @@ class QuizCubit extends Cubit<QuizState> {
     return AssetPaths.bronzeCup;
   }
 
-  void nextQuestion() {
+  void nextQuestion({bool loadAdditionalWords = false}) {
     if (state is! QuizLoaded) return;
     final loadedState = state as QuizLoaded;
     final nextIndex = loadedState.currentIndex + 1;
@@ -104,8 +122,17 @@ class QuizCubit extends Cubit<QuizState> {
         ),
       );
     } else {
+      List<String> answers = [];
+      if (loadAdditionalWords) {
+        final current = loadedState.words[nextIndex];
+        answers = getAnswers(
+          current: current,
+          additionalWords: loadedState.additionalWords,
+        );
+      }
       emit(
         loadedState.copyWith(
+          answers: answers,
           currentIndex: nextIndex,
           answered: false,
           userAnswer: '',
@@ -127,7 +154,7 @@ class QuizCubit extends Cubit<QuizState> {
       loadedState.copyWith(
         currentIndex: previousIndex,
         answered: false,
-        userAnswer: null,
+        userAnswer: '',
         correct: false,
       ),
     );

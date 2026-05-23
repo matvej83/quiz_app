@@ -337,15 +337,383 @@ class WordsCompanion extends UpdateCompanion<Word> {
   }
 }
 
+class $HistoryTableTable extends HistoryTable
+    with TableInfo<$HistoryTableTable, HistoryTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $HistoryTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<TestType, String> testType =
+      GeneratedColumn<String>(
+        'test_type',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<TestType>($HistoryTableTable.$convertertestType);
+  static const VerificationMeta _savedMeta = const VerificationMeta('saved');
+  @override
+  late final GeneratedColumn<DateTime> saved = GeneratedColumn<DateTime>(
+    'saved',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _correctAnswersMeta = const VerificationMeta(
+    'correctAnswers',
+  );
+  @override
+  late final GeneratedColumn<int> correctAnswers = GeneratedColumn<int>(
+    'correct_answers',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _totalAnswersMeta = const VerificationMeta(
+    'totalAnswers',
+  );
+  @override
+  late final GeneratedColumn<int> totalAnswers = GeneratedColumn<int>(
+    'total_answers',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    testType,
+    saved,
+    correctAnswers,
+    totalAnswers,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'history_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<HistoryTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('saved')) {
+      context.handle(
+        _savedMeta,
+        saved.isAcceptableOrUnknown(data['saved']!, _savedMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_savedMeta);
+    }
+    if (data.containsKey('correct_answers')) {
+      context.handle(
+        _correctAnswersMeta,
+        correctAnswers.isAcceptableOrUnknown(
+          data['correct_answers']!,
+          _correctAnswersMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_correctAnswersMeta);
+    }
+    if (data.containsKey('total_answers')) {
+      context.handle(
+        _totalAnswersMeta,
+        totalAnswers.isAcceptableOrUnknown(
+          data['total_answers']!,
+          _totalAnswersMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_totalAnswersMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  HistoryTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return HistoryTableData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      testType: $HistoryTableTable.$convertertestType.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}test_type'],
+        )!,
+      ),
+      saved: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}saved'],
+      )!,
+      correctAnswers: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}correct_answers'],
+      )!,
+      totalAnswers: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_answers'],
+      )!,
+    );
+  }
+
+  @override
+  $HistoryTableTable createAlias(String alias) {
+    return $HistoryTableTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<TestType, String, String> $convertertestType =
+      const EnumNameConverter<TestType>(TestType.values);
+}
+
+class HistoryTableData extends DataClass
+    implements Insertable<HistoryTableData> {
+  final int id;
+  final TestType testType;
+  final DateTime saved;
+  final int correctAnswers;
+  final int totalAnswers;
+  const HistoryTableData({
+    required this.id,
+    required this.testType,
+    required this.saved,
+    required this.correctAnswers,
+    required this.totalAnswers,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    {
+      map['test_type'] = Variable<String>(
+        $HistoryTableTable.$convertertestType.toSql(testType),
+      );
+    }
+    map['saved'] = Variable<DateTime>(saved);
+    map['correct_answers'] = Variable<int>(correctAnswers);
+    map['total_answers'] = Variable<int>(totalAnswers);
+    return map;
+  }
+
+  HistoryTableCompanion toCompanion(bool nullToAbsent) {
+    return HistoryTableCompanion(
+      id: Value(id),
+      testType: Value(testType),
+      saved: Value(saved),
+      correctAnswers: Value(correctAnswers),
+      totalAnswers: Value(totalAnswers),
+    );
+  }
+
+  factory HistoryTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return HistoryTableData(
+      id: serializer.fromJson<int>(json['id']),
+      testType: $HistoryTableTable.$convertertestType.fromJson(
+        serializer.fromJson<String>(json['testType']),
+      ),
+      saved: serializer.fromJson<DateTime>(json['saved']),
+      correctAnswers: serializer.fromJson<int>(json['correctAnswers']),
+      totalAnswers: serializer.fromJson<int>(json['totalAnswers']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'testType': serializer.toJson<String>(
+        $HistoryTableTable.$convertertestType.toJson(testType),
+      ),
+      'saved': serializer.toJson<DateTime>(saved),
+      'correctAnswers': serializer.toJson<int>(correctAnswers),
+      'totalAnswers': serializer.toJson<int>(totalAnswers),
+    };
+  }
+
+  HistoryTableData copyWith({
+    int? id,
+    TestType? testType,
+    DateTime? saved,
+    int? correctAnswers,
+    int? totalAnswers,
+  }) => HistoryTableData(
+    id: id ?? this.id,
+    testType: testType ?? this.testType,
+    saved: saved ?? this.saved,
+    correctAnswers: correctAnswers ?? this.correctAnswers,
+    totalAnswers: totalAnswers ?? this.totalAnswers,
+  );
+  HistoryTableData copyWithCompanion(HistoryTableCompanion data) {
+    return HistoryTableData(
+      id: data.id.present ? data.id.value : this.id,
+      testType: data.testType.present ? data.testType.value : this.testType,
+      saved: data.saved.present ? data.saved.value : this.saved,
+      correctAnswers: data.correctAnswers.present
+          ? data.correctAnswers.value
+          : this.correctAnswers,
+      totalAnswers: data.totalAnswers.present
+          ? data.totalAnswers.value
+          : this.totalAnswers,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HistoryTableData(')
+          ..write('id: $id, ')
+          ..write('testType: $testType, ')
+          ..write('saved: $saved, ')
+          ..write('correctAnswers: $correctAnswers, ')
+          ..write('totalAnswers: $totalAnswers')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, testType, saved, correctAnswers, totalAnswers);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is HistoryTableData &&
+          other.id == this.id &&
+          other.testType == this.testType &&
+          other.saved == this.saved &&
+          other.correctAnswers == this.correctAnswers &&
+          other.totalAnswers == this.totalAnswers);
+}
+
+class HistoryTableCompanion extends UpdateCompanion<HistoryTableData> {
+  final Value<int> id;
+  final Value<TestType> testType;
+  final Value<DateTime> saved;
+  final Value<int> correctAnswers;
+  final Value<int> totalAnswers;
+  const HistoryTableCompanion({
+    this.id = const Value.absent(),
+    this.testType = const Value.absent(),
+    this.saved = const Value.absent(),
+    this.correctAnswers = const Value.absent(),
+    this.totalAnswers = const Value.absent(),
+  });
+  HistoryTableCompanion.insert({
+    this.id = const Value.absent(),
+    required TestType testType,
+    required DateTime saved,
+    required int correctAnswers,
+    required int totalAnswers,
+  }) : testType = Value(testType),
+       saved = Value(saved),
+       correctAnswers = Value(correctAnswers),
+       totalAnswers = Value(totalAnswers);
+  static Insertable<HistoryTableData> custom({
+    Expression<int>? id,
+    Expression<String>? testType,
+    Expression<DateTime>? saved,
+    Expression<int>? correctAnswers,
+    Expression<int>? totalAnswers,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (testType != null) 'test_type': testType,
+      if (saved != null) 'saved': saved,
+      if (correctAnswers != null) 'correct_answers': correctAnswers,
+      if (totalAnswers != null) 'total_answers': totalAnswers,
+    });
+  }
+
+  HistoryTableCompanion copyWith({
+    Value<int>? id,
+    Value<TestType>? testType,
+    Value<DateTime>? saved,
+    Value<int>? correctAnswers,
+    Value<int>? totalAnswers,
+  }) {
+    return HistoryTableCompanion(
+      id: id ?? this.id,
+      testType: testType ?? this.testType,
+      saved: saved ?? this.saved,
+      correctAnswers: correctAnswers ?? this.correctAnswers,
+      totalAnswers: totalAnswers ?? this.totalAnswers,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (testType.present) {
+      map['test_type'] = Variable<String>(
+        $HistoryTableTable.$convertertestType.toSql(testType.value),
+      );
+    }
+    if (saved.present) {
+      map['saved'] = Variable<DateTime>(saved.value);
+    }
+    if (correctAnswers.present) {
+      map['correct_answers'] = Variable<int>(correctAnswers.value);
+    }
+    if (totalAnswers.present) {
+      map['total_answers'] = Variable<int>(totalAnswers.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HistoryTableCompanion(')
+          ..write('id: $id, ')
+          ..write('testType: $testType, ')
+          ..write('saved: $saved, ')
+          ..write('correctAnswers: $correctAnswers, ')
+          ..write('totalAnswers: $totalAnswers')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $WordsTable words = $WordsTable(this);
+  late final $HistoryTableTable historyTable = $HistoryTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [words];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [words, historyTable];
 }
 
 typedef $$WordsTableCreateCompanionBuilder =
@@ -528,10 +896,211 @@ typedef $$WordsTableProcessedTableManager =
       Word,
       PrefetchHooks Function()
     >;
+typedef $$HistoryTableTableCreateCompanionBuilder =
+    HistoryTableCompanion Function({
+      Value<int> id,
+      required TestType testType,
+      required DateTime saved,
+      required int correctAnswers,
+      required int totalAnswers,
+    });
+typedef $$HistoryTableTableUpdateCompanionBuilder =
+    HistoryTableCompanion Function({
+      Value<int> id,
+      Value<TestType> testType,
+      Value<DateTime> saved,
+      Value<int> correctAnswers,
+      Value<int> totalAnswers,
+    });
+
+class $$HistoryTableTableFilterComposer
+    extends Composer<_$AppDatabase, $HistoryTableTable> {
+  $$HistoryTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<TestType, TestType, String> get testType =>
+      $composableBuilder(
+        column: $table.testType,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
+
+  ColumnFilters<DateTime> get saved => $composableBuilder(
+    column: $table.saved,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get correctAnswers => $composableBuilder(
+    column: $table.correctAnswers,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalAnswers => $composableBuilder(
+    column: $table.totalAnswers,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$HistoryTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $HistoryTableTable> {
+  $$HistoryTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get testType => $composableBuilder(
+    column: $table.testType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get saved => $composableBuilder(
+    column: $table.saved,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get correctAnswers => $composableBuilder(
+    column: $table.correctAnswers,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get totalAnswers => $composableBuilder(
+    column: $table.totalAnswers,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$HistoryTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $HistoryTableTable> {
+  $$HistoryTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<TestType, String> get testType =>
+      $composableBuilder(column: $table.testType, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get saved =>
+      $composableBuilder(column: $table.saved, builder: (column) => column);
+
+  GeneratedColumn<int> get correctAnswers => $composableBuilder(
+    column: $table.correctAnswers,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get totalAnswers => $composableBuilder(
+    column: $table.totalAnswers,
+    builder: (column) => column,
+  );
+}
+
+class $$HistoryTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $HistoryTableTable,
+          HistoryTableData,
+          $$HistoryTableTableFilterComposer,
+          $$HistoryTableTableOrderingComposer,
+          $$HistoryTableTableAnnotationComposer,
+          $$HistoryTableTableCreateCompanionBuilder,
+          $$HistoryTableTableUpdateCompanionBuilder,
+          (
+            HistoryTableData,
+            BaseReferences<_$AppDatabase, $HistoryTableTable, HistoryTableData>,
+          ),
+          HistoryTableData,
+          PrefetchHooks Function()
+        > {
+  $$HistoryTableTableTableManager(_$AppDatabase db, $HistoryTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$HistoryTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$HistoryTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$HistoryTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<TestType> testType = const Value.absent(),
+                Value<DateTime> saved = const Value.absent(),
+                Value<int> correctAnswers = const Value.absent(),
+                Value<int> totalAnswers = const Value.absent(),
+              }) => HistoryTableCompanion(
+                id: id,
+                testType: testType,
+                saved: saved,
+                correctAnswers: correctAnswers,
+                totalAnswers: totalAnswers,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required TestType testType,
+                required DateTime saved,
+                required int correctAnswers,
+                required int totalAnswers,
+              }) => HistoryTableCompanion.insert(
+                id: id,
+                testType: testType,
+                saved: saved,
+                correctAnswers: correctAnswers,
+                totalAnswers: totalAnswers,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$HistoryTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $HistoryTableTable,
+      HistoryTableData,
+      $$HistoryTableTableFilterComposer,
+      $$HistoryTableTableOrderingComposer,
+      $$HistoryTableTableAnnotationComposer,
+      $$HistoryTableTableCreateCompanionBuilder,
+      $$HistoryTableTableUpdateCompanionBuilder,
+      (
+        HistoryTableData,
+        BaseReferences<_$AppDatabase, $HistoryTableTable, HistoryTableData>,
+      ),
+      HistoryTableData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
   $$WordsTableTableManager get words =>
       $$WordsTableTableManager(_db, _db.words);
+  $$HistoryTableTableTableManager get historyTable =>
+      $$HistoryTableTableTableManager(_db, _db.historyTable);
 }
