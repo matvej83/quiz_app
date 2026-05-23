@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quiz_app/app/constants/app_constants.dart';
 import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/page_wrapper.dart';
 
-import '../../../../app/constants/app_constants.dart';
 import '../../../../app/theme/app_semantic_colors.dart';
 import '../../../../core/presentation/widgets/smooth_flip_card.dart';
 import '../../../../enums/app_enums.dart';
 import '../../../history/presentation/cubit/cubit.dart';
 import '../bloc/quiz_cubit.dart';
-import '../widgets/pronounce_button.dart';
+import '../widgets/word_with_pronounce.dart';
 
 class FlashcardsPage extends StatelessWidget {
   const FlashcardsPage({super.key});
@@ -74,19 +74,11 @@ class FlashcardsPage extends StatelessWidget {
                           spacing: 8.0,
                           mainAxisAlignment: .center,
                           children: [
-                            Text(
-                              current.questionFor(cubit.type),
-                              style: theme.textTheme.headlineLarge,
-                            ),
-                            PronounceButton(
-                              onTap: () {
-                                cubit.pronounceWord(
-                                  current.questionFor(cubit.type),
-                                  language: cubit.type == TranslationType.enRu
-                                      ? AppConstants.enLocale
-                                      : AppConstants.ruLocale,
-                                );
-                              },
+                            WordWithPronounce(
+                              word: current.questionFor(cubit.type),
+                              language: cubit.type == TranslationType.enRu
+                                  ? AppConstants.enLocale
+                                  : AppConstants.ruLocale,
                             ),
                           ],
                         ),
@@ -110,19 +102,11 @@ class FlashcardsPage extends StatelessWidget {
                           spacing: 8.0,
                           mainAxisAlignment: .center,
                           children: [
-                            Text(
-                              current.answerFor(cubit.type),
-                              style: theme.textTheme.headlineLarge,
-                            ),
-                            PronounceButton(
-                              onTap: () {
-                                cubit.pronounceWord(
-                                  current.answerFor(cubit.type),
-                                  language: cubit.type == TranslationType.enRu
-                                      ? AppConstants.ruLocale
-                                      : AppConstants.enLocale,
-                                );
-                              },
+                            WordWithPronounce(
+                              word: current.answerFor(cubit.type),
+                              language: cubit.type == TranslationType.enRu
+                                  ? AppConstants.ruLocale
+                                  : AppConstants.enLocale,
                             ),
                           ],
                         ),

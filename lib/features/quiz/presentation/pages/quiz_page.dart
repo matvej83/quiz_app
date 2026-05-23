@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz_app/app/constants/app_constants.dart';
 import 'package:quiz_app/core/presentation/widgets/app_text_form_field.dart';
 import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/completed_widget.dart';
+import 'package:quiz_app/features/quiz/presentation/widgets/answer_result.dart';
+import 'package:quiz_app/features/quiz/presentation/widgets/word_with_pronounce.dart';
 
-import '../../../../app/theme/app_semantic_colors.dart';
 import '../../../../enums/app_enums.dart';
 import '../../../history/presentation/cubit/cubit.dart';
 import '../bloc/quiz_cubit.dart';
 import '../widgets/page_wrapper.dart';
-import '../widgets/pronounce_button.dart';
 
 class QuizPage extends StatelessWidget {
   const QuizPage({super.key});
@@ -47,20 +48,11 @@ class QuizPage extends StatelessWidget {
             mainAxisAlignment: .center,
             spacing: 16.0,
             children: [
-              Row(
-                spacing: 8.0,
-                mainAxisAlignment: .center,
-                children: [
-                  Text(
-                    current.questionFor(cubit.type),
-                    style: theme.textTheme.headlineLarge,
-                  ),
-                  PronounceButton(
-                    onTap: () {
-                      cubit.pronounceWord(current.questionFor(cubit.type));
-                    },
-                  ),
-                ],
+              WordWithPronounce(
+                word: current.questionFor(cubit.type),
+                language: cubit.type == TranslationType.enRu
+                    ? AppConstants.enLocale
+                    : AppConstants.ruLocale,
               ),
               AppTextFormField(
                 enabled: !state.answered,
@@ -76,14 +68,7 @@ class QuizPage extends StatelessWidget {
                   child: const Text('Проверить'),
                 ),
               if (state.answered) ...[
-                Text(
-                  state.correct ? 'Правильно' : 'Неправильно',
-                  style: TextStyle(
-                    color: state.correct
-                        ? theme.extension<AppSemanticColors>()!.success
-                        : theme.colorScheme.error,
-                  ),
-                ),
+                AnswerResult(isCorrect: state.correct),
                 Text('Правильный ответ: ${current.answerFor(cubit.type)}'),
                 ElevatedButton(
                   onPressed: cubit.nextQuestion,
