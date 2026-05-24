@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/features/quiz/presentation/bloc/quiz_cubit.dart';
@@ -21,7 +22,14 @@ class WordWithPronounce extends StatelessWidget {
       spacing: 8.0,
       mainAxisAlignment: .center,
       children: [
-        Text(word, style: theme.textTheme.headlineLarge),
+        Flexible(
+          child: AutoSizeText(
+            word,
+            style: theme.textTheme.headlineLarge,
+            minFontSize: 10.0,
+            maxLines: 2,
+          ),
+        ),
         PronounceButton(
           onTap: () {
             cubit.pronounceWord(word, language: language);
