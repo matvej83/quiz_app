@@ -10,7 +10,7 @@ import '../../../../core/presentation/widgets/smooth_flip_card.dart';
 import '../../../../enums/app_enums.dart';
 import '../../../history/presentation/cubit/cubit.dart';
 import '../bloc/quiz_cubit.dart';
-import '../widgets/word_with_pronounce.dart';
+import '../widgets/flash_card.dart';
 
 class FlashcardsPage extends StatelessWidget {
   const FlashcardsPage({super.key});
@@ -59,59 +59,21 @@ class FlashcardsPage extends StatelessWidget {
             children: [
               SmoothFlipCard(
                 front: (flip) {
-                  return GestureDetector(
-                    onTap: flip,
-                    child: AspectRatio(
-                      aspectRatio: 2.0,
-                      child: Card(
-                        elevation: 4,
-                        color: theme
-                            .inputDecorationTheme
-                            .disabledBorder
-                            ?.borderSide
-                            .color,
-                        child: Row(
-                          spacing: 8.0,
-                          mainAxisAlignment: .center,
-                          children: [
-                            WordWithPronounce(
-                              word: current.questionFor(cubit.type),
-                              language: cubit.type == TranslationType.enRu
-                                  ? AppConstants.enLocale
-                                  : AppConstants.ruLocale,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  return FlashCard(
+                    flip: flip,
+                    word: current.questionFor(cubit.type),
+                    language: cubit.type == TranslationType.enRu
+                        ? AppConstants.enLocale
+                        : AppConstants.ruLocale,
                   );
                 },
                 back: (flip) {
-                  return GestureDetector(
-                    onTap: flip,
-                    child: AspectRatio(
-                      aspectRatio: 2.0,
-                      child: Card(
-                        elevation: 4,
-                        color: theme
-                            .inputDecorationTheme
-                            .disabledBorder
-                            ?.borderSide
-                            .color,
-                        child: Row(
-                          spacing: 8.0,
-                          mainAxisAlignment: .center,
-                          children: [
-                            WordWithPronounce(
-                              word: current.answerFor(cubit.type),
-                              language: cubit.type == TranslationType.enRu
-                                  ? AppConstants.ruLocale
-                                  : AppConstants.enLocale,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  return FlashCard(
+                    flip: flip,
+                    word: current.answerFor(cubit.type),
+                    language: cubit.type == TranslationType.enRu
+                        ? AppConstants.ruLocale
+                        : AppConstants.enLocale,
                   );
                 },
               ),
