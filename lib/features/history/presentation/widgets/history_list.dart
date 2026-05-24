@@ -13,7 +13,9 @@ class HistoryList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HistoryCubit, HistoryState>(
       builder: (context, state) {
-        return state.history.isEmpty
+        return state.isLoading
+            ? const Center(child: CircularProgressIndicator.adaptive())
+            : state.history.isEmpty
             ? const Center(child: Text('Нет данных для отображения'))
             : ListView.separated(
                 itemCount: state.history.length,
