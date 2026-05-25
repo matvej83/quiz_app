@@ -37,7 +37,18 @@ class HistoryCubit extends Cubit<HistoryState> {
         );
       },
       (r) {
-        emit(state.copyWith(history: r, isLoading: false, initialized: true));
+        List<DateTime> trainingDays = [];
+        for (var e in r) {
+          trainingDays.add(e.saved);
+        }
+        emit(
+          state.copyWith(
+            history: r,
+            trainingDays: trainingDays,
+            isLoading: false,
+            initialized: true,
+          ),
+        );
       },
     );
   }

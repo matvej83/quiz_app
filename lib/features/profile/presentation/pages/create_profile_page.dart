@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quiz_app/app/constants/app_constants.dart';
 import 'package:quiz_app/app/router/app_routes.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/state.dart';
@@ -47,7 +47,10 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Создать профиль'), centerTitle: true),
+      appBar: AppBar(
+        title: Text('createProfilePage.screenName'.tr()),
+        centerTitle: true,
+      ),
       resizeToAvoidBottomInset: true,
       body: BlocConsumer<ProfileCubit, ProfileState>(
         builder: (context, state) {
@@ -71,10 +74,10 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                       controller: _firstNameController,
                       enabled: !isLoading,
                       keyboardType: .name,
-                      hintText: 'Имя',
+                      hintText: 'createProfilePage.fieldFirstName'.tr(),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppConstants.fieldIsRequired;
+                          return 'fieldValidation.fieldIsRequired'.tr();
                         }
                         return null;
                       },
@@ -83,10 +86,10 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                       controller: _lastNameController,
                       enabled: !isLoading,
                       keyboardType: .name,
-                      hintText: 'Фамилия',
+                      hintText: 'createProfilePage.fieldLastName'.tr(),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppConstants.fieldIsRequired;
+                          return 'fieldValidation.fieldIsRequired'.tr();
                         }
                         return null;
                       },
@@ -101,7 +104,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                                 strokeWidth: 2.0,
                               ),
                             )
-                          : const Text('Создать аккаунт'),
+                          : Text('createProfilePage.btnCreate'.tr()),
                     ),
                   ],
                 ),

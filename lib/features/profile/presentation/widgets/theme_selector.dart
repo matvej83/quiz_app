@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,13 +41,19 @@ class _ThemeSelectorState extends State<ThemeSelector> {
       entries: <DropdownMenuEntry<AppThemeMode>>[
         DropdownMenuEntry<AppThemeMode>(
           value: AppThemeMode.dark,
-          label: 'Темная тема',
-          labelWidget: Text('Темная тема', style: textTheme.bodyMedium),
+          label: 'profilePage.themeDark'.tr(),
+          labelWidget: Text(
+            'profilePage.themeDark'.tr(),
+            style: textTheme.bodyMedium,
+          ),
         ),
         DropdownMenuEntry<AppThemeMode>(
           value: AppThemeMode.light,
-          label: 'Светлая тема',
-          labelWidget: Text('Светлая тема', style: textTheme.bodyMedium),
+          label: 'profilePage.themeLight'.tr(),
+          labelWidget: Text(
+            'profilePage.themeLight'.tr(),
+            style: textTheme.bodyMedium,
+          ),
         ),
       ],
     );

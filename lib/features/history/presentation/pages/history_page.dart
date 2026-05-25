@@ -1,8 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quiz_app/core/presentation/widgets/app_dialog.dart';
+import 'package:quiz_app/core/presentation/widgets/calendar.dart';
 import 'package:quiz_app/features/history/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/history/presentation/widgets/history_list.dart';
+
+import '../cubit/state.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -20,9 +25,10 @@ class _HistoryPageState extends State<HistoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('История'),
+        title: Text('historyPage.screenName'.tr()),
         centerTitle: true,
         leading: BackButton(
           style: IconButton.styleFrom(backgroundColor: Colors.transparent),
@@ -32,6 +38,31 @@ class _HistoryPageState extends State<HistoryPage> {
             }
           },
         ),
+        actions: [
+          BlocBuilder<HistoryCubit, HistoryState>(
+            builder: (context, state) {
+              return IconButton(
+                style: IconButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                ),
+                onPressed: () {
+                  AppDialog.empty(
+                    context,
+                    content: Container(
+                      margin: const .all(16.0),
+                      constraints: BoxConstraints(
+                        maxHeight: screenSize.height * 0.9,
+                        maxWidth: screenSize.width - 32.0,
+                      ),
+                      child: AppCalendar(specialDays: state.trainingDays),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.calendar_month),
+              );
+            },
+          ),
+        ],
       ),
       body: const HistoryList(),
     );

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,7 +31,7 @@ class TestsPage extends StatelessWidget {
               mainAxisSize: .min,
               spacing: 4.0,
               children: [
-                Text('Перевод слов', style: textStyle),
+                Text('testsPage.translate'.tr(), style: textStyle),
                 SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
                 SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
               ],
@@ -45,7 +46,7 @@ class TestsPage extends StatelessWidget {
               mainAxisSize: .min,
               spacing: 4.0,
               children: [
-                Text('Перевод слов', style: textStyle),
+                Text('testsPage.translate'.tr(), style: textStyle),
                 SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
                 SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
               ],
@@ -60,7 +61,7 @@ class TestsPage extends StatelessWidget {
               mainAxisSize: .min,
               spacing: 4.0,
               children: [
-                Text('Карточки', style: textStyle),
+                Text('testsPage.flashcards'.tr(), style: textStyle),
                 SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
                 SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
               ],
@@ -75,7 +76,7 @@ class TestsPage extends StatelessWidget {
               mainAxisSize: .min,
               spacing: 4.0,
               children: [
-                Text('Карточки', style: textStyle),
+                Text('testsPage.flashcards'.tr(), style: textStyle),
                 SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
                 SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
               ],
@@ -93,7 +94,7 @@ class TestsPage extends StatelessWidget {
               mainAxisSize: .min,
               spacing: 4.0,
               children: [
-                Text('Тест', style: textStyle),
+                Text('testsPage.test'.tr(), style: textStyle),
                 SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
                 SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
               ],
@@ -111,7 +112,7 @@ class TestsPage extends StatelessWidget {
               mainAxisSize: .min,
               spacing: 4.0,
               children: [
-                Text('Тест', style: textStyle),
+                Text('testsPage.test'.tr(), style: textStyle),
                 SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
                 SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
               ],

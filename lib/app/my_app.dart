@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/app/router/app_router.dart';
@@ -36,6 +37,9 @@ class _MyAppState extends State<MyApp> {
             routerConfig: appRouter.router,
             debugShowCheckedModeBanner: false,
             theme: state.theme,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
           );
         },
       ),
