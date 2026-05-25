@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quiz_app/app/router/app_routes.dart';
@@ -7,18 +8,18 @@ class MainScreenUtils {
     final location = GoRouterState.of(context).uri;
     if (location.pathSegments.length == 2) {
       if (location.pathSegments.last == AppRoutes.translate) {
-        return 'Перевод';
+        return 'testsPage.translate'.tr();
       }
       if (location.pathSegments.last == AppRoutes.flashcards) {
-        return 'Карточки';
+        return 'testsPage.flashcards'.tr();
       }
       if (location.pathSegments.last == AppRoutes.test) {
         return 'Тест';
       }
     }
     return switch (location.toString()) {
-      AppRoutes.tests => 'Тесты',
-      AppRoutes.profile => 'Профиль',
+      AppRoutes.tests => 'testsPage.screenName'.tr(),
+      AppRoutes.profile => 'profilePage.screenName'.tr(),
       _ => '',
     };
   }

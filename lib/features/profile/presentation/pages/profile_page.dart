@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -70,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   context.push(AppRoutes.history);
                 },
-                child: const Text('История'),
+                child: Text('historyPage.screenName'.tr()),
               ),
               TextButton(
                 style: TextButton.styleFrom(
@@ -79,18 +80,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () async {
                   final result = await AppDialog.show(
                     context,
-                    title: 'Удаление профиля',
-                    text:
-                        'Вы действительно хотите удалить профиль? Это действие необратимо и удалит все данные пользователя',
-                    cancelText: 'Отмена',
-                    okText: 'ОК',
+                    title: 'profilePage.btnRemove'.tr(),
+                    text: 'profilePage.youWantRemove'.tr(),
+                    cancelText: 'cancelText'.tr(),
+                    okText: 'okText'.tr(),
                   );
                   if (result) {
                     historyCubit.deleteHistory();
                     cubit.deleteProfile();
                   }
                 },
-                child: const Text('Удалить профиль'),
+                child: Text('profilePage.btnRemoveProfile'.tr()),
               ),
             ],
           ),

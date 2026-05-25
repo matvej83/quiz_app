@@ -5,6 +5,7 @@ import '../../domain/entity/history_entity.dart';
 class HistoryState extends Equatable {
   const HistoryState({
     this.history = const [],
+    this.trainingDays = const [],
     this.error,
     this.isLoading = false,
     this.success = false,
@@ -12,6 +13,7 @@ class HistoryState extends Equatable {
   });
 
   final List<HistoryEntity> history;
+  final List<DateTime> trainingDays;
   final String? error;
   final bool isLoading;
   final bool success;
@@ -19,6 +21,7 @@ class HistoryState extends Equatable {
 
   HistoryState copyWith({
     List<HistoryEntity>? history,
+    List<DateTime>? trainingDays,
     String? error,
     bool? isLoading,
     bool? success,
@@ -26,6 +29,7 @@ class HistoryState extends Equatable {
   }) {
     return HistoryState(
       history: history ?? this.history,
+      trainingDays: trainingDays ?? this.trainingDays,
       error: error ?? this.error,
       isLoading: isLoading ?? this.isLoading,
       success: success ?? this.success,
@@ -34,5 +38,12 @@ class HistoryState extends Equatable {
   }
 
   @override
-  List<dynamic> get props => [history, error, isLoading, success, initialized];
+  List<dynamic> get props => [
+    history,
+    trainingDays,
+    error,
+    isLoading,
+    success,
+    initialized,
+  ];
 }

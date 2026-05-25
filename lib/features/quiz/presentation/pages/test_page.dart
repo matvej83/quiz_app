@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/app/constants/app_constants.dart';
@@ -54,16 +55,21 @@ class TestPage extends StatelessWidget {
             ),
             if (state.answered) ...[
               AnswerResult(isCorrect: state.correct),
-              Text('Выбранный ответ: ${state.userAnswer}'),
-              Text('Правильный ответ: ${current.answerFor(cubit.type)}'),
+              Text('${'testPage.selectedAnswer'.tr()}: ${state.userAnswer}'),
+              Text(
+                '${'quizPage.correctAnswer'.tr()}: ${current.answerFor(cubit.type)}',
+              ),
               ElevatedButton(
                 onPressed: () {
                   cubit.nextQuestion(loadAdditionalWords: true);
                 },
-                child: const Text('Далее'),
+                child: Text('quizPage.next'.tr()),
               ),
             ] else ...[
-              Text('Выберите ответ:', style: theme.textTheme.bodyMedium),
+              Text(
+                '${'testPage.selectAnswer'.tr()}:',
+                style: theme.textTheme.bodyMedium,
+              ),
               AnswersBlock(
                 words: state.answers,
                 onSelected: (word) {

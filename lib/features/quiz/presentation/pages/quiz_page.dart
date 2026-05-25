@@ -1,10 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/app/constants/app_constants.dart';
 import 'package:quiz_app/core/presentation/widgets/app_text_form_field.dart';
 import 'package:quiz_app/core/utils/extensions.dart';
-import 'package:quiz_app/features/quiz/presentation/widgets/completed_widget.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/answer_result.dart';
+import 'package:quiz_app/features/quiz/presentation/widgets/completed_widget.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/word_with_pronounce.dart';
 
 import '../../../../enums/app_enums.dart';
@@ -58,21 +59,25 @@ class QuizPage extends StatelessWidget {
                 enabled: !state.answered,
                 controller: controller,
                 keyboardType: .text,
-                decoration: const InputDecoration(hintText: 'Введите перевод'),
+                decoration: InputDecoration(
+                  hintText: 'quizPage.inputTranslation'.tr(),
+                ),
               ),
               if (!state.answered)
                 ElevatedButton(
                   onPressed: () {
                     cubit.checkAnswer(controller.text);
                   },
-                  child: const Text('Проверить'),
+                  child: Text('quizPage.check'.tr()),
                 ),
               if (state.answered) ...[
                 AnswerResult(isCorrect: state.correct),
-                Text('Правильный ответ: ${current.answerFor(cubit.type)}'),
+                Text(
+                  '${'quizPage.correctAnswer'.tr()}: ${current.answerFor(cubit.type)}',
+                ),
                 ElevatedButton(
                   onPressed: cubit.nextQuestion,
-                  child: const Text('Далее'),
+                  child: Text('quizPage.next'.tr()),
                 ),
               ],
             ],

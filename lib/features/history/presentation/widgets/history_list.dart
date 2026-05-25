@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:quiz_app/core/presentation/widgets/app_loader.dart';
 
 import '../../domain/entity/history_entity.dart';
 import '../cubit/cubit.dart';
@@ -11,12 +12,13 @@ class HistoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.locale;
     return BlocBuilder<HistoryCubit, HistoryState>(
       builder: (context, state) {
         return state.isLoading
-            ? const Center(child: CircularProgressIndicator.adaptive())
+            ? const AppLoader()
             : state.history.isEmpty
-            ? const Center(child: Text('Нет данных для отображения'))
+            ? Center(child: Text('errors.noData'.tr()))
             : ListView.separated(
                 itemCount: state.history.length,
                 physics: const ClampingScrollPhysics(),
@@ -25,11 +27,13 @@ class HistoryList extends StatelessWidget {
                   final item = state.history[index];
                   final currentDate = DateFormat(
                     'yyyy.MM.dd',
+                    locale.languageCode,
                   ).format(item.saved);
 
                   final previousDate = index > 0
                       ? DateFormat(
                           'yyyy.MM.dd',
+                          locale.languageCode,
                         ).format(state.history[index - 1].saved)
                       : null;
 
@@ -69,9 +73,18 @@ class HistoryItem extends StatelessWidget {
           spacing: 8.0,
           crossAxisAlignment: .start,
           children: [
-            Text('Тип теста: ${history.testType.name}', style: style),
-            Text('Количество вопросов: ${history.totalAnswers}', style: style),
-            Text('Правильных ответов: ${history.correctAnswers}', style: style),
+            Text(
+              '${'historyPage.testType'.tr()}: ${history.testType.name}',
+              style: style,
+            ),
+            Text(
+              '${'historyPage.questionCount'.tr()}: ${history.totalAnswers}',
+              style: style,
+            ),
+            Text(
+              '${'historyPage.correctAnswers'.tr()}: ${history.correctAnswers}',
+              style: style,
+            ),
             Text(time, style: theme.textTheme.bodySmall),
           ],
         ),

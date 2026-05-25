@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz_app/core/presentation/widgets/app_loader.dart';
 
 import '../bloc/quiz_cubit.dart';
 import '../bloc/quiz_state.dart';
@@ -23,7 +24,7 @@ class PageWrapper extends StatelessWidget {
       child: BlocBuilder<QuizCubit, QuizState>(
         builder: (context, state) {
           if (state is QuizLoading) {
-            return const Center(child: CircularProgressIndicator.adaptive());
+            return const AppLoader();
           }
           if (state is QuizCompleted) {
             return onCompleted(state);

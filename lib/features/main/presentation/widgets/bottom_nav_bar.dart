@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -15,11 +16,14 @@ class BottomNavBar extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentPage,
       onTap: onItemTap,
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Старт'),
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle),
-          label: 'Профиль',
+          icon: const Icon(Icons.home_filled),
+          label: 'bottomNavBar.homeTab'.tr(),
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(Icons.account_circle),
+          label: 'bottomNavBar.profileTab'.tr(),
         ),
       ],
     );

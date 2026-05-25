@@ -45,4 +45,11 @@ class AppDialog {
 
     return result ?? false;
   }
+
+  static Future empty(BuildContext context, {required Widget content}) {
+    return showDialog(
+      context: context,
+      builder: (context) => Dialog(child: content),
+    );
+  }
 }

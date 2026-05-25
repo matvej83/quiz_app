@@ -1,13 +1,13 @@
-import 'package:quiz_app/app/constants/app_constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:quiz_app/core/error/failure.dart';
 
 class AppUtils {
   static String? parseFailureMessage(Failure failure) {
     if (failure is CacheFailure) {
-      return AppConstants.cacheError;
+      return 'errors.cacheError'.tr();
     }
     if (failure is CacheFailure) {
-      return AppConstants.assetError;
+      return 'errors.assetError'.tr();
     }
     if (failure is UnknownFailure) {
       return failure.message;

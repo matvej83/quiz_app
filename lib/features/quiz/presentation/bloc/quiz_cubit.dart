@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:quiz_app/app/constants/asset_paths.dart';
@@ -59,7 +60,7 @@ class QuizCubit extends Cubit<QuizState> {
       }
     } catch (e, st) {
       log(st.toString());
-      emit(QuizError('Failed to load words: $e'));
+      emit(QuizError('${'errors.noWords'.tr()}: $e'));
     }
   }
 

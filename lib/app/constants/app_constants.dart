@@ -6,9 +6,4 @@ class AppConstants {
   /// locales
   static const enLocale = 'en-US';
   static const ruLocale = 'ru-Ru';
-
-  /// errors
-  static const cacheError = 'Ошибка чтения данных с устройства';
-  static const assetError = 'Ошибка чтения из базы данных';
-  static const fieldIsRequired = 'Это поле обязательно!';
 }

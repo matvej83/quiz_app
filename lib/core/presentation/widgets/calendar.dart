@@ -1,0 +1,177 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+
+class AppCalendar extends StatefulWidget {
+  const AppCalendar({super.key, this.specialDays = const []});
+
+  final List<DateTime> specialDays;
+
+  @override
+  State<AppCalendar> createState() => _AppCalendarState();
+}
+
+class _AppCalendarState extends State<AppCalendar> {
+  DateTime _currentDate = DateTime.now();
+  late Locale _locale;
+  late ThemeData _theme;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _theme = Theme.of(context);
+    _locale = context.locale;
+  }
+
+  bool _isSpecialDay(DateTime date) {
+    return widget.specialDays.any(
+      (d) => d.year == date.year && d.month == date.month && d.day == date.day,
+    );
+  }
+
+  void _changeMonth(int offset) {
+    setState(() {
+      _currentDate = DateTime(
+        _currentDate.year,
+        _currentDate.month + offset,
+        1,
+      );
+    });
+  }
+
+  List<String> _buildWeekDays() {
+    final dateFormat = DateFormat.E(_locale.toString());
+
+    // monday as a date
+    final base = DateTime(2024, 1, 1); // monday
+    return List.generate(7, (i) {
+      final day = base.add(Duration(days: i));
+      return dateFormat.format(day);
+    });
+  }
+
+  List<Widget> _buildCalendar() {
+    List<Widget> days = [];
+
+    final firstDay = DateTime(_currentDate.year, _currentDate.month, 1);
+    final totalDays = DateTime(
+      _currentDate.year,
+      _currentDate.month + 1,
+      0,
+    ).day;
+
+    // normalize monday as a start
+    int startWeekday = firstDay.weekday; // Mon = 1
+
+    for (int i = 1; i < startWeekday; i++) {
+      days.add(const SizedBox());
+    }
+
+    for (int i = 1; i <= totalDays; i++) {
+      final date = DateTime(_currentDate.year, _currentDate.month, i);
+
+      days.add(_buildDayCell(i, isSpecial: _isSpecialDay(date)));
+    }
+
+    return days;
+  }
+
+  Widget _buildDayCell(int day, {bool isSpecial = false}) {
+    return Center(
+      child: Text(
+        '$day',
+        style: _theme.textTheme.bodySmall?.copyWith(
+          color: isSpecial
+              ? _theme.colorScheme.error
+              : _theme.colorScheme.primary,
+          fontWeight: isSpecial ? FontWeight.w600 : null,
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final weekDays = _buildWeekDays();
+    final calendar = _buildCalendar();
+
+    return Column(
+      mainAxisSize: .min,
+      children: [
+        /// HEADER
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              style: IconButton.styleFrom(backgroundColor: Colors.transparent),
+              icon: const Icon(Icons.arrow_left),
+              onPressed: () => _changeMonth(-1),
+            ),
+            Row(
+              spacing: 4.0,
+              children: [
+                Text(
+                  DateFormat('MMMM', _locale.toString()).format(_currentDate),
+                  style: _theme.textTheme.titleLarge,
+                ),
+                Text(
+                  DateFormat('yyyy', _locale.toString()).format(_currentDate),
+                  style: _theme.textTheme.titleLarge,
+                ),
+              ],
+            ),
+            IconButton(
+              style: IconButton.styleFrom(backgroundColor: Colors.transparent),
+              icon: const Icon(Icons.arrow_right),
+              onPressed: () => _changeMonth(1),
+            ),
+          ],
+        ),
+
+        /// WEEK DAYS
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: weekDays
+              .map(
+                (d) => Expanded(
+                  child: Center(
+                    child: Text(d, style: _theme.textTheme.bodyLarge),
+                  ),
+                ),
+              )
+              .toList(),
+        ),
+
+        const SizedBox(height: 8),
+
+        /// GRID
+        GridView.count(
+          shrinkWrap: true,
+          crossAxisCount: 7,
+          physics: const NeverScrollableScrollPhysics(),
+          children: calendar,
+        ),
+
+        /// Footer
+        Row(
+          spacing: 8.0,
+          crossAxisAlignment: .center,
+          mainAxisAlignment: .center,
+          children: [
+            Container(
+              width: 12.0,
+              height: 12.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: _theme.colorScheme.error,
+              ),
+            ),
+            Text(
+              'calendar.trainingDays'.tr(),
+              style: _theme.textTheme.bodyMedium,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
