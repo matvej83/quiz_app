@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:quiz_app/core/presentation/widgets/app_loader.dart';
 
 import '../../domain/entity/history_entity.dart';
 import '../cubit/cubit.dart';
@@ -14,7 +15,7 @@ class HistoryList extends StatelessWidget {
     return BlocBuilder<HistoryCubit, HistoryState>(
       builder: (context, state) {
         return state.isLoading
-            ? const Center(child: CircularProgressIndicator.adaptive())
+            ? const AppLoader()
             : state.history.isEmpty
             ? const Center(child: Text('Нет данных для отображения'))
             : ListView.separated(
