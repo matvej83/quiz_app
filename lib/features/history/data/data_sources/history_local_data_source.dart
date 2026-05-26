@@ -6,7 +6,10 @@ import '../../../dictionary/data/database/app_database.dart';
 import '../models/history_model.dart';
 
 abstract class HistoryLocalDataSource {
-  Future<List<HistoryModel>?> fetchHistory();
+  Future<List<HistoryModel>?> fetchHistory({
+    required int limit,
+    required int offset,
+  });
 
   Future<void> saveHistory(HistoryModel history);
 
@@ -29,11 +32,16 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
   }
 
   @override
-  Future<List<HistoryModel>?> fetchHistory() async {
+  Future<List<HistoryModel>?> fetchHistory({
+    required int limit,
+    required int offset,
+  }) async {
     try {
-      final result = await (_database.select(
-        _database.historyTable,
-      )..orderBy([(t) => OrderingTerm.desc(t.saved)])).get();
+      final result =
+          await (_database.select(_database.historyTable)
+                ..orderBy([(t) => OrderingTerm.desc(t.saved)])
+                ..limit(limit, offset: offset))
+              .get();
 
       return result
           .map(

@@ -14,9 +14,15 @@ class HistoryRepositoryImpl implements HistoryRepository {
   final HistoryLocalDataSource historyLocalDataSource;
 
   @override
-  Future<Either<Failure, List<HistoryEntity>>> fetchHistory() async {
+  Future<Either<Failure, List<HistoryEntity>>> fetchHistory({
+    required int limit,
+    required int offset,
+  }) async {
     try {
-      final history = await historyLocalDataSource.fetchHistory();
+      final history = await historyLocalDataSource.fetchHistory(
+        limit: limit,
+        offset: offset,
+      );
       if (history == null) {
         return Left(NoHistoryFailure());
       }

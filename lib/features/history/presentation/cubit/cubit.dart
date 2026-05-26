@@ -21,11 +21,35 @@ class HistoryCubit extends Cubit<HistoryState> {
   final SaveHistoryUseCase saveHistoryUseCase;
   final DeleteHistoryUseCase deleteHistoryUseCase;
 
-  Future<void> loadHistory({bool loadSilent = true}) async {
+  /// pagination data
+  static const _pageSize = 10;
+  int _offset = 0;
+  bool _hasMore = true;
+  bool _isLoading = false;
+
+  Future<void> init() async {
+    resetPaginationData();
+    loadHistory(loadSilent: false);
+  }
+
+  void resetPaginationData() {
+    _offset = 0;
+    _hasMore = true;
+    _isLoading = false;
+  }
+
+  Future<void> loadHistory({
+    bool loadSilent = true,
+    int limit = _pageSize,
+    int offset = 0,
+  }) async {
     if (!loadSilent) {
       emit(state.copyWith(isLoading: true));
     }
-    final mode = await fetchHistoryUseCase(NoParams());
+    final mode = await fetchHistoryUseCase(
+      FetchHistoryParams(limit: limit, offset: offset),
+    );
+
     mode.fold(
       (l) {
         emit(
@@ -53,6 +77,46 @@ class HistoryCubit extends Cubit<HistoryState> {
     );
   }
 
+  Future<void> loadMoreHistory() async {
+    if (_isLoading || !_hasMore) return;
+    _isLoading = true;
+    emit(state.copyWith(isShowLoader: true));
+    final mode = await fetchHistoryUseCase(
+      FetchHistoryParams(limit: _pageSize, offset: _offset),
+    );
+
+    mode.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+            isShowLoader: false,
+          ),
+        );
+      },
+      (r) {
+        List<DateTime> trainingDays = [];
+        for (var e in r) {
+          trainingDays.add(e.saved);
+        }
+        _offset += r.length;
+
+        if (r.length < _pageSize) {
+          _hasMore = false;
+        }
+        emit(
+          state.copyWith(
+            history: [...state.history, ...r],
+            trainingDays: trainingDays,
+            isShowLoader: false,
+          ),
+        );
+      },
+    );
+    _isLoading = false;
+  }
+
   Future<void> addHistoryItem({
     required TestType testType,
     required int correctAnswers,
@@ -65,7 +129,8 @@ class HistoryCubit extends Cubit<HistoryState> {
       correctAnswers: correctAnswers,
       totalAnswers: totalAnswers,
     );
-    await saveHistoryUseCase(HistoryParams(history: history));
+    await saveHistoryUseCase(SaveHistoryParams(history: history));
+    resetPaginationData();
     loadHistory();
   }
 

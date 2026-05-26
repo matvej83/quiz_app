@@ -20,7 +20,7 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   void initState() {
     super.initState();
-    context.read<HistoryCubit>().loadHistory(loadSilent: false);
+    context.read<HistoryCubit>().init();
   }
 
   @override

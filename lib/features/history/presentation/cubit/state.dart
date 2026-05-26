@@ -8,6 +8,7 @@ class HistoryState extends Equatable {
     this.trainingDays = const [],
     this.error,
     this.isLoading = false,
+    this.isShowLoader = false,
     this.success = false,
     this.initialized = false,
   });
@@ -16,6 +17,7 @@ class HistoryState extends Equatable {
   final List<DateTime> trainingDays;
   final String? error;
   final bool isLoading;
+  final bool isShowLoader;
   final bool success;
   final bool initialized;
 
@@ -24,6 +26,7 @@ class HistoryState extends Equatable {
     List<DateTime>? trainingDays,
     String? error,
     bool? isLoading,
+    bool? isShowLoader,
     bool? success,
     bool? initialized,
   }) {
@@ -32,6 +35,7 @@ class HistoryState extends Equatable {
       trainingDays: trainingDays ?? this.trainingDays,
       error: error ?? this.error,
       isLoading: isLoading ?? this.isLoading,
+      isShowLoader: isShowLoader ?? this.isShowLoader,
       success: success ?? this.success,
       initialized: initialized ?? this.initialized,
     );
@@ -43,6 +47,7 @@ class HistoryState extends Equatable {
     trainingDays,
     error,
     isLoading,
+    isShowLoader,
     success,
     initialized,
   ];

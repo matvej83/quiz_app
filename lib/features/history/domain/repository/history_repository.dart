@@ -4,7 +4,10 @@ import '../../../../core/error/failure.dart';
 import '../entity/history_entity.dart';
 
 abstract class HistoryRepository {
-  Future<Either<Failure, List<HistoryEntity>>> fetchHistory();
+  Future<Either<Failure, List<HistoryEntity>>> fetchHistory({
+    required int limit,
+    required int offset,
+  });
 
   Future<Either<Failure, void>> saveHistory({required HistoryEntity history});
 
