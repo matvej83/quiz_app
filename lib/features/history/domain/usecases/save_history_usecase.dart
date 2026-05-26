@@ -7,7 +7,7 @@ import '../entity/history_entity.dart';
 import '../repository/history_repository.dart';
 
 @lazySingleton
-class SaveHistoryUseCase implements UseCase<void, HistoryParams> {
+class SaveHistoryUseCase implements UseCase<void, SaveHistoryParams> {
   SaveHistoryUseCase(this.repository);
 
   final HistoryRepository repository;
@@ -18,8 +18,8 @@ class SaveHistoryUseCase implements UseCase<void, HistoryParams> {
   }
 }
 
-class HistoryParams {
-  HistoryParams({required this.history});
+class SaveHistoryParams {
+  SaveHistoryParams({required this.history});
 
   final HistoryEntity history;
 }

@@ -7,26 +7,26 @@ import '../../../../core/error/failure.dart';
 import '../../../../core/usecases/usecase.dart';
 
 @lazySingleton
-class FetchHistoryUseCase
-    implements UseCase<List<HistoryEntity>, FetchHistoryParams> {
-  FetchHistoryUseCase(this.repository);
+class FetchMonthHistoryUseCase
+    implements UseCase<List<HistoryEntity>, FetchMonthHistoryParams> {
+  FetchMonthHistoryUseCase(this.repository);
 
   final HistoryRepository repository;
 
   @override
   Future<Either<Failure, List<HistoryEntity>>> call(
-    FetchHistoryParams params,
+    FetchMonthHistoryParams params,
   ) async {
-    return await repository.fetchHistory(
-      limit: params.limit,
-      offset: params.offset,
+    return await repository.fetchMonthHistory(
+      year: params.year,
+      month: params.month,
     );
   }
 }
 
-class FetchHistoryParams {
-  FetchHistoryParams({required this.limit, required this.offset});
+class FetchMonthHistoryParams {
+  FetchMonthHistoryParams({required this.year, required this.month});
 
-  final int limit;
-  final int offset;
+  final int year;
+  final int month;
 }

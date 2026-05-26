@@ -8,25 +8,52 @@ import 'package:quiz_app/features/history/presentation/cubit/state.dart';
 import '../../domain/entity/history_entity.dart';
 import '../../domain/usecases/delete_history_usecase.dart';
 import '../../domain/usecases/fetch_history_usecase.dart';
+import '../../domain/usecases/fetch_month_history_usecase.dart';
 import '../../domain/usecases/save_history_usecase.dart';
 
 @lazySingleton
 class HistoryCubit extends Cubit<HistoryState> {
   HistoryCubit({
     required this.fetchHistoryUseCase,
+    required this.fetchMonthHistoryUseCase,
     required this.saveHistoryUseCase,
     required this.deleteHistoryUseCase,
   }) : super(const HistoryState());
   final FetchHistoryUseCase fetchHistoryUseCase;
+  final FetchMonthHistoryUseCase fetchMonthHistoryUseCase;
   final SaveHistoryUseCase saveHistoryUseCase;
   final DeleteHistoryUseCase deleteHistoryUseCase;
 
-  Future<void> loadHistory({bool loadSilent = true}) async {
+  /// pagination data
+  static const _pageSize = 10;
+  int _offset = 0;
+  bool _hasMore = true;
+  bool _isLoading = false;
+
+  Future<void> init() async {
+    resetPaginationData();
+    loadHistory(loadSilent: false);
+  }
+
+  void resetPaginationData() {
+    _offset = 0;
+    _hasMore = true;
+    _isLoading = false;
+  }
+
+  Future<void> loadHistory({
+    bool loadSilent = true,
+    int limit = _pageSize,
+    int offset = 0,
+  }) async {
     if (!loadSilent) {
       emit(state.copyWith(isLoading: true));
     }
-    final mode = await fetchHistoryUseCase(NoParams());
-    mode.fold(
+    final data = await fetchHistoryUseCase(
+      FetchHistoryParams(limit: limit, offset: offset),
+    );
+
+    data.fold(
       (l) {
         emit(
           state.copyWith(
@@ -37,20 +64,68 @@ class HistoryCubit extends Cubit<HistoryState> {
         );
       },
       (r) {
+        emit(state.copyWith(history: r, isLoading: false, initialized: true));
+      },
+    );
+  }
+
+  Future<void> loadMonthHistory({required int year, required int month}) async {
+    final data = await fetchMonthHistoryUseCase(
+      FetchMonthHistoryParams(year: year, month: month),
+    );
+
+    data.fold(
+      (l) {
+        emit(state.copyWith(error: AppUtils.parseFailureMessage(l)));
+      },
+      (r) {
         List<DateTime> trainingDays = [];
         for (var e in r) {
           trainingDays.add(e.saved);
         }
+        emit(state.copyWith(trainingDays: trainingDays));
+      },
+    );
+  }
+
+  Future<void> loadMoreHistory() async {
+    if (_isLoading || !_hasMore) return;
+    _isLoading = true;
+    emit(state.copyWith(isShowLoader: true));
+    final mode = await fetchHistoryUseCase(
+      FetchHistoryParams(limit: _pageSize, offset: _offset),
+    );
+
+    mode.fold(
+      (l) {
         emit(
           state.copyWith(
-            history: r,
-            trainingDays: trainingDays,
+            error: AppUtils.parseFailureMessage(l),
             isLoading: false,
-            initialized: true,
+            isShowLoader: false,
+          ),
+        );
+      },
+      (r) {
+        List<DateTime> trainingDays = [];
+        for (var e in r) {
+          trainingDays.add(e.saved);
+        }
+        _offset += r.length;
+
+        if (r.length < _pageSize) {
+          _hasMore = false;
+        }
+        emit(
+          state.copyWith(
+            history: [...state.history, ...r],
+            trainingDays: trainingDays,
+            isShowLoader: false,
           ),
         );
       },
     );
+    _isLoading = false;
   }
 
   Future<void> addHistoryItem({
@@ -65,7 +140,8 @@ class HistoryCubit extends Cubit<HistoryState> {
       correctAnswers: correctAnswers,
       totalAnswers: totalAnswers,
     );
-    await saveHistoryUseCase(HistoryParams(history: history));
+    await saveHistoryUseCase(SaveHistoryParams(history: history));
+    resetPaginationData();
     loadHistory();
   }
 

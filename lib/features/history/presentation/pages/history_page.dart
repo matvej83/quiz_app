@@ -17,10 +17,13 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
+  late HistoryCubit cubit;
+
   @override
   void initState() {
     super.initState();
-    context.read<HistoryCubit>().loadHistory(loadSilent: false);
+    cubit = context.read<HistoryCubit>();
+    cubit.init();
   }
 
   @override
@@ -39,28 +42,33 @@ class _HistoryPageState extends State<HistoryPage> {
           },
         ),
         actions: [
-          BlocBuilder<HistoryCubit, HistoryState>(
-            builder: (context, state) {
-              return IconButton(
-                style: IconButton.styleFrom(
-                  backgroundColor: Colors.transparent,
+          IconButton(
+            style: IconButton.styleFrom(backgroundColor: Colors.transparent),
+            onPressed: () {
+              final now = DateTime.now();
+              cubit.loadMonthHistory(year: now.year, month: now.month);
+              AppDialog.empty(
+                context,
+                content: Container(
+                  margin: const .all(16.0),
+                  constraints: BoxConstraints(
+                    maxHeight: screenSize.height * 0.9,
+                    maxWidth: screenSize.width - 32.0,
+                  ),
+                  child: BlocBuilder<HistoryCubit, HistoryState>(
+                    builder: (context, state) {
+                      return AppCalendar(
+                        specialDays: state.trainingDays,
+                        onMonthChanged: (year, month) {
+                          cubit.loadMonthHistory(year: year, month: month);
+                        },
+                      );
+                    },
+                  ),
                 ),
-                onPressed: () {
-                  AppDialog.empty(
-                    context,
-                    content: Container(
-                      margin: const .all(16.0),
-                      constraints: BoxConstraints(
-                        maxHeight: screenSize.height * 0.9,
-                        maxWidth: screenSize.width - 32.0,
-                      ),
-                      child: AppCalendar(specialDays: state.trainingDays),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.calendar_month),
               );
             },
+            icon: const Icon(Icons.calendar_month),
           ),
         ],
       ),

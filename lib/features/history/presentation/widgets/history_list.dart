@@ -7,8 +7,43 @@ import '../../domain/entity/history_entity.dart';
 import '../cubit/cubit.dart';
 import '../cubit/state.dart';
 
-class HistoryList extends StatelessWidget {
+class HistoryList extends StatefulWidget {
   const HistoryList({super.key});
+
+  @override
+  State<HistoryList> createState() => _HistoryListState();
+}
+
+class _HistoryListState extends State<HistoryList> {
+  late HistoryCubit cubit;
+  final _scrollController = ScrollController();
+
+  bool isBottom(ScrollController scrollController) {
+    if (!scrollController.hasClients) return false;
+    final maxScroll = scrollController.position.maxScrollExtent;
+    final currentScroll = scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
+  }
+
+  void _onScroll() {
+    if (isBottom(_scrollController)) {
+      cubit.loadMoreHistory();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cubit = context.read<HistoryCubit>();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,36 +54,43 @@ class HistoryList extends StatelessWidget {
             ? const AppLoader()
             : state.history.isEmpty
             ? Center(child: Text('errors.noData'.tr()))
-            : ListView.separated(
-                itemCount: state.history.length,
-                physics: const ClampingScrollPhysics(),
-                padding: const .symmetric(horizontal: 16.0),
-                itemBuilder: (context, index) {
-                  final item = state.history[index];
-                  final currentDate = DateFormat(
-                    'yyyy.MM.dd',
-                    locale.languageCode,
-                  ).format(item.saved);
+            : Stack(
+                children: [
+                  ListView.separated(
+                    controller: _scrollController,
+                    itemCount: state.history.length,
+                    physics: const ClampingScrollPhysics(),
+                    padding: const .symmetric(horizontal: 16.0),
+                    itemBuilder: (context, index) {
+                      final item = state.history[index];
+                      final currentDate = DateFormat(
+                        'yyyy.MM.dd',
+                        locale.languageCode,
+                      ).format(item.saved);
 
-                  final previousDate = index > 0
-                      ? DateFormat(
-                          'yyyy.MM.dd',
-                          locale.languageCode,
-                        ).format(state.history[index - 1].saved)
-                      : null;
+                      final previousDate = index > 0
+                          ? DateFormat(
+                              'yyyy.MM.dd',
+                              locale.languageCode,
+                            ).format(state.history[index - 1].saved)
+                          : null;
 
-                  final shouldShowDate = currentDate != previousDate;
-                  return Column(
-                    crossAxisAlignment: .stretch,
-                    children: [
-                      if (shouldShowDate)
-                        Align(alignment: .center, child: Text(currentDate)),
-                      HistoryItem(history: item),
-                    ],
-                  );
-                },
-                separatorBuilder: (context, index) =>
-                    const SizedBox(width: 8.0),
+                      final shouldShowDate = currentDate != previousDate;
+                      return Column(
+                        crossAxisAlignment: .stretch,
+                        children: [
+                          if (shouldShowDate)
+                            Align(alignment: .center, child: Text(currentDate)),
+                          HistoryItem(history: item),
+                        ],
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 8.0),
+                  ),
+                  if (state.isShowLoader)
+                    const CircularProgressIndicator.adaptive(),
+                ],
               );
       },
     );
