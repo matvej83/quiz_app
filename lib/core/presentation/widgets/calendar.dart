@@ -2,9 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AppCalendar extends StatefulWidget {
-  const AppCalendar({super.key, this.specialDays = const []});
+  const AppCalendar({
+    super.key,
+    this.specialDays = const [],
+    required this.onMonthChanged,
+  });
 
   final List<DateTime> specialDays;
+  final Function(int, int) onMonthChanged;
 
   @override
   State<AppCalendar> createState() => _AppCalendarState();
@@ -36,6 +41,7 @@ class _AppCalendarState extends State<AppCalendar> {
         1,
       );
     });
+    widget.onMonthChanged(_currentDate.year, _currentDate.month);
   }
 
   List<String> _buildWeekDays() {
@@ -152,25 +158,26 @@ class _AppCalendarState extends State<AppCalendar> {
         ),
 
         /// Footer
-        Row(
-          spacing: 8.0,
-          crossAxisAlignment: .center,
-          mainAxisAlignment: .center,
-          children: [
-            Container(
-              width: 12.0,
-              height: 12.0,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _theme.colorScheme.error,
+        if (widget.specialDays.isNotEmpty)
+          Row(
+            spacing: 8.0,
+            crossAxisAlignment: .center,
+            mainAxisAlignment: .center,
+            children: [
+              Container(
+                width: 12.0,
+                height: 12.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _theme.colorScheme.error,
+                ),
               ),
-            ),
-            Text(
-              'calendar.trainingDays'.tr(),
-              style: _theme.textTheme.bodyMedium,
-            ),
-          ],
-        ),
+              Text(
+                'calendar.trainingDays'.tr(),
+                style: _theme.textTheme.bodyMedium,
+              ),
+            ],
+          ),
       ],
     );
   }

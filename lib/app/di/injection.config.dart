@@ -36,6 +36,8 @@ import 'package:quiz_app/features/history/domain/usecases/delete_history_usecase
     as _i471;
 import 'package:quiz_app/features/history/domain/usecases/fetch_history_usecase.dart'
     as _i876;
+import 'package:quiz_app/features/history/domain/usecases/fetch_month_history_usecase.dart'
+    as _i173;
 import 'package:quiz_app/features/history/domain/usecases/save_history_usecase.dart'
     as _i1051;
 import 'package:quiz_app/features/history/presentation/cubit/cubit.dart'
@@ -152,12 +154,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i876.FetchHistoryUseCase>(
       () => _i876.FetchHistoryUseCase(gh<_i427.HistoryRepository>()),
     );
+    gh.lazySingleton<_i173.FetchMonthHistoryUseCase>(
+      () => _i173.FetchMonthHistoryUseCase(gh<_i427.HistoryRepository>()),
+    );
     gh.lazySingleton<_i1051.SaveHistoryUseCase>(
       () => _i1051.SaveHistoryUseCase(gh<_i427.HistoryRepository>()),
     );
     gh.lazySingleton<_i61.HistoryCubit>(
       () => _i61.HistoryCubit(
         fetchHistoryUseCase: gh<_i876.FetchHistoryUseCase>(),
+        fetchMonthHistoryUseCase: gh<_i173.FetchMonthHistoryUseCase>(),
         saveHistoryUseCase: gh<_i1051.SaveHistoryUseCase>(),
         deleteHistoryUseCase: gh<_i471.DeleteHistoryUseCase>(),
       ),

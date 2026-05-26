@@ -11,6 +11,11 @@ abstract class HistoryLocalDataSource {
     required int offset,
   });
 
+  Future<List<HistoryModel>?> fetchMonthHistory({
+    required int year,
+    required int month,
+  });
+
   Future<void> saveHistory(HistoryModel history);
 
   Future<void> deleteHistory();
@@ -41,6 +46,42 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
           await (_database.select(_database.historyTable)
                 ..orderBy([(t) => OrderingTerm.desc(t.saved)])
                 ..limit(limit, offset: offset))
+              .get();
+
+      return result
+          .map(
+            (item) => HistoryModel(
+              testType: item.testType,
+              saved: item.saved,
+              correctAnswers: item.correctAnswers,
+              totalAnswers: item.totalAnswers,
+            ),
+          )
+          .toList();
+    } on Exception {
+      throw CacheException();
+    }
+  }
+
+  @override
+  Future<List<HistoryModel>?> fetchMonthHistory({
+    required int year,
+    required int month,
+  }) async {
+    try {
+      final startDate = DateTime(year, month);
+      final endDate = month == 12
+          ? DateTime(year + 1, 1)
+          : DateTime(year, month + 1);
+
+      final result =
+          await (_database.select(_database.historyTable)
+                ..where(
+                  (t) =>
+                      t.saved.isBiggerOrEqualValue(startDate) &
+                      t.saved.isSmallerThanValue(endDate),
+                )
+                ..orderBy([(t) => OrderingTerm.desc(t.saved)]))
               .get();
 
       return result

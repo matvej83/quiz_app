@@ -8,16 +8,19 @@ import 'package:quiz_app/features/history/presentation/cubit/state.dart';
 import '../../domain/entity/history_entity.dart';
 import '../../domain/usecases/delete_history_usecase.dart';
 import '../../domain/usecases/fetch_history_usecase.dart';
+import '../../domain/usecases/fetch_month_history_usecase.dart';
 import '../../domain/usecases/save_history_usecase.dart';
 
 @lazySingleton
 class HistoryCubit extends Cubit<HistoryState> {
   HistoryCubit({
     required this.fetchHistoryUseCase,
+    required this.fetchMonthHistoryUseCase,
     required this.saveHistoryUseCase,
     required this.deleteHistoryUseCase,
   }) : super(const HistoryState());
   final FetchHistoryUseCase fetchHistoryUseCase;
+  final FetchMonthHistoryUseCase fetchMonthHistoryUseCase;
   final SaveHistoryUseCase saveHistoryUseCase;
   final DeleteHistoryUseCase deleteHistoryUseCase;
 
@@ -46,11 +49,11 @@ class HistoryCubit extends Cubit<HistoryState> {
     if (!loadSilent) {
       emit(state.copyWith(isLoading: true));
     }
-    final mode = await fetchHistoryUseCase(
+    final data = await fetchHistoryUseCase(
       FetchHistoryParams(limit: limit, offset: offset),
     );
 
-    mode.fold(
+    data.fold(
       (l) {
         emit(
           state.copyWith(
@@ -61,18 +64,26 @@ class HistoryCubit extends Cubit<HistoryState> {
         );
       },
       (r) {
+        emit(state.copyWith(history: r, isLoading: false, initialized: true));
+      },
+    );
+  }
+
+  Future<void> loadMonthHistory({required int year, required int month}) async {
+    final data = await fetchMonthHistoryUseCase(
+      FetchMonthHistoryParams(year: year, month: month),
+    );
+
+    data.fold(
+      (l) {
+        emit(state.copyWith(error: AppUtils.parseFailureMessage(l)));
+      },
+      (r) {
         List<DateTime> trainingDays = [];
         for (var e in r) {
           trainingDays.add(e.saved);
         }
-        emit(
-          state.copyWith(
-            history: r,
-            trainingDays: trainingDays,
-            isLoading: false,
-            initialized: true,
-          ),
-        );
+        emit(state.copyWith(trainingDays: trainingDays));
       },
     );
   }

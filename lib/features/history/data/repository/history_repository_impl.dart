@@ -33,6 +33,25 @@ class HistoryRepositoryImpl implements HistoryRepository {
   }
 
   @override
+  Future<Either<Failure, List<HistoryEntity>>> fetchMonthHistory({
+    required int year,
+    required int month,
+  }) async {
+    try {
+      final history = await historyLocalDataSource.fetchMonthHistory(
+        year: year,
+        month: month,
+      );
+      if (history == null) {
+        return Left(NoHistoryFailure());
+      }
+      return Right(HistoryEntity.fromHistoryModelList(history));
+    } catch (e) {
+      return Left(mapExceptionToFailure(e));
+    }
+  }
+
+  @override
   Future<Either<Failure, void>> saveHistory({
     required HistoryEntity history,
   }) async {
