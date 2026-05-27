@@ -23,6 +23,7 @@ class AppThemeColors {
     required this.iconButtonBackground,
     required this.iconButtonBackgroundActive,
     required this.iconButtonBackgroundReset,
+    required this.cardBackground,
   });
 
   final Color primary;
@@ -44,6 +45,7 @@ class AppThemeColors {
   final Color iconButtonBackground;
   final Color iconButtonBackgroundActive;
   final Color iconButtonBackgroundReset;
+  final Color cardBackground;
 
   static AppThemeColors fromMode(AppThemeMode mode) {
     switch (mode) {
@@ -74,6 +76,7 @@ class AppThemeColors {
     iconButtonBackground: Colors.grey.shade300,
     iconButtonBackgroundActive: Colors.blue,
     iconButtonBackgroundReset: Colors.grey.shade400,
+    cardBackground: Colors.grey.shade300,
   );
 
   static final dark = AppThemeColors(
@@ -96,5 +99,6 @@ class AppThemeColors {
     iconButtonBackground: Colors.grey.shade800,
     iconButtonBackgroundActive: Colors.blue,
     iconButtonBackgroundReset: Colors.grey.shade700,
+    cardBackground: Colors.grey.shade700,
   );
 }

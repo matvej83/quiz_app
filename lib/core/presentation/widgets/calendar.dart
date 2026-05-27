@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/core/utils/extensions.dart';
 
 class AppCalendar extends StatefulWidget {
   const AppCalendar({
@@ -74,15 +75,32 @@ class _AppCalendarState extends State<AppCalendar> {
 
     for (int i = 1; i <= totalDays; i++) {
       final date = DateTime(_currentDate.year, _currentDate.month, i);
+      final isSpecialDay = _isSpecialDay(date);
+      final trainingsCount = widget.specialDays
+          .where((e) => e.isSameDay(date))
+          .toList()
+          .length;
 
-      days.add(_buildDayCell(i, isSpecial: _isSpecialDay(date)));
+      days.add(
+        _buildDayCell(
+          i,
+          isSpecial: isSpecialDay,
+          tooltipMessage: isSpecialDay
+              ? 'historyPage.trainings'.plural(trainingsCount)
+              : null,
+        ),
+      );
     }
 
     return days;
   }
 
-  Widget _buildDayCell(int day, {bool isSpecial = false}) {
-    return Center(
+  Widget _buildDayCell(
+    int day, {
+    bool isSpecial = false,
+    String? tooltipMessage,
+  }) {
+    final child = Center(
       child: Text(
         '$day',
         style: _theme.textTheme.bodySmall?.copyWith(
@@ -92,6 +110,14 @@ class _AppCalendarState extends State<AppCalendar> {
           fontWeight: isSpecial ? FontWeight.w600 : null,
         ),
       ),
+    );
+
+    if (tooltipMessage == null) return child;
+
+    return Tooltip(
+      message: tooltipMessage,
+      triggerMode: TooltipTriggerMode.tap,
+      child: child,
     );
   }
 

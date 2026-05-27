@@ -46,7 +46,13 @@
     "screenName": "История",
     "testType": "Тип теста",
     "questionCount": "Количество вопросов",
-    "correctAnswers": "Правильных ответов"
+    "correctAnswers": "Правильных ответов",
+    "trainings": {
+      "one": "{} тренировка",
+      "few": "{} тренировки",
+      "many": "{} тренировок",
+      "other": "{} тренировок"
+    }
   },
   "fieldValidation": {
     "fieldIsRequired": "Это поле обязательно!"
