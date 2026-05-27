@@ -108,7 +108,6 @@ class HistoryItem extends StatelessWidget {
     final style = theme.textTheme.bodyMedium;
     final time = DateFormat.Hm().format(history.saved);
     return Card(
-      color: theme.bottomNavigationBarTheme.backgroundColor,
       child: Padding(
         padding: const .all(8.0),
         child: Column(

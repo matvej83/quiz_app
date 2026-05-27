@@ -14,3 +14,9 @@ extension WordX on Word {
 extension NormalizeString on String {
   String normalize() => trim().toLowerCase();
 }
+
+extension DateX on DateTime {
+  bool isSameDay(DateTime other) {
+    return year == other.year && month == other.month && day == other.day;
+  }
+}

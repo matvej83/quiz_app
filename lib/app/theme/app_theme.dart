@@ -200,6 +200,10 @@ class AppTheme {
             return RoundedRectangleBorder(borderRadius: .circular(10.0));
           }),
         ),
+        tooltipTheme: TooltipThemeData(
+          decoration: BoxDecoration(color: Colors.cyan.withValues(alpha: 0.7)),
+        ),
+        cardTheme: CardThemeData(color: appColors.cardBackground),
       );
     } else {
       return ThemeData.light(useMaterial3: true).copyWith(
@@ -395,6 +399,10 @@ class AppTheme {
             return RoundedRectangleBorder(borderRadius: .circular(10.0));
           }),
         ),
+        tooltipTheme: TooltipThemeData(
+          decoration: BoxDecoration(color: Colors.cyan.withValues(alpha: 0.7)),
+        ),
+        cardTheme: CardThemeData(color: appColors.cardBackground),
       );
     }
   }
