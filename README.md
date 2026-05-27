@@ -1,4 +1,4 @@
-## Quiz App [Under development]
+## Quiz App
 
 ### About
 
