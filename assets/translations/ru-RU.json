@@ -24,8 +24,9 @@
     "next": "Далее"
   },
   "testPage": {
-    "selectedAnswer": "Выбранный ответ",
-    "selectAnswer": "Выберите ответ"
+    "selectAnswer": "Выберите ответ",
+    "correct": "Верно",
+    "incorrect": "Неверно"
   },
   "flashcardPage": {
     "ready": "Готово"

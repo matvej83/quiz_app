@@ -201,7 +201,10 @@ class AppTheme {
           }),
         ),
         tooltipTheme: TooltipThemeData(
-          decoration: BoxDecoration(color: Colors.cyan.withValues(alpha: 0.7)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.0),
+            color: Colors.cyan.withValues(alpha: 0.8),
+          ),
         ),
         cardTheme: CardThemeData(color: appColors.cardBackground),
       );
@@ -400,7 +403,10 @@ class AppTheme {
           }),
         ),
         tooltipTheme: TooltipThemeData(
-          decoration: BoxDecoration(color: Colors.cyan.withValues(alpha: 0.7)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4.0),
+            color: Colors.cyan.withValues(alpha: 0.8),
+          ),
         ),
         cardTheme: CardThemeData(color: appColors.cardBackground),
       );

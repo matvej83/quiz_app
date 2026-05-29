@@ -81,13 +81,15 @@ class _AppCalendarState extends State<AppCalendar> {
           .toList()
           .length;
 
+      final formattedDate = DateFormat('dd.MM.yyyy').format(date);
+      final tooltipMessage =
+          '$formattedDate\n${'historyPage.trainings'.plural(trainingsCount)}';
+
       days.add(
         _buildDayCell(
           i,
           isSpecial: isSpecialDay,
-          tooltipMessage: isSpecialDay
-              ? 'historyPage.trainings'.plural(trainingsCount)
-              : null,
+          tooltipMessage: isSpecialDay ? tooltipMessage : null,
         ),
       );
     }
@@ -103,6 +105,7 @@ class _AppCalendarState extends State<AppCalendar> {
     final child = Center(
       child: Text(
         '$day',
+        textAlign: .center,
         style: _theme.textTheme.bodySmall?.copyWith(
           color: isSpecial
               ? _theme.colorScheme.error
