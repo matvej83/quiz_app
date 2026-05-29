@@ -27,7 +27,7 @@ class WordWithPronounce extends StatelessWidget {
             word,
             style: theme.textTheme.headlineLarge,
             minFontSize: 10.0,
-            maxLines: 2,
+            maxLines: 1,
           ),
         ),
         PronounceButton(

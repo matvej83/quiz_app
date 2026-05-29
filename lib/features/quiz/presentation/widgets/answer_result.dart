@@ -16,12 +16,11 @@ class AnswerResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final semanticColors = theme.extension<AppSemanticColors>();
     return Text(
       isCorrect ? correctText : incorrectText,
       style: TextStyle(
-        color: isCorrect
-            ? theme.extension<AppSemanticColors>()!.success
-            : theme.colorScheme.error,
+        color: isCorrect ? semanticColors!.success : theme.colorScheme.error,
       ),
     );
   }

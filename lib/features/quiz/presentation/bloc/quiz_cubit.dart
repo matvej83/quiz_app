@@ -7,7 +7,6 @@ import 'package:quiz_app/app/constants/asset_paths.dart';
 import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/enums/app_enums.dart';
 
-import '../../../../app/constants/app_constants.dart';
 import '../../../dictionary/data/data_sources/dictionary_local_data_source.dart';
 import '../../../dictionary/data/database/app_database.dart';
 import '../../../dictionary/services/tts_service.dart';
@@ -28,11 +27,7 @@ class QuizCubit extends Cubit<QuizState> {
       List<String> additionalWords = [];
       List<String> answers = [];
       this.type = type;
-      await ttsService.setLanguage(
-        type == TranslationType.enRu
-            ? AppConstants.enLocale
-            : AppConstants.ruLocale,
-      );
+      await ttsService.setLanguage(type.questionFor);
       emit(QuizLoading());
       final words = await dataSource.getQuizWords(10);
       if (loadAdditionalWords) {
@@ -96,7 +91,7 @@ class QuizCubit extends Cubit<QuizState> {
       ),
     );
     if (goToNext) {
-      Future.delayed(const Duration(seconds: 5), () {
+      Future.delayed(const Duration(seconds: 3), () {
         nextQuestion(loadAdditionalWords: true);
       });
     }
