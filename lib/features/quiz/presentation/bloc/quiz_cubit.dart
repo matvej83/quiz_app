@@ -82,7 +82,7 @@ class QuizCubit extends Cubit<QuizState> {
     return answers;
   }
 
-  void checkAnswer(String userAnswer) {
+  void checkAnswer(String userAnswer, {bool goToNext = false}) {
     if (state is! QuizLoaded) return;
     final loadedState = state as QuizLoaded;
     final currentWord = loadedState.words[loadedState.currentIndex];
@@ -95,6 +95,11 @@ class QuizCubit extends Cubit<QuizState> {
         userAnswer: userAnswer.trim(),
       ),
     );
+    if (goToNext) {
+      Future.delayed(const Duration(seconds: 5), () {
+        nextQuestion(loadAdditionalWords: true);
+      });
+    }
   }
 
   String getCup({required int total, required int correct}) {

@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/app/constants/app_constants.dart';
 import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/features/history/presentation/cubit/cubit.dart';
-import 'package:quiz_app/features/quiz/presentation/widgets/answer_result.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/completed_widget.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/page_wrapper.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/word_with_pronounce.dart';
 
+import '../../../../app/theme/app_semantic_colors.dart';
 import '../../../../enums/app_enums.dart';
 import '../bloc/quiz_cubit.dart';
 import '../widgets/answers_block.dart';
@@ -19,6 +19,7 @@ class TestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final semanticColors = theme.extension<AppSemanticColors>();
     final cubit = context.read<QuizCubit>();
     return PageWrapper(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -42,6 +43,7 @@ class TestPage extends StatelessWidget {
       },
       onLoaded: (state) {
         final current = state.words[state.currentIndex];
+        final answered = state.answered;
         return Column(
           crossAxisAlignment: .center,
           mainAxisAlignment: .center,
@@ -53,30 +55,32 @@ class TestPage extends StatelessWidget {
                   ? AppConstants.enLocale
                   : AppConstants.ruLocale,
             ),
-            if (state.answered) ...[
-              AnswerResult(isCorrect: state.correct),
-              Text('${'testPage.selectedAnswer'.tr()}: ${state.userAnswer}'),
+            if (answered) ...[
               Text(
-                '${'quizPage.correctAnswer'.tr()}: ${current.answerFor(cubit.type)}',
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  cubit.nextQuestion(loadAdditionalWords: true);
-                },
-                child: Text('quizPage.next'.tr()),
+                state.correct
+                    ? 'testPage.correct'.tr()
+                    : 'testPage.incorrect'.tr(),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: state.correct
+                      ? semanticColors!.success
+                      : theme.colorScheme.error,
+                ),
               ),
             ] else ...[
               Text(
                 '${'testPage.selectAnswer'.tr()}:',
                 style: theme.textTheme.bodyMedium,
               ),
-              AnswersBlock(
-                words: state.answers,
-                onSelected: (word) {
-                  cubit.checkAnswer(word);
-                },
-              ),
             ],
+            AnswersBlock(
+              selectedAnswer: state.userAnswer ?? '',
+              correctAnswer: answered ? current.answerFor(cubit.type) : '',
+              words: state.answers,
+              answered: answered,
+              onSelected: (word) {
+                cubit.checkAnswer(word, goToNext: true);
+              },
+            ),
             Text(
               '${state.currentIndex + 1} / ${state.words.length}',
               style: theme.textTheme.bodyLarge,
