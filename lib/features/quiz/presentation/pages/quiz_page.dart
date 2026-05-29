@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz_app/app/constants/app_constants.dart';
 import 'package:quiz_app/core/presentation/widgets/app_text_form_field.dart';
 import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/answer_result.dart';
@@ -51,9 +50,7 @@ class QuizPage extends StatelessWidget {
             children: [
               WordWithPronounce(
                 word: current.questionFor(cubit.type),
-                language: cubit.type == TranslationType.enRu
-                    ? AppConstants.enLocale
-                    : AppConstants.ruLocale,
+                language: cubit.type.questionFor,
               ),
               AppTextFormField(
                 enabled: !state.answered,

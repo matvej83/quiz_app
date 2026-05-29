@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../app/theme/app_semantic_colors.dart';
@@ -70,7 +71,7 @@ class AnswerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textStyle = theme.textTheme.bodyMedium;
-    final successColor = theme.extension<AppSemanticColors>()!.success;
+    final semanticColors = theme.extension<AppSemanticColors>();
     final errorColor = theme.colorScheme.error;
     final isCorrect =
         selectedAnswer.isNotEmpty && selectedAnswer == correctAnswer;
@@ -79,9 +80,9 @@ class AnswerButton extends StatelessWidget {
       if (buttonText == selectedAnswer) {
         return OutlinedButton(
           style: OutlinedButton.styleFrom(
-            foregroundColor: isCorrect ? successColor : errorColor,
+            foregroundColor: isCorrect ? semanticColors!.success : errorColor,
             side: BorderSide(
-              color: isCorrect ? successColor : errorColor,
+              color: isCorrect ? semanticColors!.success : errorColor,
               width: 2.0,
             ),
           ),
@@ -90,14 +91,16 @@ class AnswerButton extends StatelessWidget {
             mainAxisAlignment: .center,
             spacing: 4.0,
             children: [
-              Text(
-                buttonText,
-                style: isCorrect
-                    ? textStyle?.copyWith(color: successColor)
-                    : textStyle?.copyWith(color: errorColor),
+              Flexible(
+                child: AutoSizeText(
+                  buttonText,
+                  style: isCorrect
+                      ? textStyle?.copyWith(color: semanticColors!.success)
+                      : textStyle?.copyWith(color: errorColor),
+                ),
               ),
               if (isCorrect)
-                Icon(Icons.check, color: successColor, size: 14.0)
+                Icon(Icons.check, color: semanticColors!.success, size: 14.0)
               else
                 Icon(Icons.close, color: errorColor, size: 14.0),
             ],
@@ -110,7 +113,7 @@ class AnswerButton extends StatelessWidget {
           child: Text(
             buttonText,
             style: isCorrect
-                ? textStyle?.copyWith(color: successColor)
+                ? textStyle?.copyWith(color: semanticColors!.success)
                 : textStyle?.copyWith(color: theme.colorScheme.primary),
           ),
         );

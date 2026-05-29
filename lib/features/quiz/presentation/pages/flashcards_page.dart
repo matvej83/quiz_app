@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quiz_app/app/constants/app_constants.dart';
 import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/page_wrapper.dart';
 
@@ -20,6 +19,7 @@ class FlashcardsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<QuizCubit>();
     final theme = Theme.of(context);
+    final semanticColors = theme.extension<AppSemanticColors>();
     return PageWrapper(
       backgroundColor: theme.scaffoldBackgroundColor,
       onCompleted: (state) {
@@ -31,7 +31,7 @@ class FlashcardsPage extends StatelessWidget {
               Icon(
                 Icons.check_circle_outline_outlined,
                 size: 80.0,
-                color: theme.extension<AppSemanticColors>()!.success,
+                color: semanticColors!.success,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -63,18 +63,14 @@ class FlashcardsPage extends StatelessWidget {
                   return FlashCard(
                     flip: flip,
                     word: current.questionFor(cubit.type),
-                    language: cubit.type == TranslationType.enRu
-                        ? AppConstants.enLocale
-                        : AppConstants.ruLocale,
+                    language: cubit.type.questionFor,
                   );
                 },
                 back: (flip) {
                   return FlashCard(
                     flip: flip,
                     word: current.answerFor(cubit.type),
-                    language: cubit.type == TranslationType.enRu
-                        ? AppConstants.ruLocale
-                        : AppConstants.enLocale,
+                    language: cubit.type.answerFor,
                   );
                 },
               ),
