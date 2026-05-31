@@ -9,25 +9,49 @@ class TranslationCubit extends Cubit<TranslationState> {
     : super(const TranslationState());
   final CheckTranslationUseCase checkTranslationUseCase;
 
-  Future<void> check({
-    required String russianText,
-    required String userTranslation,
-  }) async {
-    emit(state.copyWith(isLoading: true));
+  Future<void> check({required String userTranslation}) async {
+    emit(state.copyWith(status: TranslationStatus.loading));
     final result = await checkTranslationUseCase.call(
       CheckTranslationParams(
-        russianText: russianText,
+        russianText: state.russianText[state.currentIndex],
         userTranslation: userTranslation,
       ),
     );
     result.fold(
       (l) {
-        emit(state.copyWith(error: 'Gemini error', isLoading: false));
+        emit(
+          state.copyWith(
+            error: 'Gemini error',
+            status: TranslationStatus.error,
+          ),
+        );
       },
       (r) {
-        emit(state.copyWith(result: r, isLoading: false));
+        emit(state.copyWith(result: r, status: TranslationStatus.answered));
       },
     );
+  }
+
+  Future<void> nextQuestion() async {
+    final nextIndex = state.currentIndex + 1;
+    final totalScore = state.totalScore + (state.result?.score ?? 0);
+    if (nextIndex >= state.russianText.length) {
+      emit(
+        state.copyWith(
+          status: TranslationStatus.completed,
+          totalScore: totalScore,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          status: TranslationStatus.loaded,
+          currentIndex: nextIndex,
+          totalScore: totalScore,
+          error: '',
+        ),
+      );
+    }
   }
 
   Future<void> disableError() async {

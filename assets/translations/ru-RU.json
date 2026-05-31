@@ -22,7 +22,12 @@
     "inputTranslation": "Введите перевод",
     "check": "Проверить",
     "correctAnswer": "Правильный ответ",
-    "next": "Далее"
+    "next": "Далее",
+    "correctAnswers": "правильные ответы",
+    "incorrectAnswers": "неправильные ответы",
+    "totalQuestions": "всего вопросов",
+    "congrats": "Поздравляем!",
+    "quizCompleted": "Quiz завершен!"
   },
   "testPage": {
     "selectAnswer": "Выберите ответ",
@@ -54,6 +59,7 @@
     "testType": "Тип теста",
     "questionCount": "Количество вопросов",
     "correctAnswers": "Правильных ответов",
+    "score": "Счет",
     "trainings": {
       "one": "{} тренировка",
       "few": "{} тренировки",

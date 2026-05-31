@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -51,7 +52,7 @@ class _CompletedWidgetState extends State<CompletedWidget> {
           children: [
             Image.asset(widget.cup, height: 120.0),
             Text(
-              'Поздравляем!\nQuiz завершен!',
+              '${'quizPage.congrats'.tr()}\n${'quizPage.quizCompleted'.tr()}',
               style: theme.textTheme.headlineSmall,
               textAlign: .center,
             ),
@@ -60,16 +61,18 @@ class _CompletedWidgetState extends State<CompletedWidget> {
               spacing: 8.0,
               children: [
                 Text(
-                  'правильные ответы: ${widget.correctAnswers}',
+                  '${'quizPage.correctAnswers'.tr()}: ${widget.correctAnswers}',
                   style: TextStyle(
                     color: theme.extension<AppSemanticColors>()!.success,
                   ),
                 ),
                 Text(
-                  'неправильные ответы: ${widget.totalQuestions - widget.correctAnswers}',
+                  '${'quizPage.incorrectAnswers'.tr()}: ${widget.totalQuestions - widget.correctAnswers}',
                   style: TextStyle(color: theme.colorScheme.error),
                 ),
-                Text('всего вопросов: ${widget.totalQuestions}'),
+                Text(
+                  '${'quizPage.totalQuestions'.tr()}: ${widget.totalQuestions}',
+                ),
               ],
             ),
             ElevatedButton(
@@ -79,7 +82,7 @@ class _CompletedWidgetState extends State<CompletedWidget> {
                   context.pop();
                 }
               },
-              child: const Text('Готово'),
+              child: Text('flashcardPage.ready'.tr()),
             ),
           ],
         ),
