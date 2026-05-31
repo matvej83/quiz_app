@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/presentation/widgets/app_loader.dart';
 
-import '../bloc/quiz_cubit.dart';
-import '../bloc/quiz_state.dart';
+import '../cubit/cubit.dart';
+import '../cubit/state.dart';
 
 class PageWrapper extends StatelessWidget {
   const PageWrapper({

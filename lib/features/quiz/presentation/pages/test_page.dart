@@ -9,7 +9,7 @@ import 'package:quiz_app/features/quiz/presentation/widgets/word_with_pronounce.
 
 import '../../../../app/theme/app_semantic_colors.dart';
 import '../../../../enums/app_enums.dart';
-import '../bloc/quiz_cubit.dart';
+import '../cubit/cubit.dart';
 import '../widgets/answers_block.dart';
 
 class TestPage extends StatelessWidget {

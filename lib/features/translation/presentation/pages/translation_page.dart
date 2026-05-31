@@ -2,8 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/presentation/widgets/app_back_button.dart';
+import 'package:quiz_app/core/presentation/widgets/app_text_form_field.dart';
 import 'package:quiz_app/features/translation/presentation/cubit/cubit.dart';
 
+import '../../../../core/presentation/widgets/app_message.dart';
 import '../cubit/state.dart';
 
 class TranslationPage extends StatefulWidget {
@@ -26,26 +28,27 @@ class _TranslationPageState extends State<TranslationPage> {
         title: Text('translationPage.screenName'.tr()),
         leading: const AppBackButton(),
       ),
-      body: BlocBuilder<TranslationCubit, TranslationState>(
+      body: BlocConsumer<TranslationCubit, TranslationState>(
+        listener: (context, state) {
+          if (state.error?.isNotEmpty == true) {
+            AppMessage.error(
+              context,
+              message: state.error!,
+              onClose: cubit.disableError,
+            );
+          }
+        },
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
+              spacing: 16.0,
               children: [
-                Text(russianText, style: const TextStyle(fontSize: 22)),
-
-                const SizedBox(height: 20),
-
-                TextField(
+                Text(russianText, style: theme.textTheme.titleLarge),
+                AppTextFormField(
                   controller: controller,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: 'quizPage.inputTranslation'.tr(),
-                  ),
+                  hintText: 'quizPage.inputTranslation'.tr(),
                 ),
-
-                const SizedBox(height: 16),
-
                 ElevatedButton(
                   onPressed: state.isLoading
                       ? null
@@ -57,32 +60,28 @@ class _TranslationPageState extends State<TranslationPage> {
                         },
                   child: Text('quizPage.check'.tr()),
                 ),
-
-                const SizedBox(height: 20),
-
-                if (state.isLoading) const CircularProgressIndicator(),
-
+                if (state.isLoading) const CircularProgressIndicator.adaptive(),
                 if (state.result != null)
                   Expanded(
                     child: ListView(
                       children: [
                         Text(
                           '${'translationPage.estimation'.tr()}: ${state.result!.score}/100',
+                          style: theme.textTheme.bodyMedium,
                         ),
-
                         const SizedBox(height: 12),
-
-                        Text('${'translationPage.correctTranslation'.tr()}:'),
-
+                        Text(
+                          '${'translationPage.correctTranslation'.tr()}:',
+                          style: theme.textTheme.bodyMedium,
+                        ),
                         Text(
                           state.result!.correctTranslation,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.primary,
+                          ),
                         ),
-
                         const SizedBox(height: 20),
-
                         Text('${'errors.errors'.tr()}:'),
-
                         ...state.result!.mistakes.map(
                           (e) => ListTile(
                             leading: Icon(
@@ -95,7 +94,21 @@ class _TranslationPageState extends State<TranslationPage> {
                                 color: theme.colorScheme.error,
                               ),
                             ),
-                            subtitle: Text('${e.suggestion}\n${e.reason}'),
+                            subtitle: Column(
+                              crossAxisAlignment: .start,
+                              children: [
+                                Text(
+                                  e.suggestion,
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                    color: theme.colorScheme.primary,
+                                  ),
+                                ),
+                                Text(
+                                  e.reason,
+                                  style: theme.textTheme.bodyMedium,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],

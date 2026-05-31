@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:quiz_app/app/constants/asset_paths.dart';
 import 'package:quiz_app/app/router/app_routes.dart';
 import 'package:quiz_app/enums/app_enums.dart';
-import 'package:quiz_app/features/quiz/presentation/bloc/quiz_cubit.dart';
+import 'package:quiz_app/features/quiz/presentation/cubit/cubit.dart';
 
 class TestsPage extends StatelessWidget {
   const TestsPage({super.key});
@@ -122,7 +122,7 @@ class TestsPage extends StatelessWidget {
             onPressed: () {
               context.push(AppRoutes.translation);
             },
-            child: Text('Перевод текста', style: textStyle),
+            child: Text('testsPage.textTranslation'.tr(), style: textStyle),
           ),
         ],
       ),

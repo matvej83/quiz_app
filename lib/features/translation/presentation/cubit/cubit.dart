@@ -29,4 +29,8 @@ class TranslationCubit extends Cubit<TranslationState> {
       },
     );
   }
+
+  Future<void> disableError() async {
+    emit(state.copyWith(error: ''));
+  }
 }

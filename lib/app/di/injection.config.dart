@@ -58,8 +58,7 @@ import 'package:quiz_app/features/profile/domain/usecases/save_profile_usecase.d
     as _i235;
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart'
     as _i504;
-import 'package:quiz_app/features/quiz/presentation/bloc/quiz_cubit.dart'
-    as _i3;
+import 'package:quiz_app/features/quiz/presentation/cubit/cubit.dart' as _i936;
 import 'package:quiz_app/features/translation/data/services/gemini_service_impl.dart'
     as _i192;
 import 'package:quiz_app/features/translation/domain/services/gemini_service.dart'
@@ -118,8 +117,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i631.GeminiService>(
       () => _i192.GeminiServiceImpl(gh<_i656.GenerativeModel>()),
     );
-    gh.lazySingleton<_i3.QuizCubit>(
-      () => _i3.QuizCubit(
+    gh.lazySingleton<_i936.QuizCubit>(
+      () => _i936.QuizCubit(
         gh<_i66.DictionaryLocalDataSource>(),
         gh<_i192.TtsService>(),
       ),

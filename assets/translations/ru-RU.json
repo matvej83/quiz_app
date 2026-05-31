@@ -15,7 +15,8 @@
     "screenName": "Тесты",
     "translate": "Перевод слов",
     "flashcards": "Карточки",
-    "test": "Тест"
+    "test": "Тест",
+    "textTranslation": "Перевод текста"
   },
   "quizPage": {
     "inputTranslation": "Введите перевод",

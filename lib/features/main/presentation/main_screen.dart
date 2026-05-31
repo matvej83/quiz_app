@@ -5,7 +5,7 @@ import 'package:quiz_app/core/presentation/widgets/app_back_button.dart';
 import 'package:quiz_app/features/main/presentation/widgets/bottom_nav_bar.dart';
 
 import '../../../app/di/injection.dart';
-import '../../quiz/presentation/bloc/quiz_cubit.dart';
+import '../../quiz/presentation/cubit/cubit.dart';
 import '../utils.dart';
 
 class MainScreen extends StatelessWidget {
