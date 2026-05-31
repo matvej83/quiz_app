@@ -52,7 +52,7 @@ Return ONLY valid JSON:
       final json = AppUtils.parseJson(text);
       return Right(TranslationCheckResultModel.fromJson(json).toEntity());
     } catch (e) {
-      return Left(GeminiFailure());
+      return Left(GeminiFailure(message: e.toString()));
     }
   }
 }

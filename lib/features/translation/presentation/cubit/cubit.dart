@@ -3,6 +3,8 @@ import 'package:injectable/injectable.dart';
 import 'package:quiz_app/features/translation/domain/usecases/check_translation_usecase.dart';
 import 'package:quiz_app/features/translation/presentation/cubit/state.dart';
 
+import '../../../../core/error/failure.dart';
+
 @lazySingleton
 class TranslationCubit extends Cubit<TranslationState> {
   TranslationCubit({required this.checkTranslationUseCase})
@@ -19,9 +21,10 @@ class TranslationCubit extends Cubit<TranslationState> {
     );
     result.fold(
       (l) {
+        final message = (l as GeminiFailure).message;
         emit(
           state.copyWith(
-            error: 'Gemini error',
+            error: message,
             status: TranslationStatus.error,
           ),
         );
