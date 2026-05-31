@@ -31,6 +31,11 @@
   "flashcardPage": {
     "ready": "Готово"
   },
+  "translationPage": {
+    "screenName": "Перевод текста",
+    "estimation": "Оценка",
+    "correctTranslation": "Правильный перевод"
+  },
   "calendar": {
     "trainingDays": "Дни тренировок"
   },
@@ -59,6 +64,7 @@
     "fieldIsRequired": "Это поле обязательно!"
   },
   "errors": {
+    "errors": "Ошибки",
     "noData": "Нет данных для отображения",
     "noWords": "Failed to load words",
     "cacheError": "Ошибка чтения данных с устройства",

@@ -118,6 +118,12 @@ class TestsPage extends StatelessWidget {
               ],
             ),
           ),
+          OutlinedButton(
+            onPressed: () {
+              context.push(AppRoutes.translation);
+            },
+            child: Text('Перевод текста', style: textStyle),
+          ),
         ],
       ),
     );

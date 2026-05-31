@@ -13,6 +13,8 @@ class NoHistoryFailure extends Failure {}
 
 class AssetFailure extends Failure {}
 
+class GeminiFailure extends Failure {}
+
 class UnknownFailure extends Failure {
   UnknownFailure(this.message);
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quiz_app/core/presentation/widgets/app_back_button.dart';
 import 'package:quiz_app/features/main/presentation/widgets/bottom_nav_bar.dart';
 
 import '../../../app/di/injection.dart';
@@ -27,16 +28,7 @@ class MainScreen extends StatelessWidget {
           title: Text(MainScreenUtils.getAppBarTitle(context)),
           centerTitle: true,
           leading: MainScreenUtils.showBackButton(context)
-              ? BackButton(
-                  style: IconButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                  ),
-                  onPressed: () {
-                    if (context.canPop()) {
-                      context.pop();
-                    }
-                  },
-                )
+              ? const AppBackButton()
               : null,
         ),
         body: SafeArea(
