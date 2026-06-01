@@ -8,8 +8,8 @@ import 'package:quiz_app/features/history/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/translation/presentation/widgets/results_widget.dart';
 
 import '../../../../core/presentation/widgets/app_message.dart';
-import '../translation_cubit/cubit.dart';
-import '../translation_cubit/state.dart';
+import '../cubit/cubit.dart';
+import '../cubit/state.dart';
 import '../widgets/completed_widget.dart';
 
 class TranslationPage extends StatefulWidget {
@@ -76,7 +76,7 @@ class _TranslationPageState extends State<TranslationPage> {
                   },
                 )
               : Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const .all(16),
                   child: Column(
                     spacing: 16.0,
                     children: [

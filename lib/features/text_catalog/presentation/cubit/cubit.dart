@@ -1,13 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:quiz_app/core/usecases/usecase.dart';
-import 'package:quiz_app/features/translation/domain/usecases/load_catalog_usecase.dart';
-import 'package:quiz_app/features/translation/presentation/translation_catalog_cubit/state.dart';
+import 'package:quiz_app/features/text_catalog/presentation/cubit/state.dart';
+
+import '../../domain/usecases/load_catalog_usecase.dart';
 
 @lazySingleton
-class TranslationCatalogCubit extends Cubit<TranslationCatalogState> {
-  TranslationCatalogCubit({required this.loadCatalogUseCase})
-    : super(const TranslationCatalogState());
+class TextCatalogCubit extends Cubit<TextCatalogState> {
+  TextCatalogCubit({required this.loadCatalogUseCase})
+    : super(const TextCatalogState());
   final LoadCatalogUseCase loadCatalogUseCase;
 
   Future<void> loadCatalog() async {

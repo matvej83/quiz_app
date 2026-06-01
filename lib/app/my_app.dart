@@ -5,8 +5,8 @@ import 'package:quiz_app/app/router/app_router.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 
 import '../features/history/presentation/cubit/cubit.dart';
-import '../features/translation/presentation/translation_catalog_cubit/cubit.dart';
-import '../features/translation/presentation/translation_cubit/cubit.dart';
+import '../features/text_catalog/presentation/cubit/cubit.dart';
+import '../features/translation/presentation/cubit/cubit.dart';
 import '../theme/cubit/cubit.dart';
 import '../theme/cubit/state.dart';
 import 'di/injection.dart';
@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   final profileCubit = getIt<ProfileCubit>();
   final historyCubit = getIt<HistoryCubit>();
   final translationCubit = getIt<TranslationCubit>();
-  final translationCatalogCubit = getIt<TranslationCatalogCubit>();
+  final translationCatalogCubit = getIt<TextCatalogCubit>();
 
   @override
   Widget build(BuildContext context) {
