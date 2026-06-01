@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:quiz_app/core/error/failure.dart';
@@ -17,7 +18,7 @@ class AppUtils {
     return null;
   }
 
-  static dynamic parseJson(String text) {
+  static Map<String, dynamic> parseJson(String text) {
     final match = RegExp(r'\{[\s\S]*\}').firstMatch(text);
 
     if (match == null) {
@@ -27,5 +28,19 @@ class AppUtils {
     final jsonString = match.group(0)!;
 
     return jsonDecode(jsonString) as Map<String, dynamic>;
+  }
+
+  static String parseError(String error) {
+    try {
+      final json = parseJson(error);
+      final code = json['code'];
+      final status = json['status'];
+      if (code == 503 && status == 'UNAVAILABLE') {
+        return 'errors.modelUnavailable'.tr();
+      }
+    } on Exception catch (e) {
+      log(e.toString());
+    }
+    return error;
   }
 }

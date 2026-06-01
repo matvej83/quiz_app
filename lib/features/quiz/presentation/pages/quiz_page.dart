@@ -29,6 +29,7 @@ class QuizPage extends StatelessWidget {
         return CompletedWidget(
           cup: cup,
           correctAnswers: state.correctAnswers,
+          incorrectAnswers: state.totalQuestions - state.correctAnswers,
           totalQuestions: state.totalQuestions,
           onTap: () {
             context.read<HistoryCubit>().addHistoryItem(

@@ -20,12 +20,25 @@ class TranslationPage extends StatefulWidget {
 }
 
 class _TranslationPageState extends State<TranslationPage> {
+  late TranslationCubit translationCubit;
+  late HistoryCubit historyCubit;
   final controller = TextEditingController();
 
   @override
+  void initState() {
+    translationCubit = context.read<TranslationCubit>();
+    historyCubit = context.read<HistoryCubit>();
+    super.initState();
+  }
+
+  @override
+  void deactivate() {
+    translationCubit.resetData();
+    super.deactivate();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final cubit = context.read<TranslationCubit>();
-    final historyCubit = context.read<HistoryCubit>();
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +51,7 @@ class _TranslationPageState extends State<TranslationPage> {
             AppMessage.error(
               context,
               message: state.error!,
-              onClose: cubit.disableError,
+              onClose: translationCubit.disableError,
             );
           }
         },
@@ -56,7 +69,8 @@ class _TranslationPageState extends State<TranslationPage> {
                   onTap: () {
                     historyCubit.addHistoryItem(
                       testType: TestType.translation,
-                      correctAnswers: state.totalScore,
+                      correctAnswers:
+                          (state.totalScore / state.russianText.length).round(),
                       totalAnswers: state.russianText.length,
                     );
                   },
@@ -77,9 +91,11 @@ class _TranslationPageState extends State<TranslationPage> {
                             : () {
                                 if (isAnswered) {
                                   controller.text = '';
-                                  cubit.nextQuestion();
+                                  translationCubit.nextQuestion();
                                 } else {
-                                  cubit.check(userTranslation: controller.text);
+                                  translationCubit.check(
+                                    userTranslation: controller.text,
+                                  );
                                 }
                               },
                         child: Text(

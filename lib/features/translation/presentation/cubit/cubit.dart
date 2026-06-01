@@ -22,12 +22,7 @@ class TranslationCubit extends Cubit<TranslationState> {
     result.fold(
       (l) {
         final message = (l as GeminiFailure).message;
-        emit(
-          state.copyWith(
-            error: message,
-            status: TranslationStatus.error,
-          ),
-        );
+        emit(state.copyWith(error: message, status: TranslationStatus.error));
       },
       (r) {
         emit(state.copyWith(result: r, status: TranslationStatus.answered));
@@ -59,5 +54,16 @@ class TranslationCubit extends Cubit<TranslationState> {
 
   Future<void> disableError() async {
     emit(state.copyWith(error: ''));
+  }
+
+  Future<void> resetData() async {
+    emit(
+      state.copyWith(
+        status: TranslationStatus.initial,
+        currentIndex: 0,
+        totalScore: 0,
+        error: '',
+      ),
+    );
   }
 }
