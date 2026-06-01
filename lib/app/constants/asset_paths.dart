@@ -9,4 +9,5 @@ class AssetPaths {
   static const goldenCup = 'assets/images/golden_cup.png';
   static const silverCup = 'assets/images/silver_cup.png';
   static const bronzeCup = 'assets/images/bronze_cup.png';
+  static const coversPath = 'assets/covers/';
 }

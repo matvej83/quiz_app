@@ -87,7 +87,7 @@ class _HistoryListState extends State<HistoryList> {
                       );
                     },
                     separatorBuilder: (context, index) =>
-                        const SizedBox(width: 8.0),
+                        const SizedBox(height: 8.0),
                   ),
                   if (state.isShowLoader)
                     const CircularProgressIndicator.adaptive(),

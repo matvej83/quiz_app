@@ -10,8 +10,8 @@ import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/pages/create_profile_page.dart';
 import 'package:quiz_app/features/quiz/presentation/pages/quiz_page.dart';
 import 'package:quiz_app/features/quiz/presentation/pages/test_page.dart';
+import 'package:quiz_app/features/text_catalog/presentation/pages/text_catalog_page.dart';
 import 'package:quiz_app/features/translation/presentation/pages/translation_page.dart';
-import 'package:quiz_app/features/translation/presentation/pages/translations_catalog_page.dart';
 
 import '../../core/presentation/pages/splash_page.dart';
 import '../../features/main/presentation/main_screen.dart';
@@ -77,7 +77,7 @@ class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.catalog,
-        builder: (context, state) => const TranslationsCatalogPage(),
+        builder: (context, state) => const TextCatalogPage(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

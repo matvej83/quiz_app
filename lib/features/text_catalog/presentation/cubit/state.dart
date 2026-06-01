@@ -1,20 +1,20 @@
 import 'package:equatable/equatable.dart';
-import 'package:quiz_app/features/translation/domain/entity/translation_entity.dart';
+import 'package:quiz_app/features/text_catalog/domain/entity/text_entity.dart';
 
-class TranslationCatalogState extends Equatable {
-  const TranslationCatalogState({
+class TextCatalogState extends Equatable {
+  const TextCatalogState({
     this.isLoading = false,
     this.translations = const [],
   });
 
   final bool isLoading;
-  final List<TranslationEntity> translations;
+  final List<TextEntity> translations;
 
-  TranslationCatalogState copyWith({
+  TextCatalogState copyWith({
     bool? isLoading,
-    List<TranslationEntity>? translations,
+    List<TextEntity>? translations,
   }) {
-    return TranslationCatalogState(
+    return TextCatalogState(
       isLoading: isLoading ?? this.isLoading,
       translations: translations ?? this.translations,
     );

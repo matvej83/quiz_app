@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-class TranslationEntity extends Equatable {
-  const TranslationEntity({
+class TextEntity extends Equatable {
+  const TextEntity({
     required this.id,
     required this.title,
     required this.text,
