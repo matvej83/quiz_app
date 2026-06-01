@@ -30,6 +30,7 @@ dependencies:
   intl: ^0.20.2
   auto_size_text: ^3.0.0
   easy_localization: ^3.0.8
+  google_generative_ai: ^0.4.7
 
 dev_dependencies:
   flutter_test:
@@ -56,4 +57,5 @@ flutter:
     - assets/images/
     - assets/svg_icons/
     - assets/database/
+    - assets/texts/
 

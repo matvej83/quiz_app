@@ -9,7 +9,7 @@ import 'package:quiz_app/features/quiz/presentation/widgets/word_with_pronounce.
 
 import '../../../../enums/app_enums.dart';
 import '../../../history/presentation/cubit/cubit.dart';
-import '../bloc/quiz_cubit.dart';
+import '../cubit/cubit.dart';
 import '../widgets/page_wrapper.dart';
 
 class QuizPage extends StatelessWidget {
@@ -29,6 +29,7 @@ class QuizPage extends StatelessWidget {
         return CompletedWidget(
           cup: cup,
           correctAnswers: state.correctAnswers,
+          incorrectAnswers: state.totalQuestions - state.correctAnswers,
           totalQuestions: state.totalQuestions,
           onTap: () {
             context.read<HistoryCubit>().addHistoryItem(

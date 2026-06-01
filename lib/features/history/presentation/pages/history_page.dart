@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+import 'package:quiz_app/core/presentation/widgets/app_back_button.dart';
 import 'package:quiz_app/core/presentation/widgets/app_dialog.dart';
 import 'package:quiz_app/core/presentation/widgets/calendar.dart';
 import 'package:quiz_app/features/history/presentation/cubit/cubit.dart';
@@ -33,14 +33,7 @@ class _HistoryPageState extends State<HistoryPage> {
       appBar: AppBar(
         title: Text('historyPage.screenName'.tr()),
         centerTitle: true,
-        leading: BackButton(
-          style: IconButton.styleFrom(backgroundColor: Colors.transparent),
-          onPressed: () {
-            if (context.canPop()) {
-              context.pop();
-            }
-          },
-        ),
+        leading: const AppBackButton(),
         actions: [
           IconButton(
             style: IconButton.styleFrom(backgroundColor: Colors.transparent),

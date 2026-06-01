@@ -10,7 +10,9 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
+import 'package:google_generative_ai/google_generative_ai.dart' as _i656;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:quiz_app/app/di/modules/ai_module.dart' as _i568;
 import 'package:quiz_app/app/di/modules/database_module.dart' as _i1034;
 import 'package:quiz_app/app/di/modules/shared_pref_module.dart' as _i775;
 import 'package:quiz_app/app/router/app_router.dart' as _i223;
@@ -56,8 +58,25 @@ import 'package:quiz_app/features/profile/domain/usecases/save_profile_usecase.d
     as _i235;
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart'
     as _i504;
-import 'package:quiz_app/features/quiz/presentation/bloc/quiz_cubit.dart'
-    as _i3;
+import 'package:quiz_app/features/quiz/presentation/cubit/cubit.dart' as _i936;
+import 'package:quiz_app/features/translation/data/data_sources/catalog_local_data_source.dart'
+    as _i110;
+import 'package:quiz_app/features/translation/data/repository/catalog_repository_impl.dart'
+    as _i54;
+import 'package:quiz_app/features/translation/data/services/gemini_service_impl.dart'
+    as _i192;
+import 'package:quiz_app/features/translation/domain/respository/catalog_respository.dart'
+    as _i44;
+import 'package:quiz_app/features/translation/domain/services/gemini_service.dart'
+    as _i631;
+import 'package:quiz_app/features/translation/domain/usecases/check_translation_usecase.dart'
+    as _i806;
+import 'package:quiz_app/features/translation/domain/usecases/load_catalog_usecase.dart'
+    as _i822;
+import 'package:quiz_app/features/translation/presentation/translation_catalog_cubit/cubit.dart'
+    as _i683;
+import 'package:quiz_app/features/translation/presentation/translation_cubit/cubit.dart'
+    as _i1047;
 import 'package:quiz_app/theme/cubit/cubit.dart' as _i29;
 import 'package:quiz_app/theme/data/data_sources/theme_local_data_source.dart'
     as _i593;
@@ -77,12 +96,14 @@ extension GetItInjectableX on _i174.GetIt {
   }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final sharedPrefModule = _$SharedPrefModule();
+    final aiModule = _$AiModule();
     final databaseModule = _$DatabaseModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => sharedPrefModule.prefs,
       preResolve: true,
     );
     gh.singleton<_i192.TtsService>(() => _i192.TtsService());
+    gh.lazySingleton<_i656.GenerativeModel>(() => aiModule.generativeModel());
     gh.lazySingleton<_i976.DictionaryAssetDataSource>(
       () => _i976.DictionaryAssetDataSource(),
     );
@@ -100,11 +121,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i593.ThemeLocalDataSource>(
       () => _i593.ThemeLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
+    gh.lazySingleton<_i110.CatalogLocalDataSource>(
+      () => _i110.CatalogLocalDataSourceImpl(),
+    );
     gh.lazySingleton<_i146.ProfileLocalDataSource>(
       () => _i146.ProfileLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
-    gh.lazySingleton<_i3.QuizCubit>(
-      () => _i3.QuizCubit(
+    gh.lazySingleton<_i631.GeminiService>(
+      () => _i192.GeminiServiceImpl(gh<_i656.GenerativeModel>()),
+    );
+    gh.lazySingleton<_i44.CatalogRepository>(
+      () => _i54.ProductsRepositoryImpl(
+        catalogLocalDataSource: gh<_i110.CatalogLocalDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i936.QuizCubit>(
+      () => _i936.QuizCubit(
         gh<_i66.DictionaryLocalDataSource>(),
         gh<_i192.TtsService>(),
       ),
@@ -136,6 +168,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i235.SaveProfileUseCase>(
       () => _i235.SaveProfileUseCase(gh<_i1049.ProfileRepository>()),
     );
+    gh.lazySingleton<_i822.LoadCatalogUseCase>(
+      () => _i822.LoadCatalogUseCase(gh<_i44.CatalogRepository>()),
+    );
     gh.lazySingleton<_i575.GetThemeUseCase>(
       () => _i575.GetThemeUseCase(gh<_i37.ThemeRepository>()),
     );
@@ -147,6 +182,9 @@ extension GetItInjectableX on _i174.GetIt {
         getThemeUseCase: gh<_i575.GetThemeUseCase>(),
         setThemeUseCase: gh<_i1061.SetThemeUseCase>(),
       ),
+    );
+    gh.lazySingleton<_i806.CheckTranslationUseCase>(
+      () => _i806.CheckTranslationUseCase(gh<_i631.GeminiService>()),
     );
     gh.lazySingleton<_i471.DeleteHistoryUseCase>(
       () => _i471.DeleteHistoryUseCase(gh<_i427.HistoryRepository>()),
@@ -168,6 +206,11 @@ extension GetItInjectableX on _i174.GetIt {
         deleteHistoryUseCase: gh<_i471.DeleteHistoryUseCase>(),
       ),
     );
+    gh.lazySingleton<_i1047.TranslationCubit>(
+      () => _i1047.TranslationCubit(
+        checkTranslationUseCase: gh<_i806.CheckTranslationUseCase>(),
+      ),
+    );
     gh.lazySingleton<_i504.ProfileCubit>(
       () => _i504.ProfileCubit(
         fetchProfileUseCase: gh<_i89.FetchProfileUseCase>(),
@@ -178,10 +221,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i223.AppRouter>(
       () => _i223.AppRouter(gh<_i504.ProfileCubit>()),
     );
+    gh.lazySingleton<_i683.TranslationCatalogCubit>(
+      () => _i683.TranslationCatalogCubit(
+        loadCatalogUseCase: gh<_i822.LoadCatalogUseCase>(),
+      ),
+    );
     return this;
   }
 }
 
 class _$SharedPrefModule extends _i775.SharedPrefModule {}
+
+class _$AiModule extends _i568.AiModule {}
 
 class _$DatabaseModule extends _i1034.DatabaseModule {}

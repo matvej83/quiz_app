@@ -9,3 +9,5 @@ class UnknownException extends AppException {
 class CacheException extends AppException {}
 
 class AssetException extends AppException {}
+
+class GeminiException extends AppException {}

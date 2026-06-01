@@ -10,7 +10,7 @@ import 'package:quiz_app/enums/app_enums.dart';
 import '../../../dictionary/data/data_sources/dictionary_local_data_source.dart';
 import '../../../dictionary/data/database/app_database.dart';
 import '../../../dictionary/services/tts_service.dart';
-import 'quiz_state.dart';
+import 'state.dart';
 
 @lazySingleton
 class QuizCubit extends Cubit<QuizState> {

@@ -15,13 +15,19 @@
     "screenName": "Тесты",
     "translate": "Перевод слов",
     "flashcards": "Карточки",
-    "test": "Тест"
+    "test": "Тест",
+    "textTranslation": "Перевод текста"
   },
   "quizPage": {
     "inputTranslation": "Введите перевод",
     "check": "Проверить",
     "correctAnswer": "Правильный ответ",
-    "next": "Далее"
+    "next": "Далее",
+    "correctAnswers": "правильные ответы",
+    "incorrectAnswers": "неправильные ответы",
+    "totalQuestions": "всего вопросов",
+    "congrats": "Поздравляем!",
+    "quizCompleted": "Quiz завершен!"
   },
   "testPage": {
     "selectAnswer": "Выберите ответ",
@@ -30,6 +36,21 @@
   },
   "flashcardPage": {
     "ready": "Готово"
+  },
+  "textCatalogPage": {
+    "screenName": "Каталог текстов",
+    "level": "Уровень",
+    "phrases": {
+      "one": "{} фраза",
+      "few": "{} фразы",
+      "many": "{} фраз",
+      "other": "{} фраз"
+    }
+  },
+  "translationPage": {
+    "screenName": "Перевод текста",
+    "estimation": "Оценка",
+    "correctTranslation": "Правильный перевод"
   },
   "calendar": {
     "trainingDays": "Дни тренировок"
@@ -48,6 +69,7 @@
     "testType": "Тип теста",
     "questionCount": "Количество вопросов",
     "correctAnswers": "Правильных ответов",
+    "score": "Счет",
     "trainings": {
       "one": "{} тренировка",
       "few": "{} тренировки",
@@ -59,10 +81,12 @@
     "fieldIsRequired": "Это поле обязательно!"
   },
   "errors": {
+    "errors": "Ошибки",
     "noData": "Нет данных для отображения",
     "noWords": "Failed to load words",
     "cacheError": "Ошибка чтения данных с устройства",
     "assetError": "Ошибка чтения из базы данных",
-    "fieldIsRequired": "Это поле обязательно!"
+    "fieldIsRequired": "Это поле обязательно!",
+    "modelUnavailable": "Эта модель в данный момент недоступна. Попробуйте позже."
   }
 }

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/presentation/widgets/app_loader.dart';
+import 'package:quiz_app/enums/app_enums.dart';
 
 import '../../domain/entity/history_entity.dart';
 import '../cubit/cubit.dart';
@@ -107,6 +108,7 @@ class HistoryItem extends StatelessWidget {
     final theme = Theme.of(context);
     final style = theme.textTheme.bodyMedium;
     final time = DateFormat.Hm().format(history.saved);
+    final isTranslation = history.testType == TestType.translation;
     return Card(
       child: Padding(
         padding: const .all(8.0),
@@ -123,7 +125,7 @@ class HistoryItem extends StatelessWidget {
               style: style,
             ),
             Text(
-              '${'historyPage.correctAnswers'.tr()}: ${history.correctAnswers}',
+              '${isTranslation ? 'historyPage.score'.tr() : 'historyPage.correctAnswers'.tr()}: ${history.correctAnswers}',
               style: style,
             ),
             Text(time, style: theme.textTheme.bodySmall),
