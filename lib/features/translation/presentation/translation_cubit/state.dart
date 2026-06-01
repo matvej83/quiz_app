@@ -7,10 +7,7 @@ class TranslationState extends Equatable {
   const TranslationState({
     this.status = TranslationStatus.initial,
     this.result,
-    this.russianText = const [
-      'Я люблю программировать на Flutter',
-      'Я не люблю программировать на Flutter',
-    ],
+    this.russianText = const [],
     this.currentIndex = 0,
     this.totalScore = 0,
     this.error,

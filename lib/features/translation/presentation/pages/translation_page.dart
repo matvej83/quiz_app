@@ -5,11 +5,11 @@ import 'package:quiz_app/core/presentation/widgets/app_back_button.dart';
 import 'package:quiz_app/core/presentation/widgets/app_text_form_field.dart';
 import 'package:quiz_app/enums/app_enums.dart';
 import 'package:quiz_app/features/history/presentation/cubit/cubit.dart';
-import 'package:quiz_app/features/translation/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/translation/presentation/widgets/results_widget.dart';
 
 import '../../../../core/presentation/widgets/app_message.dart';
-import '../cubit/state.dart';
+import '../translation_cubit/cubit.dart';
+import '../translation_cubit/state.dart';
 import '../widgets/completed_widget.dart';
 
 class TranslationPage extends StatefulWidget {

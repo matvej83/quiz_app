@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:quiz_app/features/translation/domain/usecases/check_translation_usecase.dart';
-import 'package:quiz_app/features/translation/presentation/cubit/state.dart';
+import 'package:quiz_app/features/translation/presentation/translation_cubit/state.dart';
 
 import '../../../../core/error/failure.dart';
 
@@ -10,6 +10,10 @@ class TranslationCubit extends Cubit<TranslationState> {
   TranslationCubit({required this.checkTranslationUseCase})
     : super(const TranslationState());
   final CheckTranslationUseCase checkTranslationUseCase;
+
+  Future<void> loadRussianText(List<String> text) async {
+    emit(state.copyWith(russianText: text));
+  }
 
   Future<void> check({required String userTranslation}) async {
     emit(state.copyWith(status: TranslationStatus.loading));

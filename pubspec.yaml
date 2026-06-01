@@ -57,4 +57,5 @@ flutter:
     - assets/images/
     - assets/svg_icons/
     - assets/database/
+    - assets/texts/
 

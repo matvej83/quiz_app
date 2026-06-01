@@ -37,6 +37,16 @@
   "flashcardPage": {
     "ready": "Готово"
   },
+  "textCatalogPage": {
+    "screenName": "Каталог текстов",
+    "level": "Уровень",
+    "phrases": {
+      "one": "{} фраза",
+      "few": "{} фразы",
+      "many": "{} фраз",
+      "other": "{} фраз"
+    }
+  },
   "translationPage": {
     "screenName": "Перевод текста",
     "estimation": "Оценка",

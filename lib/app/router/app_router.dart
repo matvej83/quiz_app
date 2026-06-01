@@ -11,6 +11,7 @@ import 'package:quiz_app/features/profile/presentation/pages/create_profile_page
 import 'package:quiz_app/features/quiz/presentation/pages/quiz_page.dart';
 import 'package:quiz_app/features/quiz/presentation/pages/test_page.dart';
 import 'package:quiz_app/features/translation/presentation/pages/translation_page.dart';
+import 'package:quiz_app/features/translation/presentation/pages/translations_catalog_page.dart';
 
 import '../../core/presentation/pages/splash_page.dart';
 import '../../features/main/presentation/main_screen.dart';
@@ -73,6 +74,10 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.translation,
         builder: (context, state) => const TranslationPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.catalog,
+        builder: (context, state) => const TranslationsCatalogPage(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
