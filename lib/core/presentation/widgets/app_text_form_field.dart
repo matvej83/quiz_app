@@ -17,6 +17,7 @@ class AppTextFormField extends StatelessWidget {
     this.focusNode,
     this.unfocusOnTapOutside = true,
     this.inputFormatters,
+    this.maxLines,
   });
 
   final TextEditingController controller;
@@ -32,6 +33,7 @@ class AppTextFormField extends StatelessWidget {
   final FocusNode? focusNode;
   final bool unfocusOnTapOutside;
   final List<TextInputFormatter>? inputFormatters;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +48,7 @@ class AppTextFormField extends StatelessWidget {
       textAlignVertical: .center,
       inputFormatters: inputFormatters,
       style: textTheme.bodyMedium,
+      maxLines: maxLines,
       decoration:
           decoration ??
           InputDecoration(
