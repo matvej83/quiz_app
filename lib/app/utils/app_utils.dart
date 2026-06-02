@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:quiz_app/core/error/failure.dart';
@@ -30,19 +29,21 @@ class AppUtils {
     return jsonDecode(jsonString) as Map<String, dynamic>;
   }
 
-  static String parseError(String error) {
-    String errorText = error;
-    try {
-      final json = parseJson(error);
-      final code = json['code'];
-      final status = json['status'];
-      if (code == 503 && status == 'UNAVAILABLE') {
-        errorText = 'errors.modelUnavailable'.tr();
-      }
-      log(error);
-    } on Exception catch (e) {
-      log(e.toString());
+  static String parseGeminiError(Object e) {
+    final errorLog = e.toString();
+    String userMessage = 'errors.'.tr();
+
+    if (errorLog.contains('503') || errorLog.contains('UNAVAILABLE')) {
+      userMessage = 'errors.geminiErrors.serverUnavailable'.tr();
+    } else if (errorLog.contains('429') ||
+        errorLog.contains('RESOURCE_EXHAUSTED')) {
+      userMessage = 'errors.geminiErrors.limitReached'.tr();
+    } else if (errorLog.contains('403') ||
+        errorLog.contains('PERMISSION_DENIED')) {
+      userMessage = 'errors.geminiErrors.permissionDenied'.tr();
+    } else if (e is FormatException) {
+      userMessage = 'errors.geminiErrors.formatException'.tr();
     }
-    return errorText;
+    return userMessage;
   }
 }
