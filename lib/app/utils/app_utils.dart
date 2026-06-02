@@ -31,16 +31,18 @@ class AppUtils {
   }
 
   static String parseError(String error) {
+    String errorText = error;
     try {
       final json = parseJson(error);
       final code = json['code'];
       final status = json['status'];
       if (code == 503 && status == 'UNAVAILABLE') {
-        return 'errors.modelUnavailable'.tr();
+        errorText = 'errors.modelUnavailable'.tr();
       }
+      log(error);
     } on Exception catch (e) {
       log(e.toString());
     }
-    return error;
+    return errorText;
   }
 }

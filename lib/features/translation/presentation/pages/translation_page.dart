@@ -82,7 +82,9 @@ class _TranslationPageState extends State<TranslationPage> {
                     children: [
                       Text(currentText, style: theme.textTheme.titleLarge),
                       AppTextFormField(
+                        enabled: !isAnswered,
                         controller: controller,
+                        keyboardType: .multiline,
                         hintText: 'quizPage.inputTranslation'.tr(),
                       ),
                       ElevatedButton(
