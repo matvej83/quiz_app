@@ -125,7 +125,15 @@ class TestsPage extends StatelessWidget {
               context.read<TextCatalogCubit>().loadCatalog();
               context.push(AppRoutes.catalog);
             },
-            child: Text('testsPage.textTranslation'.tr(), style: textStyle),
+            child: Row(
+              mainAxisSize: .min,
+              spacing: 4.0,
+              children: [
+                Text('testsPage.textTranslation'.tr(), style: textStyle),
+                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
+                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
+              ],
+            ),
           ),
         ],
       ),
