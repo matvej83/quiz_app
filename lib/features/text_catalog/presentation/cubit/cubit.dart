@@ -12,9 +12,6 @@ class TextCatalogCubit extends Cubit<TextCatalogState> {
   final LoadCatalogUseCase loadCatalogUseCase;
 
   Future<void> loadCatalog() async {
-    if (state.translations.isNotEmpty) {
-      return;
-    }
     emit(state.copyWith(isLoading: true));
     final result = await loadCatalogUseCase.call(NoParams());
     result.fold(

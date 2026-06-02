@@ -13,12 +13,17 @@ class TextCatalogRepositoryImpl implements TextCatalogRepository {
   TextCatalogRepositoryImpl({required this.catalogLocalDataSource});
 
   final TextCatalogLocalDataSource catalogLocalDataSource;
+  List<TextEntity>? _cachedCatalog;
 
   @override
   Future<Either<Failure, List<TextEntity>>> loadData() async {
+    if (_cachedCatalog != null) {
+      return Right(_cachedCatalog!);
+    }
     try {
       final catalog = await catalogLocalDataSource.loadCatalog();
       final list = catalog?.map((e) => e.toEntity()).toList() ?? [];
+      _cachedCatalog = list;
       return Right(list);
     } catch (e) {
       return Left(mapExceptionToFailure(e));

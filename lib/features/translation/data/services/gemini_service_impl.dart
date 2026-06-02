@@ -54,8 +54,8 @@ Provide "reason" value as a text in russian language.
       final json = AppUtils.parseJson(text);
       return Right(TranslationCheckResultModel.fromJson(json).toEntity());
     } catch (e) {
-      final message = AppUtils.parseError(e.toString());
-      return Left(GeminiFailure(message: message));
+      final userMessage = AppUtils.parseGeminiError(e);
+      return Left(GeminiFailure(message: userMessage));
     }
   }
 }
