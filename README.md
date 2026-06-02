@@ -16,5 +16,10 @@ You may obtain a copy of the License at:
 
 http://www.apache.org/licenses/LICENSE-2.0
 
-Dataset:
+### Dataset
+
 https://huggingface.co/datasets/KvaytG/en-ru-filtered-dict-20m-corpus
+
+### Third-Party Libraries
+
+- google_generative_ai (Apache License 2.0, Copyright Google LLC)
