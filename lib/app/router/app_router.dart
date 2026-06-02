@@ -8,6 +8,7 @@ import 'package:quiz_app/features/history/presentation/pages/history_page.dart';
 import 'package:quiz_app/features/main/presentation/pages/tests_page.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/pages/create_profile_page.dart';
+import 'package:quiz_app/features/profile/presentation/pages/licences_page.dart';
 import 'package:quiz_app/features/quiz/presentation/pages/quiz_page.dart';
 import 'package:quiz_app/features/quiz/presentation/pages/test_page.dart';
 import 'package:quiz_app/features/text_catalog/presentation/pages/text_catalog_page.dart';
@@ -78,6 +79,10 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.catalog,
         builder: (context, state) => const TextCatalogPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.licenses,
+        builder: (context, state) => const LicensesPage(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

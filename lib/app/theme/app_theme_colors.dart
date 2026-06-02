@@ -20,9 +20,6 @@ class AppThemeColors {
     required this.fieldBorderDisabled,
     required this.primaryText,
     required this.secondaryText,
-    required this.iconButtonBackground,
-    required this.iconButtonBackgroundActive,
-    required this.iconButtonBackgroundReset,
     required this.cardBackground,
   });
 
@@ -42,9 +39,6 @@ class AppThemeColors {
   final Color fieldBorderDisabled;
   final Color primaryText;
   final Color secondaryText;
-  final Color iconButtonBackground;
-  final Color iconButtonBackgroundActive;
-  final Color iconButtonBackgroundReset;
   final Color cardBackground;
 
   static AppThemeColors fromMode(AppThemeMode mode) {
@@ -73,9 +67,6 @@ class AppThemeColors {
     fieldBorderDisabled: Colors.blueGrey,
     primaryText: Colors.black,
     secondaryText: Colors.grey.shade600,
-    iconButtonBackground: Colors.grey.shade300,
-    iconButtonBackgroundActive: Colors.blue,
-    iconButtonBackgroundReset: Colors.grey.shade400,
     cardBackground: Colors.grey.shade300,
   );
 
@@ -96,9 +87,6 @@ class AppThemeColors {
     fieldBorderDisabled: Colors.blueGrey,
     primaryText: Colors.white,
     secondaryText: Colors.grey.shade400,
-    iconButtonBackground: Colors.grey.shade800,
-    iconButtonBackgroundActive: Colors.blue,
-    iconButtonBackgroundReset: Colors.grey.shade700,
     cardBackground: Colors.grey.shade700,
   );
 }

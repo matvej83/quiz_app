@@ -137,7 +137,6 @@ class _AppCalendarState extends State<AppCalendar> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              style: IconButton.styleFrom(backgroundColor: Colors.transparent),
               icon: const Icon(Icons.arrow_left),
               onPressed: () => _changeMonth(-1),
             ),
@@ -155,7 +154,6 @@ class _AppCalendarState extends State<AppCalendar> {
               ],
             ),
             IconButton(
-              style: IconButton.styleFrom(backgroundColor: Colors.transparent),
               icon: const Icon(Icons.arrow_right),
               onPressed: () => _changeMonth(1),
             ),

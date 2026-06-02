@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../app/constants/app_constants.dart';
 import '../../enums/app_enums.dart';
 import '../../features/dictionary/data/database/app_database.dart';
@@ -24,7 +26,7 @@ extension TranslationTypeX on TranslationType {
   };
 }
 
-extension NormalizeString on String {
+extension StringX on String {
   String normalize() => trim().toLowerCase();
 }
 
@@ -32,4 +34,10 @@ extension DateX on DateTime {
   bool isSameDay(DateTime other) {
     return year == other.year && month == other.month && day == other.day;
   }
+}
+
+extension ThemeDataX on ThemeData {
+  bool isDark() => brightness == Brightness.dark;
+
+  bool isLight() => brightness == Brightness.light;
 }

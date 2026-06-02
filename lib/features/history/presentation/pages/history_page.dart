@@ -36,7 +36,6 @@ class _HistoryPageState extends State<HistoryPage> {
         leading: const AppBackButton(),
         actions: [
           IconButton(
-            style: IconButton.styleFrom(backgroundColor: Colors.transparent),
             onPressed: () {
               final now = DateTime.now();
               cubit.loadMonthHistory(year: now.year, month: now.month);

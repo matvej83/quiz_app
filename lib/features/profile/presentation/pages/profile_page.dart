@@ -71,7 +71,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPressed: () {
                   context.push(AppRoutes.history);
                 },
-                child: Text('historyPage.screenName'.tr()),
+                child: Row(
+                  spacing: 4.0,
+                  mainAxisSize: .min,
+                  children: [
+                    Text('historyPage.screenName'.tr()),
+                    Icon(
+                      Icons.history_outlined,
+                      color: theme.colorScheme.primary,
+                    ),
+                  ],
+                ),
               ),
               TextButton(
                 style: TextButton.styleFrom(
@@ -91,6 +101,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   }
                 },
                 child: Text('profilePage.btnRemoveProfile'.tr()),
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: theme.colorScheme.primary,
+                ),
+                onPressed: () {
+                  context.push(AppRoutes.licenses);
+                },
+                child: const Text('Open Source Licenses'),
               ),
             ],
           ),

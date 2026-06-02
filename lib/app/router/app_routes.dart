@@ -4,6 +4,7 @@ class AppRoutes {
   static const history = '/history';
   static const catalog = '/catalog';
   static const translation = '/translation';
+  static const licenses = '/licenses';
   static const translate = 'translate';
   static const flashcards = 'flashcards';
   static const test = 'test';
