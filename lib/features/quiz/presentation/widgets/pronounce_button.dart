@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/utils/extensions.dart';
+
 class PronounceButton extends StatelessWidget {
   const PronounceButton({super.key, required this.onTap});
 
@@ -7,6 +9,15 @@ class PronounceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(onPressed: onTap, icon: const Icon(Icons.mic));
+    final theme = Theme.of(context);
+    return IconButton(
+      style: IconButton.styleFrom(
+        backgroundColor: theme.isDark()
+            ? Colors.grey.shade800
+            : Colors.grey.shade400,
+      ),
+      onPressed: onTap,
+      icon: const Icon(Icons.mic),
+    );
   }
 }

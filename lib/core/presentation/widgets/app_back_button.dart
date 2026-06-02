@@ -7,7 +7,6 @@ class AppBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BackButton(
-      style: IconButton.styleFrom(backgroundColor: Colors.transparent),
       onPressed: () {
         if (context.canPop()) {
           context.pop();

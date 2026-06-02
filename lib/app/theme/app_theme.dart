@@ -171,7 +171,7 @@ class AppTheme {
           style: IconButton.styleFrom(
             shape: RoundedRectangleBorder(borderRadius: .circular(8.0)),
             padding: const .all(8.0),
-            backgroundColor: appColors.iconButtonBackground,
+            backgroundColor: appColors.surfaceTint,
             elevation: 0,
             shadowColor: appColors.surfaceTint,
             surfaceTintColor: appColors.surfaceTint,
@@ -373,7 +373,7 @@ class AppTheme {
           style: IconButton.styleFrom(
             shape: RoundedRectangleBorder(borderRadius: .circular(8.0)),
             padding: const .all(8.0),
-            backgroundColor: appColors.iconButtonBackground,
+            backgroundColor: appColors.surfaceTint,
             elevation: 0,
             shadowColor: appColors.surfaceTint,
             surfaceTintColor: appColors.surfaceTint,
