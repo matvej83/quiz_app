@@ -16,7 +16,8 @@
     "translate": "Перевод слов",
     "flashcards": "Карточки",
     "test": "Тест",
-    "textTranslation": "Перевод текста"
+    "translation": "Перевод текста",
+    "listening": "Аудирование"
   },
   "quizPage": {
     "inputTranslation": "Введите перевод",
@@ -51,6 +52,12 @@
     "screenName": "Перевод текста",
     "estimation": "Оценка",
     "correctTranslation": "Правильный перевод"
+  },
+  "listeningPage": {
+    "screenName": " Аудирование",
+    "inputWord": " Введите услышанное",
+    "listenAndWrite": "Прослушайте слово и запишите его",
+    "listeningCompleted": "Аудирование завершено!"
   },
   "calendar": {
     "trainingDays": "Дни тренировок"

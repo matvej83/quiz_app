@@ -9,6 +9,7 @@ import 'package:quiz_app/enums/app_enums.dart';
 import 'package:quiz_app/features/quiz/presentation/cubit/cubit.dart';
 
 import '../../../text_catalog/presentation/cubit/cubit.dart';
+import '../widgets/test_item.dart';
 
 class TestsPage extends StatelessWidget {
   const TestsPage({super.key});
@@ -16,7 +17,7 @@ class TestsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textStyle = theme.textTheme.bodyMedium;
+    final textStyle = theme.textTheme.bodyLarge;
     return ColoredBox(
       color: theme.scaffoldBackgroundColor,
       child: Column(
@@ -24,101 +25,44 @@ class TestsPage extends StatelessWidget {
         crossAxisAlignment: .stretch,
         spacing: 16.0,
         children: [
-          OutlinedButton(
-            onPressed: () {
+          TestItem(
+            title: 'testsPage.translate'.tr(),
+            onLeftTap: () {
               context.read<QuizCubit>().loadWords(type: TranslationType.enRu);
               context.go('${AppRoutes.tests}/${AppRoutes.translate}');
             },
-            child: Row(
-              mainAxisSize: .min,
-              spacing: 4.0,
-              children: [
-                Text('testsPage.translate'.tr(), style: textStyle),
-                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
-                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
-              ],
-            ),
-          ),
-          OutlinedButton(
-            onPressed: () {
+            onRightTap: () {
               context.read<QuizCubit>().loadWords(type: TranslationType.ruEn);
               context.go('${AppRoutes.tests}/${AppRoutes.translate}');
             },
-            child: Row(
-              mainAxisSize: .min,
-              spacing: 4.0,
-              children: [
-                Text('testsPage.translate'.tr(), style: textStyle),
-                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
-                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
-              ],
-            ),
           ),
-          OutlinedButton(
-            onPressed: () {
+          TestItem(
+            title: 'testsPage.flashcards'.tr(),
+            onLeftTap: () {
               context.read<QuizCubit>().loadWords(type: TranslationType.enRu);
               context.go('${AppRoutes.tests}/${AppRoutes.flashcards}');
             },
-            child: Row(
-              mainAxisSize: .min,
-              spacing: 4.0,
-              children: [
-                Text('testsPage.flashcards'.tr(), style: textStyle),
-                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
-                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
-              ],
-            ),
-          ),
-          OutlinedButton(
-            onPressed: () {
+            onRightTap: () {
               context.read<QuizCubit>().loadWords(type: TranslationType.ruEn);
               context.go('${AppRoutes.tests}/${AppRoutes.flashcards}');
             },
-            child: Row(
-              mainAxisSize: .min,
-              spacing: 4.0,
-              children: [
-                Text('testsPage.flashcards'.tr(), style: textStyle),
-                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
-                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
-              ],
-            ),
           ),
-          OutlinedButton(
-            onPressed: () {
+          TestItem(
+            title: 'testsPage.test'.tr(),
+            onLeftTap: () {
               context.read<QuizCubit>().loadWords(
                 type: TranslationType.enRu,
                 loadAdditionalWords: true,
               );
               context.go('${AppRoutes.tests}/${AppRoutes.test}');
             },
-            child: Row(
-              mainAxisSize: .min,
-              spacing: 4.0,
-              children: [
-                Text('testsPage.test'.tr(), style: textStyle),
-                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
-                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
-              ],
-            ),
-          ),
-          OutlinedButton(
-            onPressed: () {
+            onRightTap: () {
               context.read<QuizCubit>().loadWords(
                 type: TranslationType.ruEn,
                 loadAdditionalWords: true,
               );
               context.go('${AppRoutes.tests}/${AppRoutes.test}');
             },
-            child: Row(
-              mainAxisSize: .min,
-              spacing: 4.0,
-              children: [
-                Text('testsPage.test'.tr(), style: textStyle),
-                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
-                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
-              ],
-            ),
           ),
           OutlinedButton(
             onPressed: () {
@@ -129,11 +73,18 @@ class TestsPage extends StatelessWidget {
               mainAxisSize: .min,
               spacing: 4.0,
               children: [
-                Text('testsPage.textTranslation'.tr(), style: textStyle),
+                Text('testsPage.translation'.tr(), style: textStyle),
                 SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
                 SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
               ],
             ),
+          ),
+          OutlinedButton(
+            onPressed: () {
+              context.read<QuizCubit>().loadWords(type: TranslationType.ruEn);
+              context.go('${AppRoutes.tests}/${AppRoutes.listening}');
+            },
+            child: Text('listeningPage.screenName'.tr(), style: textStyle),
           ),
         ],
       ),

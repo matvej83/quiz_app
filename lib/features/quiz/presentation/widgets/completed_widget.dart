@@ -10,6 +10,7 @@ class CompletedWidget extends StatefulWidget {
   const CompletedWidget({
     super.key,
     required this.cup,
+    this.completedText,
     required this.correctAnswers,
     required this.incorrectAnswers,
     required this.totalQuestions,
@@ -17,6 +18,7 @@ class CompletedWidget extends StatefulWidget {
   });
 
   final String cup;
+  final String? completedText;
   final int correctAnswers;
   final int incorrectAnswers;
   final int totalQuestions;
@@ -55,7 +57,7 @@ class _CompletedWidgetState extends State<CompletedWidget> {
           children: [
             Image.asset(widget.cup, height: 120.0),
             Text(
-              '${'quizPage.congrats'.tr()}\n${'quizPage.quizCompleted'.tr()}',
+              '${'quizPage.congrats'.tr()}\n${widget.completedText ?? 'quizPage.quizCompleted'.tr()}',
               style: theme.textTheme.headlineSmall,
               textAlign: .center,
             ),

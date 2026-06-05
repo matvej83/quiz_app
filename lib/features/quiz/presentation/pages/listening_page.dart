@@ -1,19 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz_app/core/presentation/widgets/app_text_form_field.dart';
-import 'package:quiz_app/core/utils/extensions.dart';
-import 'package:quiz_app/features/quiz/presentation/widgets/answer_result.dart';
-import 'package:quiz_app/features/quiz/presentation/widgets/completed_widget.dart';
-import 'package:quiz_app/features/quiz/presentation/widgets/word_with_pronounce.dart';
+import 'package:quiz_app/app/constants/app_constants.dart';
 
+import '../../../../core/presentation/widgets/app_text_form_field.dart';
+import '../../../../core/utils/extensions.dart';
 import '../../../../enums/app_enums.dart';
 import '../../../history/presentation/cubit/cubit.dart';
 import '../cubit/cubit.dart';
+import '../widgets/answer_result.dart';
+import '../widgets/completed_widget.dart';
 import '../widgets/page_wrapper.dart';
+import '../widgets/pronounce_button.dart';
 
-class QuizPage extends StatelessWidget {
-  const QuizPage({super.key});
+class ListeningPage extends StatelessWidget {
+  const ListeningPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +29,13 @@ class QuizPage extends StatelessWidget {
         );
         return CompletedWidget(
           cup: cup,
+          completedText: 'listeningPage.listeningCompleted'.tr(),
           correctAnswers: state.correctAnswers,
           incorrectAnswers: state.totalQuestions - state.correctAnswers,
           totalQuestions: state.totalQuestions,
           onTap: () {
             context.read<HistoryCubit>().addHistoryItem(
-              testType: TestType.translate,
+              testType: TestType.listening,
               correctAnswers: state.correctAnswers,
               totalAnswers: state.totalQuestions,
             );
@@ -49,16 +51,24 @@ class QuizPage extends StatelessWidget {
             mainAxisAlignment: .center,
             spacing: 16.0,
             children: [
-              WordWithPronounce(
-                word: current.questionFor(cubit.type),
-                language: cubit.type.questionFor,
+              Text(
+                'listeningPage.listenAndWrite'.tr(),
+                style: theme.textTheme.bodyMedium,
+              ),
+              PronounceButton(
+                onTap: () {
+                  cubit.pronounceWord(
+                    current.englishWord,
+                    language: AppConstants.enLocale,
+                  );
+                },
               ),
               AppTextFormField(
                 enabled: !state.answered,
                 controller: controller,
                 keyboardType: .text,
                 decoration: InputDecoration(
-                  hintText: 'quizPage.inputTranslation'.tr(),
+                  hintText: 'listeningPage.inputWord'.tr(),
                 ),
               ),
               if (!state.answered)
