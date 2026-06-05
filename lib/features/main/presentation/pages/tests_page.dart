@@ -73,7 +73,7 @@ class TestsPage extends StatelessWidget {
               mainAxisSize: .min,
               spacing: 4.0,
               children: [
-                Text('testsPage.textTranslation'.tr(), style: textStyle),
+                Text('testsPage.translation'.tr(), style: textStyle),
                 SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
                 SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
               ],

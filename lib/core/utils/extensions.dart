@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/constants/app_constants.dart';
@@ -40,4 +41,14 @@ extension ThemeDataX on ThemeData {
   bool isDark() => brightness == Brightness.dark;
 
   bool isLight() => brightness == Brightness.light;
+}
+
+extension TestTypeX on TestType {
+  String translateToRu() => switch (this) {
+    TestType.test => 'testsPage.test'.tr(),
+    TestType.translate => 'testsPage.translate'.tr(),
+    TestType.flashcards => 'testsPage.flashcards'.tr(),
+    TestType.translation => 'testsPage.translation'.tr(),
+    TestType.listening => 'testsPage.listening'.tr(),
+  };
 }

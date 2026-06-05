@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/presentation/widgets/app_loader.dart';
+import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/enums/app_enums.dart';
 
 import '../../domain/entity/history_entity.dart';
@@ -117,7 +118,7 @@ class HistoryItem extends StatelessWidget {
           crossAxisAlignment: .start,
           children: [
             Text(
-              '${'historyPage.testType'.tr()}: ${history.testType.name}',
+              '${'historyPage.testType'.tr()}: ${history.testType.translateToRu()}',
               style: style,
             ),
             Text(
