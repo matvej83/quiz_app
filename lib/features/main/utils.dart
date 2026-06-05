@@ -14,7 +14,10 @@ class MainScreenUtils {
         return 'testsPage.flashcards'.tr();
       }
       if (location.pathSegments.last == AppRoutes.test) {
-        return 'Тест';
+        return 'testsPage.test'.tr();
+      }
+      if (location.pathSegments.last == AppRoutes.listening) {
+        return 'testsPage.listening'.tr();
       }
     }
     return switch (location.toString()) {

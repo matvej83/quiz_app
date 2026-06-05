@@ -8,6 +8,7 @@ class AppRoutes {
   static const translate = 'translate';
   static const flashcards = 'flashcards';
   static const test = 'test';
+  static const listening = 'listening';
 
   /// Shell routes
   static const tests = '/tests';

@@ -26,7 +26,7 @@ class AppTheme {
           titleLarge: TextStyle(color: appColors.primaryText),
           titleMedium: TextStyle(color: appColors.primaryText),
           titleSmall: TextStyle(color: appColors.primaryText),
-          bodyLarge: TextStyle(color: appColors.secondaryText),
+          bodyLarge: TextStyle(color: appColors.primaryText),
           bodyMedium: TextStyle(color: appColors.secondaryText),
           bodySmall: TextStyle(color: appColors.secondaryText),
           labelLarge: TextStyle(color: appColors.secondaryText),
@@ -81,6 +81,7 @@ class AppTheme {
             borderSide: BorderSide(color: appColors.error, width: 2.0),
           ),
           errorStyle: TextStyle(color: appColors.error),
+          hintStyle: TextStyle(color: appColors.secondaryText),
           labelStyle: WidgetStateTextStyle.resolveWith((states) {
             if (states.contains(WidgetState.error)) {
               return TextStyle(color: appColors.error);
@@ -229,7 +230,7 @@ class AppTheme {
           titleLarge: TextStyle(color: appColors.primaryText),
           titleMedium: TextStyle(color: appColors.primaryText),
           titleSmall: TextStyle(color: appColors.primaryText),
-          bodyLarge: TextStyle(color: appColors.secondaryText),
+          bodyLarge: TextStyle(color: appColors.primaryText),
           bodyMedium: TextStyle(color: appColors.secondaryText),
           bodySmall: TextStyle(color: appColors.secondaryText),
           labelLarge: TextStyle(color: appColors.secondaryText),
@@ -283,6 +284,7 @@ class AppTheme {
             borderSide: BorderSide(color: appColors.error, width: 2.0),
           ),
           errorStyle: TextStyle(color: appColors.error),
+          hintStyle: TextStyle(color: appColors.secondaryText),
           labelStyle: WidgetStateTextStyle.resolveWith((states) {
             if (states.contains(WidgetState.error)) {
               return TextStyle(color: appColors.error);
