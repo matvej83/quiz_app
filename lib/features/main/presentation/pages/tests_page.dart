@@ -18,76 +18,98 @@ class TestsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textStyle = theme.textTheme.bodyLarge;
-    return ColoredBox(
-      color: theme.scaffoldBackgroundColor,
-      child: Column(
-        mainAxisAlignment: .center,
-        crossAxisAlignment: .stretch,
-        spacing: 16.0,
-        children: [
-          TestItem(
-            title: 'testsPage.translate'.tr(),
-            onLeftTap: () {
-              context.read<QuizCubit>().loadWords(type: TranslationType.enRu);
-              context.go('${AppRoutes.tests}/${AppRoutes.translate}');
-            },
-            onRightTap: () {
-              context.read<QuizCubit>().loadWords(type: TranslationType.ruEn);
-              context.go('${AppRoutes.tests}/${AppRoutes.translate}');
-            },
-          ),
-          TestItem(
-            title: 'testsPage.flashcards'.tr(),
-            onLeftTap: () {
-              context.read<QuizCubit>().loadWords(type: TranslationType.enRu);
-              context.go('${AppRoutes.tests}/${AppRoutes.flashcards}');
-            },
-            onRightTap: () {
-              context.read<QuizCubit>().loadWords(type: TranslationType.ruEn);
-              context.go('${AppRoutes.tests}/${AppRoutes.flashcards}');
-            },
-          ),
-          TestItem(
-            title: 'testsPage.test'.tr(),
-            onLeftTap: () {
-              context.read<QuizCubit>().loadWords(
-                type: TranslationType.enRu,
-                loadAdditionalWords: true,
-              );
-              context.go('${AppRoutes.tests}/${AppRoutes.test}');
-            },
-            onRightTap: () {
-              context.read<QuizCubit>().loadWords(
-                type: TranslationType.ruEn,
-                loadAdditionalWords: true,
-              );
-              context.go('${AppRoutes.tests}/${AppRoutes.test}');
-            },
-          ),
-          OutlinedButton(
-            onPressed: () {
-              context.read<TextCatalogCubit>().loadCatalog();
-              context.push(AppRoutes.catalog);
-            },
-            child: Row(
-              mainAxisSize: .min,
-              spacing: 4.0,
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Container(
+            height: constraints.maxHeight,
+            color: theme.scaffoldBackgroundColor,
+            child: Column(
+              mainAxisAlignment: .center,
+              crossAxisAlignment: .stretch,
+              spacing: 16.0,
               children: [
-                Text('testsPage.translation'.tr(), style: textStyle),
-                SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
-                SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
+                TestItem(
+                  title: 'testsPage.translate'.tr(),
+                  onLeftTap: () {
+                    context.read<QuizCubit>().loadWords(
+                      type: TranslationType.enRu,
+                    );
+                    context.go('${AppRoutes.tests}/${AppRoutes.translate}');
+                  },
+                  onRightTap: () {
+                    context.read<QuizCubit>().loadWords(
+                      type: TranslationType.ruEn,
+                    );
+                    context.go('${AppRoutes.tests}/${AppRoutes.translate}');
+                  },
+                ),
+                TestItem(
+                  title: 'testsPage.flashcards'.tr(),
+                  onLeftTap: () {
+                    context.read<QuizCubit>().loadWords(
+                      type: TranslationType.enRu,
+                    );
+                    context.go('${AppRoutes.tests}/${AppRoutes.flashcards}');
+                  },
+                  onRightTap: () {
+                    context.read<QuizCubit>().loadWords(
+                      type: TranslationType.ruEn,
+                    );
+                    context.go('${AppRoutes.tests}/${AppRoutes.flashcards}');
+                  },
+                ),
+                TestItem(
+                  title: 'testsPage.test'.tr(),
+                  onLeftTap: () {
+                    context.read<QuizCubit>().loadWords(
+                      type: TranslationType.enRu,
+                      loadAdditionalWords: true,
+                    );
+                    context.go('${AppRoutes.tests}/${AppRoutes.test}');
+                  },
+                  onRightTap: () {
+                    context.read<QuizCubit>().loadWords(
+                      type: TranslationType.ruEn,
+                      loadAdditionalWords: true,
+                    );
+                    context.go('${AppRoutes.tests}/${AppRoutes.test}');
+                  },
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    context.read<TextCatalogCubit>().loadCatalog();
+                    context.push(AppRoutes.catalog);
+                  },
+                  child: Row(
+                    mainAxisSize: .min,
+                    spacing: 4.0,
+                    children: [
+                      Text('testsPage.translation'.tr(), style: textStyle),
+                      SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
+                      SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
+                    ],
+                  ),
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    context.read<QuizCubit>().loadWords(
+                      type: TranslationType.ruEn,
+                    );
+                    context.go('${AppRoutes.tests}/${AppRoutes.listening}');
+                  },
+                  child: Text(
+                    'listeningPage.screenName'.tr(),
+                    style: textStyle,
+                  ),
+                ),
               ],
             ),
           ),
-          OutlinedButton(
-            onPressed: () {
-              context.read<QuizCubit>().loadWords(type: TranslationType.ruEn);
-              context.go('${AppRoutes.tests}/${AppRoutes.listening}');
-            },
-            child: Text('listeningPage.screenName'.tr(), style: textStyle),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
