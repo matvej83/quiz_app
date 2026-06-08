@@ -47,6 +47,7 @@ class _CompletedWidgetState extends State<CompletedWidget> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final semanticColors = theme.extension<AppSemanticColors>();
+    final completedText = widget.completedText ?? 'quizPage.quizCompleted'.tr();
     return Stack(
       alignment: .center,
       children: [
@@ -57,7 +58,7 @@ class _CompletedWidgetState extends State<CompletedWidget> {
           children: [
             Image.asset(widget.cup, height: 120.0),
             Text(
-              '${'quizPage.congrats'.tr()}\n${widget.completedText ?? 'quizPage.quizCompleted'.tr()}',
+              '${'quizPage.congrats'.tr()}\n$completedText',
               style: theme.textTheme.headlineSmall,
               textAlign: .center,
             ),

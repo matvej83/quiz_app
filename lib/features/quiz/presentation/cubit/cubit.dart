@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:quiz_app/app/constants/asset_paths.dart';
 import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/enums/app_enums.dart';
+import 'package:vibration/vibration.dart';
 
 import '../../../dictionary/data/data_sources/dictionary_local_data_source.dart';
 import '../../../dictionary/data/database/app_database.dart';
@@ -77,12 +78,17 @@ class QuizCubit extends Cubit<QuizState> {
     return answers;
   }
 
-  void checkAnswer(String userAnswer, {bool goToNext = false}) {
+  Future<void> checkAnswer(String userAnswer, {bool goToNext = false}) async {
     if (state is! QuizLoaded) return;
     final loadedState = state as QuizLoaded;
     final currentWord = loadedState.words[loadedState.currentIndex];
     final correctAnswer = currentWord.answerFor(type).normalize();
     final isCorrect = userAnswer.normalize() == correctAnswer;
+    if (!isCorrect) {
+      if (await Vibration.hasVibrator()) {
+        Vibration.vibrate();
+      }
+    }
     emit(
       loadedState.copyWith(
         answered: true,
@@ -91,7 +97,7 @@ class QuizCubit extends Cubit<QuizState> {
       ),
     );
     if (goToNext) {
-      Future.delayed(const Duration(seconds: 3), () {
+      Future.delayed(const Duration(seconds: 2), () {
         nextQuestion(loadAdditionalWords: true);
       });
     }
