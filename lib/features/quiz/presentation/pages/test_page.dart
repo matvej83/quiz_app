@@ -28,6 +28,7 @@ class TestPage extends StatelessWidget {
           correct: state.correctAnswers,
         );
         return CompletedWidget(
+          completedText: 'testPage.testCompleted'.tr(),
           cup: cup,
           correctAnswers: state.correctAnswers,
           incorrectAnswers: state.totalQuestions - state.correctAnswers,

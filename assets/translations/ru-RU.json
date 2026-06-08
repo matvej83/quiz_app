@@ -33,7 +33,8 @@
   "testPage": {
     "selectAnswer": "Выберите ответ",
     "correct": "Верно",
-    "incorrect": "Неверно"
+    "incorrect": "Неверно",
+    "testCompleted": "Тест завершен!"
   },
   "flashcardPage": {
     "ready": "Готово"

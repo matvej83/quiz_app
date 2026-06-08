@@ -27,4 +27,5 @@ const _$TestTypeEnumMap = {
   TestType.translate: 'translate',
   TestType.flashcards: 'flashcards',
   TestType.translation: 'translation',
+  TestType.listening: 'listening',
 };

@@ -21,33 +21,37 @@ class TestItem extends StatelessWidget {
     return ExpandableContainer(
       header: Text(title),
       body: Padding(
-        padding: const .symmetric(vertical: 8.0),
+        padding: const .all(8.0),
         child: Row(
           spacing: 8.0,
           mainAxisAlignment: .center,
           children: [
             if (onLeftTap != null)
-              OutlinedButton(
-                onPressed: onLeftTap,
-                child: Row(
-                  mainAxisSize: .min,
-                  spacing: 4.0,
-                  children: [
-                    SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
-                    SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
-                  ],
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: onLeftTap,
+                  child: Row(
+                    mainAxisSize: .min,
+                    spacing: 4.0,
+                    children: [
+                      SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
+                      SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
+                    ],
+                  ),
                 ),
               ),
             if (onRightTap != null)
-              OutlinedButton(
-                onPressed: onRightTap,
-                child: Row(
-                  mainAxisSize: .min,
-                  spacing: 4.0,
-                  children: [
-                    SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
-                    SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
-                  ],
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: onRightTap,
+                  child: Row(
+                    mainAxisSize: .min,
+                    spacing: 4.0,
+                    children: [
+                      SvgPicture.asset(AssetPaths.flagRu, height: 20.0),
+                      SvgPicture.asset(AssetPaths.flagUs, height: 20.0),
+                    ],
+                  ),
                 ),
               ),
           ],

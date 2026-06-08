@@ -32,6 +32,7 @@ dependencies:
   easy_localization: ^3.0.8
   google_generative_ai: ^0.4.7
   package_info_plus: ^10.1.0
+  vibration: ^3.1.8
 
 dev_dependencies:
   flutter_test:
