@@ -10,18 +10,18 @@ import 'package:quiz_app/features/profile/presentation/cubit/state.dart';
 
 @lazySingleton
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit({
-    required this.fetchProfileUseCase,
-    required this.saveProfileUseCase,
-    required this.deleteProfileUseCase,
-  }) : super(const ProfileState());
-  final FetchProfileUseCase fetchProfileUseCase;
-  final SaveProfileUseCase saveProfileUseCase;
-  final DeleteProfileUseCase deleteProfileUseCase;
+  ProfileCubit(
+    this._fetchProfileUseCase,
+    this._saveProfileUseCase,
+    this._deleteProfileUseCase,
+  ) : super(const ProfileState());
+  final FetchProfileUseCase _fetchProfileUseCase;
+  final SaveProfileUseCase _saveProfileUseCase;
+  final DeleteProfileUseCase _deleteProfileUseCase;
 
   Future<void> loadProfile() async {
     emit(state.copyWith(isLoading: true));
-    final mode = await fetchProfileUseCase(NoParams());
+    final mode = await _fetchProfileUseCase(NoParams());
     mode.fold(
       (l) {
         emit(
@@ -44,12 +44,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   }) async {
     emit(state.copyWith(isLoading: true));
     final profile = ProfileEntity(firstName: firstName, lastName: lastName);
-    await saveProfileUseCase(ProfileParams(profile: profile));
+    await _saveProfileUseCase(ProfileParams(profile: profile));
     emit(state.copyWith(profile: profile, isLoading: false, success: true));
   }
 
   Future<void> deleteProfile() async {
-    await deleteProfileUseCase(NoParams());
+    await _deleteProfileUseCase(NoParams());
     emit(
       state.copyWith(
         profile: const ProfileEntity(firstName: '', lastName: ''),

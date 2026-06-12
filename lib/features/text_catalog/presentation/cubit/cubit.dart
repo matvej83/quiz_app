@@ -7,13 +7,12 @@ import '../../domain/usecases/load_catalog_usecase.dart';
 
 @lazySingleton
 class TextCatalogCubit extends Cubit<TextCatalogState> {
-  TextCatalogCubit({required this.loadCatalogUseCase})
-    : super(const TextCatalogState());
-  final LoadCatalogUseCase loadCatalogUseCase;
+  TextCatalogCubit(this._loadCatalogUseCase) : super(const TextCatalogState());
+  final LoadCatalogUseCase _loadCatalogUseCase;
 
   Future<void> loadCatalog() async {
     emit(state.copyWith(isLoading: true));
-    final result = await loadCatalogUseCase.call(NoParams());
+    final result = await _loadCatalogUseCase.call(NoParams());
     result.fold(
       (l) {
         emit(state.copyWith(translations: [], isLoading: false));

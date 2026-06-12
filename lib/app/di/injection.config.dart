@@ -135,12 +135,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i631.GeminiService>(
       () => _i192.GeminiServiceImpl(gh<_i656.GenerativeModel>()),
     );
-    gh.lazySingleton<_i936.QuizCubit>(
-      () => _i936.QuizCubit(
-        gh<_i66.DictionaryLocalDataSource>(),
-        gh<_i192.TtsService>(),
-      ),
-    );
     gh.lazySingleton<_i457.DictionaryService>(
       () => _i457.DictionaryService(gh<_i976.DictionaryAssetDataSource>()),
     );
@@ -157,6 +151,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i37.ThemeRepository>(
       () => _i496.ThemeRepositoryImpl(
         themeLocalDataSource: gh<_i593.ThemeLocalDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i936.QuizCubit>(
+      () => _i936.QuizCubit(
+        gh<_i66.DictionaryLocalDataSource>(),
+        gh<_i192.TtsService>(),
       ),
     );
     gh.lazySingleton<_i519.DeleteProfileUseCase>(
@@ -198,29 +198,25 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1051.SaveHistoryUseCase>(
       () => _i1051.SaveHistoryUseCase(gh<_i427.HistoryRepository>()),
     );
-    gh.lazySingleton<_i61.HistoryCubit>(
-      () => _i61.HistoryCubit(
-        fetchHistoryUseCase: gh<_i876.FetchHistoryUseCase>(),
-        fetchMonthHistoryUseCase: gh<_i173.FetchMonthHistoryUseCase>(),
-        saveHistoryUseCase: gh<_i1051.SaveHistoryUseCase>(),
-        deleteHistoryUseCase: gh<_i471.DeleteHistoryUseCase>(),
-      ),
-    );
     gh.lazySingleton<_i998.TranslationCubit>(
-      () => _i998.TranslationCubit(
-        checkTranslationUseCase: gh<_i806.CheckTranslationUseCase>(),
-      ),
+      () => _i998.TranslationCubit(gh<_i806.CheckTranslationUseCase>()),
     );
     gh.lazySingleton<_i25.TextCatalogCubit>(
-      () => _i25.TextCatalogCubit(
-        loadCatalogUseCase: gh<_i912.LoadCatalogUseCase>(),
+      () => _i25.TextCatalogCubit(gh<_i912.LoadCatalogUseCase>()),
+    );
+    gh.lazySingleton<_i61.HistoryCubit>(
+      () => _i61.HistoryCubit(
+        gh<_i876.FetchHistoryUseCase>(),
+        gh<_i173.FetchMonthHistoryUseCase>(),
+        gh<_i1051.SaveHistoryUseCase>(),
+        gh<_i471.DeleteHistoryUseCase>(),
       ),
     );
     gh.lazySingleton<_i504.ProfileCubit>(
       () => _i504.ProfileCubit(
-        fetchProfileUseCase: gh<_i89.FetchProfileUseCase>(),
-        saveProfileUseCase: gh<_i235.SaveProfileUseCase>(),
-        deleteProfileUseCase: gh<_i519.DeleteProfileUseCase>(),
+        gh<_i89.FetchProfileUseCase>(),
+        gh<_i235.SaveProfileUseCase>(),
+        gh<_i519.DeleteProfileUseCase>(),
       ),
     );
     gh.lazySingleton<_i223.AppRouter>(

@@ -7,9 +7,9 @@ import '../../../../core/error/failure.dart';
 
 @lazySingleton
 class TranslationCubit extends Cubit<TranslationState> {
-  TranslationCubit({required this.checkTranslationUseCase})
+  TranslationCubit(this._checkTranslationUseCase)
     : super(const TranslationState());
-  final CheckTranslationUseCase checkTranslationUseCase;
+  final CheckTranslationUseCase _checkTranslationUseCase;
 
   Future<void> loadRussianText(List<String> text) async {
     emit(state.copyWith(russianText: text));
@@ -17,7 +17,7 @@ class TranslationCubit extends Cubit<TranslationState> {
 
   Future<void> check({required String userTranslation}) async {
     emit(state.copyWith(status: TranslationStatus.loading));
-    final result = await checkTranslationUseCase.call(
+    final result = await _checkTranslationUseCase.call(
       CheckTranslationParams(
         russianText: state.russianText[state.currentIndex],
         userTranslation: userTranslation,
