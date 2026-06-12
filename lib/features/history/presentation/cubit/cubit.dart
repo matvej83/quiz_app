@@ -13,16 +13,16 @@ import '../../domain/usecases/save_history_usecase.dart';
 
 @lazySingleton
 class HistoryCubit extends Cubit<HistoryState> {
-  HistoryCubit({
-    required this.fetchHistoryUseCase,
-    required this.fetchMonthHistoryUseCase,
-    required this.saveHistoryUseCase,
-    required this.deleteHistoryUseCase,
-  }) : super(const HistoryState());
-  final FetchHistoryUseCase fetchHistoryUseCase;
-  final FetchMonthHistoryUseCase fetchMonthHistoryUseCase;
-  final SaveHistoryUseCase saveHistoryUseCase;
-  final DeleteHistoryUseCase deleteHistoryUseCase;
+  HistoryCubit(
+    this._fetchHistoryUseCase,
+    this._fetchMonthHistoryUseCase,
+    this._saveHistoryUseCase,
+    this._deleteHistoryUseCase,
+  ) : super(const HistoryState());
+  final FetchHistoryUseCase _fetchHistoryUseCase;
+  final FetchMonthHistoryUseCase _fetchMonthHistoryUseCase;
+  final SaveHistoryUseCase _saveHistoryUseCase;
+  final DeleteHistoryUseCase _deleteHistoryUseCase;
 
   /// pagination data
   static const _pageSize = 10;
@@ -49,7 +49,7 @@ class HistoryCubit extends Cubit<HistoryState> {
     if (!loadSilent) {
       emit(state.copyWith(isLoading: true));
     }
-    final data = await fetchHistoryUseCase(
+    final data = await _fetchHistoryUseCase(
       FetchHistoryParams(limit: limit, offset: offset),
     );
 
@@ -70,7 +70,7 @@ class HistoryCubit extends Cubit<HistoryState> {
   }
 
   Future<void> loadMonthHistory({required int year, required int month}) async {
-    final data = await fetchMonthHistoryUseCase(
+    final data = await _fetchMonthHistoryUseCase(
       FetchMonthHistoryParams(year: year, month: month),
     );
 
@@ -92,7 +92,7 @@ class HistoryCubit extends Cubit<HistoryState> {
     if (_isLoading || !_hasMore) return;
     _isLoading = true;
     emit(state.copyWith(isShowLoader: true));
-    final mode = await fetchHistoryUseCase(
+    final mode = await _fetchHistoryUseCase(
       FetchHistoryParams(limit: _pageSize, offset: _offset),
     );
 
@@ -140,13 +140,13 @@ class HistoryCubit extends Cubit<HistoryState> {
       correctAnswers: correctAnswers,
       totalAnswers: totalAnswers,
     );
-    await saveHistoryUseCase(SaveHistoryParams(history: history));
+    await _saveHistoryUseCase(SaveHistoryParams(history: history));
     resetPaginationData();
     loadHistory();
   }
 
   Future<void> deleteHistory() async {
-    await deleteHistoryUseCase(NoParams());
+    await _deleteHistoryUseCase(NoParams());
     emit(state.copyWith(history: []));
   }
 }

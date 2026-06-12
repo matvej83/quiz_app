@@ -15,9 +15,9 @@ import 'state.dart';
 
 @lazySingleton
 class QuizCubit extends Cubit<QuizState> {
-  QuizCubit(this.dataSource, this.ttsService) : super(QuizInitial());
-  final DictionaryLocalDataSource dataSource;
-  final TtsService ttsService;
+  QuizCubit(this._dataSource, this._ttsService) : super(QuizInitial());
+  final DictionaryLocalDataSource _dataSource;
+  final TtsService _ttsService;
   TranslationType type = TranslationType.enRu;
 
   void loadWords({
@@ -28,11 +28,11 @@ class QuizCubit extends Cubit<QuizState> {
       List<String> additionalWords = [];
       List<String> answers = [];
       this.type = type;
-      await ttsService.setLanguage(type.questionFor);
+      await _ttsService.setLanguage(type.questionFor);
       emit(QuizLoading());
-      final words = await dataSource.getQuizWords(10);
+      final words = await _dataSource.getQuizWords(10);
       if (loadAdditionalWords) {
-        final list = await dataSource.getWords(10);
+        final list = await _dataSource.getWords(10);
         additionalWords = getAdditionalWords(list);
         answers = getAnswers(
           current: words.first,
@@ -169,8 +169,8 @@ class QuizCubit extends Cubit<QuizState> {
 
   Future<void> pronounceWord(String word, {String? language}) async {
     if (language != null) {
-      await ttsService.setLanguage(language);
+      await _ttsService.setLanguage(language);
     }
-    await ttsService.speak(word);
+    await _ttsService.speak(word);
   }
 }
