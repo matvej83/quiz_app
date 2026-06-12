@@ -110,6 +110,7 @@ class HistoryItem extends StatelessWidget {
     final style = theme.textTheme.bodyMedium;
     final time = DateFormat.Hm().format(history.saved);
     final isTranslation = history.testType == TestType.translation;
+    final isFlashcards = history.testType == TestType.flashcards;
     return Card(
       child: Padding(
         padding: const .all(8.0),
@@ -122,13 +123,14 @@ class HistoryItem extends StatelessWidget {
               style: style,
             ),
             Text(
-              '${'historyPage.questionCount'.tr()}: ${history.totalAnswers}',
+              '${isFlashcards ? 'historyPage.cardsCount'.tr() : 'historyPage.questionCount'.tr()}: ${history.totalAnswers}',
               style: style,
             ),
-            Text(
-              '${isTranslation ? 'historyPage.score'.tr() : 'historyPage.correctAnswers'.tr()}: ${history.correctAnswers}',
-              style: style,
-            ),
+            if (!isFlashcards)
+              Text(
+                '${isTranslation ? 'historyPage.score'.tr() : 'historyPage.correctAnswers'.tr()}: ${history.correctAnswers}',
+                style: style,
+              ),
             Text(time, style: theme.textTheme.bodySmall),
           ],
         ),

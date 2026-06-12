@@ -76,6 +76,7 @@
     "screenName": "История",
     "testType": "Тип теста",
     "questionCount": "Количество вопросов",
+    "cardsCount": "Количество карточек",
     "correctAnswers": "Правильных ответов",
     "score": "Счет",
     "trainings": {
