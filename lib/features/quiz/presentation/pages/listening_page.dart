@@ -45,56 +45,65 @@ class ListeningPage extends StatelessWidget {
       onLoaded: (state) {
         final current = state.words[state.currentIndex];
         final controller = TextEditingController(text: state.userAnswer ?? '');
-        return Padding(
-          padding: const .all(16),
-          child: Column(
-            mainAxisAlignment: .center,
-            spacing: 16.0,
-            children: [
-              Text(
-                'listeningPage.listenAndWrite'.tr(),
-                style: theme.textTheme.bodyMedium,
-              ),
-              PronounceButton(
-                onTap: () {
-                  cubit.pronounceWord(
-                    current.englishWord,
-                    language: AppConstants.enLocale,
-                  );
-                },
-              ),
-              AppTextFormField(
-                enabled: !state.answered,
-                controller: controller,
-                keyboardType: .text,
-                decoration: InputDecoration(
-                  hintText: 'listeningPage.inputWord'.tr(),
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              padding: const .symmetric(horizontal: 16),
+              physics: const ClampingScrollPhysics(),
+              child: SizedBox(
+                height: constraints.maxHeight,
+                child: Column(
+                  mainAxisAlignment: .center,
+                  mainAxisSize: .max,
+                  spacing: 16.0,
+                  children: [
+                    Text(
+                      'listeningPage.listenAndWrite'.tr(),
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    PronounceButton(
+                      onTap: () {
+                        cubit.pronounceWord(
+                          current.englishWord,
+                          language: AppConstants.enLocale,
+                        );
+                      },
+                    ),
+                    AppTextFormField(
+                      enabled: !state.answered,
+                      controller: controller,
+                      keyboardType: .text,
+                      decoration: InputDecoration(
+                        hintText: 'listeningPage.inputWord'.tr(),
+                      ),
+                    ),
+                    if (!state.answered) ...[
+                      const SizedBox(height: 56.0),
+                      ElevatedButton(
+                        onPressed: () {
+                          cubit.checkAnswer(controller.text);
+                        },
+                        child: Text('quizPage.check'.tr()),
+                      ),
+                    ] else ...[
+                      AnswerResult(isCorrect: state.correct),
+                      Text(
+                        '${'quizPage.correctAnswer'.tr()}: ${current.answerFor(cubit.type)}',
+                      ),
+                      ElevatedButton(
+                        onPressed: cubit.nextQuestion,
+                        child: Text('quizPage.next'.tr()),
+                      ),
+                    ],
+                    Text(
+                      '${state.currentIndex + 1} / ${state.words.length}',
+                      style: theme.textTheme.bodyLarge,
+                    ),
+                  ],
                 ),
               ),
-              if (!state.answered) ...[
-                const SizedBox(height: 56.0),
-                ElevatedButton(
-                  onPressed: () {
-                    cubit.checkAnswer(controller.text);
-                  },
-                  child: Text('quizPage.check'.tr()),
-                ),
-              ] else ...[
-                AnswerResult(isCorrect: state.correct),
-                Text(
-                  '${'quizPage.correctAnswer'.tr()}: ${current.answerFor(cubit.type)}',
-                ),
-                ElevatedButton(
-                  onPressed: cubit.nextQuestion,
-                  child: Text('quizPage.next'.tr()),
-                ),
-              ],
-              Text(
-                '${state.currentIndex + 1} / ${state.words.length}',
-                style: theme.textTheme.bodyLarge,
-              ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
