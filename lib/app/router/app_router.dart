@@ -8,6 +8,7 @@ import 'package:quiz_app/features/history/presentation/pages/history_page.dart';
 import 'package:quiz_app/features/main/presentation/pages/tests_page.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/pages/create_profile_page.dart';
+import 'package:quiz_app/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:quiz_app/features/profile/presentation/pages/licences_page.dart';
 import 'package:quiz_app/features/quiz/presentation/pages/quiz_page.dart';
 import 'package:quiz_app/features/quiz/presentation/pages/test_page.dart';
@@ -123,6 +124,12 @@ class AppRouter {
                 path: AppRoutes.profile,
                 pageBuilder: (context, state) =>
                     const NoTransitionPage(child: ProfilePage()),
+                routes: [
+                  GoRoute(
+                    path: AppRoutes.editProfile,
+                    builder: (context, state) => const EditProfilePage(),
+                  ),
+                ],
               ),
             ],
           ),

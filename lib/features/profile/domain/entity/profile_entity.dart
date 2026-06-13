@@ -1,22 +1,27 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:quiz_app/features/profile/data/models/profile_model.dart';
 
-class ProfileEntity extends Equatable {
-  const ProfileEntity({
-    required this.firstName,
-    required this.lastName,
-    this.avatar,
-  });
+part 'profile_entity.freezed.dart';
+part 'profile_entity.g.dart';
 
-  final String firstName;
-  final String lastName;
-  final String? avatar;
+@freezed
+abstract class ProfileEntity with _$ProfileEntity {
+  const factory ProfileEntity({
+    required String firstName,
+    required String lastName,
+    String? avatar,
+    @Default(10) int wordCount,
+  }) = _ProfileEntity;
 
-  @override
-  List<Object?> get props => [firstName, lastName, avatar];
+  factory ProfileEntity.fromJson(Map<String, dynamic> json) =>
+      _$ProfileEntityFromJson(json);
 }
 
 extension ProfileEntityExt on ProfileEntity {
-  ProfileModel toModel() =>
-      ProfileModel(firstName: firstName, lastName: lastName, avatar: avatar);
+  ProfileModel toModel() => ProfileModel(
+    firstName: firstName,
+    lastName: lastName,
+    avatar: avatar,
+    wordCount: wordCount,
+  );
 }

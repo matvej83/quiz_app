@@ -1,6 +1,7 @@
 class AppRoutes {
   static const splash = '/splash';
   static const createProfile = '/create-profile';
+  static const editProfile = 'edit-profile';
   static const history = '/history';
   static const catalog = '/catalog';
   static const translation = '/translation';

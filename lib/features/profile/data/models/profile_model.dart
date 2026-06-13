@@ -10,6 +10,7 @@ abstract class ProfileModel with _$ProfileModel {
     required String firstName,
     required String lastName,
     String? avatar,
+    @Default(10) int wordCount,
   }) = _ProfileModel;
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) =>
@@ -17,6 +18,10 @@ abstract class ProfileModel with _$ProfileModel {
 }
 
 extension ProfileModelExt on ProfileModel {
-  ProfileEntity toEntity() =>
-      ProfileEntity(firstName: firstName, lastName: lastName, avatar: avatar);
+  ProfileEntity toEntity() => ProfileEntity(
+    firstName: firstName,
+    lastName: lastName,
+    avatar: avatar,
+    wordCount: wordCount,
+  );
 }

@@ -208,6 +208,14 @@ class AppTheme {
           ),
         ),
         cardTheme: CardThemeData(color: appColors.cardBackground),
+        sliderTheme: SliderThemeData(
+          padding: const .symmetric(horizontal: 16.0),
+          activeTrackColor: appColors.primary,
+          inactiveTrackColor: appColors.secondaryText,
+          thumbColor: appColors.primary,
+          activeTickMarkColor: appColors.onPrimary,
+          inactiveTickMarkColor: appColors.scaffoldBackground,
+        ),
       );
     } else {
       return ThemeData.light(useMaterial3: true).copyWith(
@@ -411,6 +419,14 @@ class AppTheme {
           ),
         ),
         cardTheme: CardThemeData(color: appColors.cardBackground),
+        sliderTheme: SliderThemeData(
+          padding: const .symmetric(horizontal: 16.0),
+          activeTrackColor: appColors.primary,
+          inactiveTrackColor: appColors.secondaryText,
+          thumbColor: appColors.primary,
+          activeTickMarkColor: appColors.onPrimary,
+          inactiveTickMarkColor: appColors.scaffoldBackground,
+        ),
       );
     }
   }
