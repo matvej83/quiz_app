@@ -177,12 +177,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1061.SetThemeUseCase>(
       () => _i1061.SetThemeUseCase(gh<_i37.ThemeRepository>()),
     );
-    gh.lazySingleton<_i29.ThemeCubit>(
-      () => _i29.ThemeCubit(
-        getThemeUseCase: gh<_i575.GetThemeUseCase>(),
-        setThemeUseCase: gh<_i1061.SetThemeUseCase>(),
-      ),
-    );
     gh.lazySingleton<_i806.CheckTranslationUseCase>(
       () => _i806.CheckTranslationUseCase(gh<_i631.GeminiService>()),
     );
@@ -217,6 +211,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i89.FetchProfileUseCase>(),
         gh<_i235.SaveProfileUseCase>(),
         gh<_i519.DeleteProfileUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i29.ThemeCubit>(
+      () => _i29.ThemeCubit(
+        gh<_i575.GetThemeUseCase>(),
+        gh<_i1061.SetThemeUseCase>(),
       ),
     );
     gh.lazySingleton<_i223.AppRouter>(

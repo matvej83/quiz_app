@@ -1,5 +1,5 @@
 {
-  "okText": "ОК:",
+  "okText": "ОК",
   "cancelText": "Отмена",
   "bottomNavBar": {
     "homeTab": "Старт",
@@ -9,6 +9,7 @@
     "screenName": "Создать аккаунт",
     "fieldFirstName": "Имя",
     "fieldLastName": "Фамилия",
+    "wordCount": "Количество слов в тесте",
     "btnCreate": "Создать аккаунт"
   },
   "testsPage": {
@@ -71,6 +72,11 @@
     "themeDark": "Темная тема",
     "themeLight": "Светлая тема",
     "role": "Роль"
+  },
+  "editProfilePage": {
+    "screenName": "Редактировать профиль",
+    "btnSave": "Сохранить изменения",
+    "updated": "Профиль изменен успешно"
   },
   "historyPage": {
     "screenName": "История",

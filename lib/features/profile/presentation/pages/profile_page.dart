@@ -85,6 +85,40 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               TextButton(
                 style: TextButton.styleFrom(
+                  foregroundColor: theme.colorScheme.primary,
+                ),
+                onPressed: () {
+                  context.go('${AppRoutes.profile}/${AppRoutes.editProfile}');
+                },
+                child: Row(
+                  spacing: 4.0,
+                  mainAxisSize: .min,
+                  children: [
+                    Text('editProfilePage.screenName'.tr()),
+                    Icon(
+                      Icons.edit,
+                      color: theme.colorScheme.primary,
+                      size: 16.0,
+                    ),
+                  ],
+                ),
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: theme.colorScheme.primary,
+                  textStyle: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.primary,
+                    decoration: .underline,
+                    decorationColor: theme.colorScheme.primary,
+                  ),
+                ),
+                onPressed: () {
+                  context.push(AppRoutes.licenses);
+                },
+                child: const Text('Open Source Licenses'),
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
                   foregroundColor: theme.colorScheme.error,
                 ),
                 onPressed: () async {
@@ -101,15 +135,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   }
                 },
                 child: Text('profilePage.btnRemoveProfile'.tr()),
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: theme.colorScheme.primary,
-                ),
-                onPressed: () {
-                  context.push(AppRoutes.licenses);
-                },
-                child: const Text('Open Source Licenses'),
               ),
             ],
           ),

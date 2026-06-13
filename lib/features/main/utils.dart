@@ -19,6 +19,9 @@ class MainScreenUtils {
       if (location.pathSegments.last == AppRoutes.listening) {
         return 'testsPage.listening'.tr();
       }
+      if (location.pathSegments.last == AppRoutes.editProfile) {
+        return 'editProfilePage.screenName'.tr();
+      }
     }
     return switch (location.toString()) {
       AppRoutes.tests => 'testsPage.screenName'.tr(),

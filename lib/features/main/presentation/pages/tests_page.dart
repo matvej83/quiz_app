@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:quiz_app/app/constants/asset_paths.dart';
 import 'package:quiz_app/app/router/app_routes.dart';
 import 'package:quiz_app/enums/app_enums.dart';
+import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/quiz/presentation/cubit/cubit.dart';
 
 import '../../../text_catalog/presentation/cubit/cubit.dart';
@@ -18,6 +19,8 @@ class TestsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textStyle = theme.textTheme.bodyLarge;
+    final profileState = context.watch<ProfileCubit>().state;
+    final wordCount = profileState.profile?.wordCount ?? 10;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -36,12 +39,14 @@ class TestsPage extends StatelessWidget {
                   onLeftTap: () {
                     context.read<QuizCubit>().loadWords(
                       type: TranslationType.enRu,
+                      wordCount: wordCount,
                     );
                     context.go('${AppRoutes.tests}/${AppRoutes.translate}');
                   },
                   onRightTap: () {
                     context.read<QuizCubit>().loadWords(
                       type: TranslationType.ruEn,
+                      wordCount: wordCount,
                     );
                     context.go('${AppRoutes.tests}/${AppRoutes.translate}');
                   },
@@ -51,12 +56,14 @@ class TestsPage extends StatelessWidget {
                   onLeftTap: () {
                     context.read<QuizCubit>().loadWords(
                       type: TranslationType.enRu,
+                      wordCount: wordCount,
                     );
                     context.go('${AppRoutes.tests}/${AppRoutes.flashcards}');
                   },
                   onRightTap: () {
                     context.read<QuizCubit>().loadWords(
                       type: TranslationType.ruEn,
+                      wordCount: wordCount,
                     );
                     context.go('${AppRoutes.tests}/${AppRoutes.flashcards}');
                   },
@@ -67,6 +74,7 @@ class TestsPage extends StatelessWidget {
                     context.read<QuizCubit>().loadWords(
                       type: TranslationType.enRu,
                       loadAdditionalWords: true,
+                      wordCount: wordCount,
                     );
                     context.go('${AppRoutes.tests}/${AppRoutes.test}');
                   },
@@ -74,6 +82,7 @@ class TestsPage extends StatelessWidget {
                     context.read<QuizCubit>().loadWords(
                       type: TranslationType.ruEn,
                       loadAdditionalWords: true,
+                      wordCount: wordCount,
                     );
                     context.go('${AppRoutes.tests}/${AppRoutes.test}');
                   },
@@ -97,6 +106,7 @@ class TestsPage extends StatelessWidget {
                   onPressed: () {
                     context.read<QuizCubit>().loadWords(
                       type: TranslationType.ruEn,
+                      wordCount: wordCount,
                     );
                     context.go('${AppRoutes.tests}/${AppRoutes.listening}');
                   },

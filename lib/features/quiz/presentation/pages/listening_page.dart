@@ -71,14 +71,15 @@ class ListeningPage extends StatelessWidget {
                   hintText: 'listeningPage.inputWord'.tr(),
                 ),
               ),
-              if (!state.answered)
+              if (!state.answered) ...[
+                const SizedBox(height: 56.0),
                 ElevatedButton(
                   onPressed: () {
                     cubit.checkAnswer(controller.text);
                   },
                   child: Text('quizPage.check'.tr()),
                 ),
-              if (state.answered) ...[
+              ] else ...[
                 AnswerResult(isCorrect: state.correct),
                 Text(
                   '${'quizPage.correctAnswer'.tr()}: ${current.answerFor(cubit.type)}',

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'profile_model.dart';
+part of 'profile_entity.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'profile_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$ProfileModel {
+mixin _$ProfileEntity {
 
  String get firstName; String get lastName; String? get avatar; int get wordCount;
-/// Create a copy of ProfileModel
+/// Create a copy of ProfileEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$ProfileModelCopyWith<ProfileModel> get copyWith => _$ProfileModelCopyWithImpl<ProfileModel>(this as ProfileModel, _$identity);
+$ProfileEntityCopyWith<ProfileEntity> get copyWith => _$ProfileEntityCopyWithImpl<ProfileEntity>(this as ProfileEntity, _$identity);
 
-  /// Serializes this ProfileModel to a JSON map.
+  /// Serializes this ProfileEntity to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileModel&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.wordCount, wordCount) || other.wordCount == wordCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileEntity&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.wordCount, wordCount) || other.wordCount == wordCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,firstName,lastName,avatar,wordCount)
 
 @override
 String toString() {
-  return 'ProfileModel(firstName: $firstName, lastName: $lastName, avatar: $avatar, wordCount: $wordCount)';
+  return 'ProfileEntity(firstName: $firstName, lastName: $lastName, avatar: $avatar, wordCount: $wordCount)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $ProfileModelCopyWith<$Res>  {
-  factory $ProfileModelCopyWith(ProfileModel value, $Res Function(ProfileModel) _then) = _$ProfileModelCopyWithImpl;
+abstract mixin class $ProfileEntityCopyWith<$Res>  {
+  factory $ProfileEntityCopyWith(ProfileEntity value, $Res Function(ProfileEntity) _then) = _$ProfileEntityCopyWithImpl;
 @useResult
 $Res call({
  String firstName, String lastName, String? avatar, int wordCount
@@ -56,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$ProfileModelCopyWithImpl<$Res>
-    implements $ProfileModelCopyWith<$Res> {
-  _$ProfileModelCopyWithImpl(this._self, this._then);
+class _$ProfileEntityCopyWithImpl<$Res>
+    implements $ProfileEntityCopyWith<$Res> {
+  _$ProfileEntityCopyWithImpl(this._self, this._then);
 
-  final ProfileModel _self;
-  final $Res Function(ProfileModel) _then;
+  final ProfileEntity _self;
+  final $Res Function(ProfileEntity) _then;
 
-/// Create a copy of ProfileModel
+/// Create a copy of ProfileEntity
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? firstName = null,Object? lastName = null,Object? avatar = freezed,Object? wordCount = null,}) {
   return _then(_self.copyWith(
@@ -78,8 +78,8 @@ as int,
 }
 
 
-/// Adds pattern-matching-related methods to [ProfileModel].
-extension ProfileModelPatterns on ProfileModel {
+/// Adds pattern-matching-related methods to [ProfileEntity].
+extension ProfileEntityPatterns on ProfileEntity {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -92,10 +92,10 @@ extension ProfileModelPatterns on ProfileModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ProfileModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ProfileEntity value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _ProfileModel() when $default != null:
+case _ProfileEntity() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -114,10 +114,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ProfileModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ProfileEntity value)  $default,){
 final _that = this;
 switch (_that) {
-case _ProfileModel():
+case _ProfileEntity():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -135,10 +135,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ProfileModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ProfileEntity value)?  $default,){
 final _that = this;
 switch (_that) {
-case _ProfileModel() when $default != null:
+case _ProfileEntity() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -158,7 +158,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String firstName,  String lastName,  String? avatar,  int wordCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _ProfileModel() when $default != null:
+case _ProfileEntity() when $default != null:
 return $default(_that.firstName,_that.lastName,_that.avatar,_that.wordCount);case _:
   return orElse();
 
@@ -179,7 +179,7 @@ return $default(_that.firstName,_that.lastName,_that.avatar,_that.wordCount);cas
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String firstName,  String lastName,  String? avatar,  int wordCount)  $default,) {final _that = this;
 switch (_that) {
-case _ProfileModel():
+case _ProfileEntity():
 return $default(_that.firstName,_that.lastName,_that.avatar,_that.wordCount);case _:
   throw StateError('Unexpected subclass');
 
@@ -199,7 +199,7 @@ return $default(_that.firstName,_that.lastName,_that.avatar,_that.wordCount);cas
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String firstName,  String lastName,  String? avatar,  int wordCount)?  $default,) {final _that = this;
 switch (_that) {
-case _ProfileModel() when $default != null:
+case _ProfileEntity() when $default != null:
 return $default(_that.firstName,_that.lastName,_that.avatar,_that.wordCount);case _:
   return null;
 
@@ -211,29 +211,29 @@ return $default(_that.firstName,_that.lastName,_that.avatar,_that.wordCount);cas
 /// @nodoc
 @JsonSerializable()
 
-class _ProfileModel implements ProfileModel {
-  const _ProfileModel({required this.firstName, required this.lastName, this.avatar, this.wordCount = 10});
-  factory _ProfileModel.fromJson(Map<String, dynamic> json) => _$ProfileModelFromJson(json);
+class _ProfileEntity implements ProfileEntity {
+  const _ProfileEntity({required this.firstName, required this.lastName, this.avatar, this.wordCount = 10});
+  factory _ProfileEntity.fromJson(Map<String, dynamic> json) => _$ProfileEntityFromJson(json);
 
 @override final  String firstName;
 @override final  String lastName;
 @override final  String? avatar;
 @override@JsonKey() final  int wordCount;
 
-/// Create a copy of ProfileModel
+/// Create a copy of ProfileEntity
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ProfileModelCopyWith<_ProfileModel> get copyWith => __$ProfileModelCopyWithImpl<_ProfileModel>(this, _$identity);
+_$ProfileEntityCopyWith<_ProfileEntity> get copyWith => __$ProfileEntityCopyWithImpl<_ProfileEntity>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$ProfileModelToJson(this, );
+  return _$ProfileEntityToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileModel&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.wordCount, wordCount) || other.wordCount == wordCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileEntity&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.avatar, avatar) || other.avatar == avatar)&&(identical(other.wordCount, wordCount) || other.wordCount == wordCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -242,15 +242,15 @@ int get hashCode => Object.hash(runtimeType,firstName,lastName,avatar,wordCount)
 
 @override
 String toString() {
-  return 'ProfileModel(firstName: $firstName, lastName: $lastName, avatar: $avatar, wordCount: $wordCount)';
+  return 'ProfileEntity(firstName: $firstName, lastName: $lastName, avatar: $avatar, wordCount: $wordCount)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ProfileModelCopyWith<$Res> implements $ProfileModelCopyWith<$Res> {
-  factory _$ProfileModelCopyWith(_ProfileModel value, $Res Function(_ProfileModel) _then) = __$ProfileModelCopyWithImpl;
+abstract mixin class _$ProfileEntityCopyWith<$Res> implements $ProfileEntityCopyWith<$Res> {
+  factory _$ProfileEntityCopyWith(_ProfileEntity value, $Res Function(_ProfileEntity) _then) = __$ProfileEntityCopyWithImpl;
 @override @useResult
 $Res call({
  String firstName, String lastName, String? avatar, int wordCount
@@ -261,17 +261,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$ProfileModelCopyWithImpl<$Res>
-    implements _$ProfileModelCopyWith<$Res> {
-  __$ProfileModelCopyWithImpl(this._self, this._then);
+class __$ProfileEntityCopyWithImpl<$Res>
+    implements _$ProfileEntityCopyWith<$Res> {
+  __$ProfileEntityCopyWithImpl(this._self, this._then);
 
-  final _ProfileModel _self;
-  final $Res Function(_ProfileModel) _then;
+  final _ProfileEntity _self;
+  final $Res Function(_ProfileEntity) _then;
 
-/// Create a copy of ProfileModel
+/// Create a copy of ProfileEntity
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? firstName = null,Object? lastName = null,Object? avatar = freezed,Object? wordCount = null,}) {
-  return _then(_ProfileModel(
+  return _then(_ProfileEntity(
 firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,avatar: freezed == avatar ? _self.avatar : avatar // ignore: cast_nullable_to_non_nullable

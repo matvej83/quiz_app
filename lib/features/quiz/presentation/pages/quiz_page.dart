@@ -61,17 +61,21 @@ class QuizPage extends StatelessWidget {
                   hintText: 'quizPage.inputTranslation'.tr(),
                 ),
               ),
-              if (!state.answered)
+              if (!state.answered) ...[
+                const SizedBox(height: 56.0),
                 ElevatedButton(
                   onPressed: () {
                     cubit.checkAnswer(controller.text);
                   },
                   child: Text('quizPage.check'.tr()),
                 ),
-              if (state.answered) ...[
+              ] else ...[
                 AnswerResult(isCorrect: state.correct),
                 Text(
                   '${'quizPage.correctAnswer'.tr()}: ${current.answerFor(cubit.type)}',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.primary,
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: cubit.nextQuestion,

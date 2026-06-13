@@ -23,6 +23,7 @@ class QuizCubit extends Cubit<QuizState> {
   void loadWords({
     required TranslationType type,
     bool loadAdditionalWords = false,
+    int wordCount = 10,
   }) async {
     try {
       List<String> additionalWords = [];
@@ -30,9 +31,9 @@ class QuizCubit extends Cubit<QuizState> {
       this.type = type;
       await _ttsService.setLanguage(type.questionFor);
       emit(QuizLoading());
-      final words = await _dataSource.getQuizWords(10);
+      final words = await _dataSource.getQuizWords(wordCount);
       if (loadAdditionalWords) {
-        final list = await _dataSource.getWords(10);
+        final list = await _dataSource.getWords(wordCount);
         additionalWords = getAdditionalWords(list);
         answers = getAnswers(
           current: words.first,

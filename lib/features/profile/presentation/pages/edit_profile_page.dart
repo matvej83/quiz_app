@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:quiz_app/app/router/app_routes.dart';
+import 'package:quiz_app/features/profile/domain/entity/profile_entity.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/state.dart';
 
@@ -10,34 +10,47 @@ import '../../../../core/presentation/widgets/app_message.dart';
 import '../../../../core/presentation/widgets/app_text_form_field.dart';
 import '../../../../core/presentation/widgets/one_value_slider.dart';
 
-class CreateProfilePage extends StatefulWidget {
-  const CreateProfilePage({super.key});
+class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({super.key});
 
   @override
-  State<CreateProfilePage> createState() => _CreateProfilePageState();
+  State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
-class _CreateProfilePageState extends State<CreateProfilePage> {
+class _EditProfilePageState extends State<EditProfilePage> {
   late ProfileCubit cubit;
+  late ProfileEntity profile;
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   int _wordCount = 10;
 
-  void _handleCreateProfile() {
-    if (_formKey.currentState!.validate()) {
-      context.read<ProfileCubit>().createProfile(
-        firstName: _firstNameController.text,
-        lastName: _lastNameController.text,
-        wordCount: _wordCount,
-      );
+  void _onSave() {
+    if (!(_formKey.currentState?.validate() ?? false)) {
+      return;
     }
+
+    final updatedProfile = profile.copyWith(
+      firstName: _firstNameController.text.trim(),
+      lastName: _lastNameController.text.trim(),
+      wordCount: _wordCount,
+    );
+
+    if (updatedProfile == cubit.state.profile) {
+      return;
+    }
+
+    cubit.updateProfile(profile: updatedProfile);
   }
 
   @override
   void initState() {
     super.initState();
     cubit = context.read<ProfileCubit>();
+    profile = cubit.state.profile!;
+    _firstNameController.text = profile.firstName;
+    _lastNameController.text = profile.lastName;
+    _wordCount = profile.wordCount;
   }
 
   @override
@@ -49,13 +62,10 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('createProfilePage.screenName'.tr()),
-        centerTitle: true,
-      ),
-      resizeToAvoidBottomInset: true,
-      body: BlocConsumer<ProfileCubit, ProfileState>(
+    final theme = Theme.of(context);
+    return ColoredBox(
+      color: theme.scaffoldBackgroundColor,
+      child: BlocConsumer<ProfileCubit, ProfileState>(
         builder: (context, state) {
           final isLoading = state.isLoading;
           return Center(
@@ -99,9 +109,11 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                     ),
                     Column(
                       crossAxisAlignment: .start,
+                      spacing: 8.0,
                       children: [
-                        Text('createProfilePage.wordCount'.tr()),
+                        Text('${'createProfilePage.wordCount'.tr()}:'),
                         OneValueSlider(
+                          initValue: profile.wordCount,
                           onChanged: (value) {
                             _wordCount = value;
                           },
@@ -109,8 +121,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                       ],
                     ),
                     ElevatedButton(
-                      onPressed: isLoading ? null : _handleCreateProfile,
-                      child: isLoading
+                      onPressed: state.isLoading ? null : _onSave,
+                      child: state.isLoading
                           ? const SizedBox(
                               width: 20.0,
                               height: 20.0,
@@ -118,7 +130,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                                 strokeWidth: 2.0,
                               ),
                             )
-                          : Text('createProfilePage.btnCreate'.tr()),
+                          : Text('editProfilePage.btnSave'.tr()),
                     ),
                   ],
                 ),
@@ -137,8 +149,14 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             );
           }
           if (state.success) {
-            context.go(AppRoutes.tests);
-            cubit.disableSuccess();
+            AppMessage.success(
+              context,
+              message: 'editProfilePage.updated'.tr(),
+              onClose: () {
+                cubit.disableSuccess();
+                context.pop();
+              },
+            );
           }
         },
       ),

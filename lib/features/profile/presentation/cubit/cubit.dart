@@ -21,8 +21,8 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> loadProfile() async {
     emit(state.copyWith(isLoading: true));
-    final mode = await _fetchProfileUseCase(NoParams());
-    mode.fold(
+    final profile = await _fetchProfileUseCase(NoParams());
+    profile.fold(
       (l) {
         emit(
           state.copyWith(
@@ -41,18 +41,45 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> createProfile({
     required String firstName,
     required String lastName,
+    int wordCount = 10,
   }) async {
     emit(state.copyWith(isLoading: true));
-    final profile = ProfileEntity(firstName: firstName, lastName: lastName);
+    final profile = ProfileEntity(
+      firstName: firstName,
+      lastName: lastName,
+      wordCount: wordCount,
+    );
     await _saveProfileUseCase(ProfileParams(profile: profile));
     emit(state.copyWith(profile: profile, isLoading: false, success: true));
+  }
+
+  Future<void> updateProfile({required ProfileEntity profile}) async {
+    emit(state.copyWith(isLoading: true));
+    final result = await _saveProfileUseCase(ProfileParams(profile: profile));
+    result.fold(
+      (l) {
+        emit(
+          state.copyWith(
+            error: AppUtils.parseFailureMessage(l),
+            isLoading: false,
+          ),
+        );
+      },
+      (r) {
+        emit(state.copyWith(profile: profile, isLoading: false, success: true));
+      },
+    );
   }
 
   Future<void> deleteProfile() async {
     await _deleteProfileUseCase(NoParams());
     emit(
       state.copyWith(
-        profile: const ProfileEntity(firstName: '', lastName: ''),
+        profile: const ProfileEntity(
+          firstName: '',
+          lastName: '',
+          wordCount: 10,
+        ),
       ),
     );
   }
