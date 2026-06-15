@@ -1,19 +1,28 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz_app/core/presentation/widgets/app_text_form_field.dart';
+import 'package:quiz_app/core/presentation/widgets/scrolled_wrapper.dart';
 import 'package:quiz_app/core/utils/extensions.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/answer_result.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/completed_widget.dart';
 import 'package:quiz_app/features/quiz/presentation/widgets/word_with_pronounce.dart';
 
+import '../../../../core/presentation/widgets/one_field_form.dart';
 import '../../../../enums/app_enums.dart';
 import '../../../history/presentation/cubit/cubit.dart';
 import '../cubit/cubit.dart';
 import '../widgets/page_wrapper.dart';
 
-class QuizPage extends StatelessWidget {
+class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
+
+  @override
+  State<QuizPage> createState() => _QuizPageState();
+}
+
+class _QuizPageState extends State<QuizPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,52 +51,50 @@ class QuizPage extends StatelessWidget {
       },
       onLoaded: (state) {
         final current = state.words[state.currentIndex];
-        final controller = TextEditingController(text: state.userAnswer ?? '');
-        return Padding(
-          padding: const .all(16),
-          child: Column(
-            mainAxisAlignment: .center,
-            spacing: 16.0,
-            children: [
-              WordWithPronounce(
-                word: current.questionFor(cubit.type),
-                language: cubit.type.questionFor,
+        return ScrolledWrapper(
+          children: [
+            Text(
+              '${state.currentIndex + 1} / ${state.words.length}',
+              style: theme.textTheme.bodyLarge,
+            ),
+            WordWithPronounce(
+              word: current.questionFor(cubit.type),
+              language: cubit.type.questionFor,
+            ),
+            OneFieldForm(
+              formKey: _formKey,
+              enabled: !state.answered,
+              controller: _controller,
+              hint: 'quizPage.inputTranslation'.tr(),
+            ),
+            if (!state.answered) ...[
+              ElevatedButton(
+                onPressed: () {
+                  final isValid = _formKey.currentState?.validate() ?? false;
+                  if (isValid) {
+                    cubit.checkAnswer(_controller.text);
+                  }
+                },
+                child: Text('quizPage.check'.tr()),
               ),
-              AppTextFormField(
-                enabled: !state.answered,
-                controller: controller,
-                keyboardType: .text,
-                decoration: InputDecoration(
-                  hintText: 'quizPage.inputTranslation'.tr(),
-                ),
+              const SizedBox(height: 56.0),
+            ] else ...[
+              ElevatedButton(
+                onPressed: () {
+                  cubit.nextQuestion();
+                  _controller.text = '';
+                },
+                child: Text('quizPage.next'.tr()),
               ),
-              if (!state.answered) ...[
-                const SizedBox(height: 56.0),
-                ElevatedButton(
-                  onPressed: () {
-                    cubit.checkAnswer(controller.text);
-                  },
-                  child: Text('quizPage.check'.tr()),
-                ),
-              ] else ...[
-                AnswerResult(isCorrect: state.correct),
-                Text(
-                  '${'quizPage.correctAnswer'.tr()}: ${current.answerFor(cubit.type)}',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.primary,
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: cubit.nextQuestion,
-                  child: Text('quizPage.next'.tr()),
-                ),
-              ],
+              AnswerResult(isCorrect: state.correct),
               Text(
-                '${state.currentIndex + 1} / ${state.words.length}',
-                style: theme.textTheme.bodyLarge,
+                '${'quizPage.correctAnswer'.tr()}: ${current.answerFor(cubit.type)}',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                ),
               ),
             ],
-          ),
+          ],
         );
       },
     );
