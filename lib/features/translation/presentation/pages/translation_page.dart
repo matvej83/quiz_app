@@ -2,15 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/presentation/widgets/app_back_button.dart';
-import 'package:quiz_app/core/presentation/widgets/app_text_form_field.dart';
 import 'package:quiz_app/enums/app_enums.dart';
 import 'package:quiz_app/features/history/presentation/cubit/cubit.dart';
-import 'package:quiz_app/features/translation/presentation/widgets/results_widget.dart';
 
 import '../../../../core/presentation/widgets/app_message.dart';
+import '../../../../core/presentation/widgets/one_field_form.dart';
 import '../cubit/cubit.dart';
 import '../cubit/state.dart';
 import '../widgets/completed_widget.dart';
+import '../widgets/translation_result_widget.dart';
 
 class TranslationPage extends StatefulWidget {
   const TranslationPage({super.key});
@@ -22,7 +22,8 @@ class TranslationPage extends StatefulWidget {
 class _TranslationPageState extends State<TranslationPage> {
   late TranslationCubit translationCubit;
   late HistoryCubit historyCubit;
-  final controller = TextEditingController();
+  final _controller = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -75,29 +76,35 @@ class _TranslationPageState extends State<TranslationPage> {
                     );
                   },
                 )
-              : Padding(
+              : SingleChildScrollView(
                   padding: const .all(16),
+                  physics: const ClampingScrollPhysics(),
                   child: Column(
                     spacing: 16.0,
                     children: [
                       Text(currentText, style: theme.textTheme.titleLarge),
-                      AppTextFormField(
+                      OneFieldForm(
+                        formKey: _formKey,
                         enabled: !isAnswered,
-                        controller: controller,
+                        controller: _controller,
+                        hint: 'quizPage.inputTranslation'.tr(),
                         keyboardType: .multiline,
-                        hintText: 'quizPage.inputTranslation'.tr(),
                       ),
                       ElevatedButton(
                         onPressed: isLoading
                             ? null
                             : () {
+                                final isValid =
+                                    _formKey.currentState?.validate() ?? false;
                                 if (isAnswered) {
-                                  controller.text = '';
+                                  _controller.text = '';
                                   translationCubit.nextQuestion();
                                 } else {
-                                  translationCubit.check(
-                                    userTranslation: controller.text,
-                                  );
+                                  if (isValid) {
+                                    translationCubit.check(
+                                      userTranslation: _controller.text,
+                                    );
+                                  }
                                 }
                               },
                         child: Text(
@@ -108,7 +115,7 @@ class _TranslationPageState extends State<TranslationPage> {
                       ),
                       if (isLoading) const CircularProgressIndicator.adaptive(),
                       if (isAnswered && state.result != null)
-                        ResultsWidget(result: state.result!),
+                        TranslationResultWidget(result: state.result!),
                     ],
                   ),
                 );
