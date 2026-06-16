@@ -64,27 +64,33 @@ class AppRouter {
     routes: [
       GoRoute(
         path: AppRoutes.splash,
-        builder: (context, state) => const SplashPage(),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: SplashPage()),
       ),
       GoRoute(
         path: AppRoutes.createProfile,
-        builder: (context, state) => const CreateProfilePage(),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: CreateProfilePage()),
       ),
       GoRoute(
         path: AppRoutes.history,
-        builder: (context, state) => const HistoryPage(),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: HistoryPage()),
       ),
       GoRoute(
         path: AppRoutes.translation,
-        builder: (context, state) => const TranslationPage(),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: TranslationPage()),
       ),
       GoRoute(
         path: AppRoutes.catalog,
-        builder: (context, state) => const TextCatalogPage(),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: TextCatalogPage()),
       ),
       GoRoute(
         path: AppRoutes.licenses,
-        builder: (context, state) => const LicensesPage(),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: LicensesPage()),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
@@ -100,19 +106,23 @@ class AppRouter {
                 routes: [
                   GoRoute(
                     path: AppRoutes.translate,
-                    builder: (context, state) => const QuizPage(),
+                    pageBuilder: (context, state) =>
+                        const NoTransitionPage(child: QuizPage()),
                   ),
                   GoRoute(
                     path: AppRoutes.flashcards,
-                    builder: (context, state) => const FlashcardsPage(),
+                    pageBuilder: (context, state) =>
+                        const NoTransitionPage(child: FlashcardsPage()),
                   ),
                   GoRoute(
                     path: AppRoutes.test,
-                    builder: (context, state) => const TestPage(),
+                    pageBuilder: (context, state) =>
+                        const NoTransitionPage(child: TestPage()),
                   ),
                   GoRoute(
                     path: AppRoutes.listening,
-                    builder: (context, state) => const ListeningPage(),
+                    pageBuilder: (context, state) =>
+                        const NoTransitionPage(child: ListeningPage()),
                   ),
                 ],
               ),
@@ -127,7 +137,8 @@ class AppRouter {
                 routes: [
                   GoRoute(
                     path: AppRoutes.editProfile,
-                    builder: (context, state) => const EditProfilePage(),
+                    pageBuilder: (context, state) =>
+                        const NoTransitionPage(child: EditProfilePage()),
                   ),
                 ],
               ),
