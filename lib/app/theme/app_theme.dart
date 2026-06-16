@@ -216,6 +216,13 @@ class AppTheme {
           activeTickMarkColor: appColors.onPrimary,
           inactiveTickMarkColor: appColors.scaffoldBackground,
         ),
+        dialogTheme: DialogThemeData(
+          backgroundColor: appColors.scaffoldBackground,
+          insetPadding: const .all(16.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.circular(12.0),
+          ),
+        ),
       );
     } else {
       return ThemeData.light(useMaterial3: true).copyWith(
@@ -426,6 +433,13 @@ class AppTheme {
           thumbColor: appColors.primary,
           activeTickMarkColor: appColors.onPrimary,
           inactiveTickMarkColor: appColors.scaffoldBackground,
+        ),
+        dialogTheme: DialogThemeData(
+          backgroundColor: appColors.scaffoldBackground,
+          insetPadding: const .all(16.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadiusGeometry.circular(12.0),
+          ),
         ),
       );
     }

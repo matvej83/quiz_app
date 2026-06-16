@@ -22,17 +22,25 @@ class ListeningPage extends StatefulWidget {
 }
 
 class _ListeningPageState extends State<ListeningPage> {
+  late QuizCubit quizCubit;
+  late HistoryCubit historyCubit;
   final _formKey = GlobalKey<FormState>();
   final _controller = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    quizCubit = context.read<QuizCubit>();
+    historyCubit = context.read<HistoryCubit>();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final cubit = context.read<QuizCubit>();
     return PageWrapper(
       backgroundColor: theme.scaffoldBackgroundColor,
       onCompleted: (state) {
-        final cup = cubit.getCup(
+        final cup = quizCubit.getCup(
           total: state.totalQuestions,
           correct: state.correctAnswers,
         );
@@ -43,7 +51,7 @@ class _ListeningPageState extends State<ListeningPage> {
           incorrectAnswers: state.totalQuestions - state.correctAnswers,
           totalQuestions: state.totalQuestions,
           onTap: () {
-            context.read<HistoryCubit>().addHistoryItem(
+            historyCubit.addHistoryItem(
               testType: TestType.listening,
               correctAnswers: state.correctAnswers,
               totalAnswers: state.totalQuestions,
@@ -69,7 +77,7 @@ class _ListeningPageState extends State<ListeningPage> {
                 ),
                 PronounceButton(
                   onTap: () {
-                    cubit.pronounceWord(
+                    quizCubit.pronounceWord(
                       current.englishWord,
                       language: AppConstants.enLocale,
                     );
@@ -88,7 +96,7 @@ class _ListeningPageState extends State<ListeningPage> {
                 onPressed: () {
                   final isValid = _formKey.currentState?.validate() ?? false;
                   if (isValid) {
-                    cubit.checkAnswer(_controller.text);
+                    quizCubit.checkAnswer(_controller.text);
                   }
                 },
                 child: Text('quizPage.check'.tr()),
@@ -97,14 +105,14 @@ class _ListeningPageState extends State<ListeningPage> {
             ] else ...[
               ElevatedButton(
                 onPressed: () {
-                  cubit.nextQuestion();
+                  quizCubit.nextQuestion();
                   _controller.text = '';
                 },
                 child: Text('quizPage.next'.tr()),
               ),
               AnswerResult(isCorrect: state.correct),
               Text(
-                '${'quizPage.correctAnswer'.tr()}: ${current.answerFor(cubit.type)}',
+                '${'quizPage.correctAnswer'.tr()}: ${current.answerFor(quizCubit.type)}',
               ),
             ],
           ],
