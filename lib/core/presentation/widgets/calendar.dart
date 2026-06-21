@@ -102,7 +102,9 @@ class _AppCalendarState extends State<AppCalendar> {
     bool isSpecial = false,
     String? tooltipMessage,
   }) {
-    final child = Center(
+    final child = Container(
+      alignment: Alignment.center,
+      color: day.isOdd ? Colors.grey.shade100 : null,
       child: Text(
         '$day',
         textAlign: .center,
