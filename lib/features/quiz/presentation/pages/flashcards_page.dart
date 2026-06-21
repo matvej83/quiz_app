@@ -20,6 +20,7 @@ class FlashcardsPage extends StatelessWidget {
     final cubit = context.read<QuizCubit>();
     final theme = Theme.of(context);
     final semanticColors = theme.extension<AppSemanticColors>();
+    final screenHeight = MediaQuery.sizeOf(context).height;
     return PageWrapper(
       backgroundColor: theme.scaffoldBackgroundColor,
       onCompleted: (state) {
@@ -58,21 +59,24 @@ class FlashcardsPage extends StatelessWidget {
             crossAxisAlignment: .center,
             mainAxisAlignment: .center,
             children: [
-              SmoothFlipCard(
-                front: (flip) {
-                  return FlashCard(
-                    flip: flip,
-                    word: current.questionFor(cubit.type),
-                    language: cubit.type.questionFor,
-                  );
-                },
-                back: (flip) {
-                  return FlashCard(
-                    flip: flip,
-                    word: current.answerFor(cubit.type),
-                    language: cubit.type.answerFor,
-                  );
-                },
+              Container(
+                constraints: BoxConstraints(maxHeight: screenHeight * 0.7),
+                child: SmoothFlipCard(
+                  front: (flip) {
+                    return FlashCard(
+                      flip: flip,
+                      word: current.questionFor(cubit.type),
+                      language: cubit.type.questionFor,
+                    );
+                  },
+                  back: (flip) {
+                    return FlashCard(
+                      flip: flip,
+                      word: current.answerFor(cubit.type),
+                      language: cubit.type.answerFor,
+                    );
+                  },
+                ),
               ),
               Row(
                 spacing: 16.0,

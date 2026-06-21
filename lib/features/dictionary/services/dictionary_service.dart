@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../app/constants/app_constants.dart';
@@ -10,10 +11,12 @@ class DictionaryService {
   final DictionaryAssetDataSource assetDataSource;
 
   Future<void> initialize() async {
-    final exists = await assetDataSource.databaseExists();
+    if (!kIsWeb) {
+      final exists = await assetDataSource.databaseExists();
 
-    if (!exists) {
-      await assetDataSource.copyDatabaseFromAssets(AppConstants.assetDbName);
+      if (!exists) {
+        await assetDataSource.copyDatabaseFromAssets(AppConstants.assetDbName);
+      }
     }
   }
 }
