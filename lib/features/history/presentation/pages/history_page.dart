@@ -29,6 +29,7 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
+    final aspectRatio = MediaQuery.of(context).size.aspectRatio;
     return Scaffold(
       appBar: AppBar(
         title: Text('historyPage.screenName'.tr()),
@@ -44,8 +45,12 @@ class _HistoryPageState extends State<HistoryPage> {
                 content: Container(
                   margin: const .all(16.0),
                   constraints: BoxConstraints(
-                    maxHeight: screenSize.height * 0.9,
-                    maxWidth: screenSize.width - 32.0,
+                    maxHeight: aspectRatio > 1
+                        ? screenSize.height - 32.0
+                        : screenSize.height * 0.8,
+                    maxWidth: aspectRatio > 1
+                        ? screenSize.height * 0.8
+                        : screenSize.width - 32.0,
                   ),
                   child: BlocBuilder<HistoryCubit, HistoryState>(
                     builder: (context, state) {

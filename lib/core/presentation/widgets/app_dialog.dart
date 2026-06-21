@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,11 +13,13 @@ class AppDialog {
   }) async {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+    final width = min(MediaQuery.sizeOf(context).width, 300.0);
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => Dialog(
-        child: Padding(
+        child: Container(
           padding: const .all(16.0),
+          constraints: BoxConstraints(maxWidth: width),
           child: Column(
             mainAxisSize: .min,
             spacing: 16.0,
