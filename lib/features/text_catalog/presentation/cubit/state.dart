@@ -10,10 +10,7 @@ class TextCatalogState extends Equatable {
   final bool isLoading;
   final List<TextEntity> translations;
 
-  TextCatalogState copyWith({
-    bool? isLoading,
-    List<TextEntity>? translations,
-  }) {
+  TextCatalogState copyWith({bool? isLoading, List<TextEntity>? translations}) {
     return TextCatalogState(
       isLoading: isLoading ?? this.isLoading,
       translations: translations ?? this.translations,
