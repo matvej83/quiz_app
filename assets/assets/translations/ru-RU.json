@@ -1,0 +1,113 @@
+{
+  "okText": "ОК",
+  "cancelText": "Отмена",
+  "bottomNavBar": {
+    "homeTab": "Старт",
+    "profileTab": "Профиль"
+  },
+  "createProfilePage": {
+    "screenName": "Создать аккаунт",
+    "fieldFirstName": "Имя",
+    "fieldLastName": "Фамилия",
+    "wordCount": "Количество слов в тесте",
+    "btnCreate": "Создать аккаунт"
+  },
+  "testsPage": {
+    "screenName": "Тесты",
+    "translate": "Перевод слов",
+    "flashcards": "Карточки",
+    "test": "Тест",
+    "translation": "Перевод текста",
+    "listening": "Аудирование"
+  },
+  "quizPage": {
+    "inputTranslation": "Введите перевод",
+    "check": "Проверить",
+    "correctAnswer": "Правильный ответ",
+    "next": "Далее",
+    "correctAnswers": "правильные ответы",
+    "incorrectAnswers": "неправильные ответы",
+    "totalQuestions": "всего вопросов",
+    "congrats": "Поздравляем!",
+    "quizCompleted": "Quiz завершен!"
+  },
+  "testPage": {
+    "selectAnswer": "Выберите ответ",
+    "correct": "Верно",
+    "incorrect": "Неверно",
+    "testCompleted": "Тест завершен!"
+  },
+  "flashcardPage": {
+    "ready": "Готово"
+  },
+  "textCatalogPage": {
+    "screenName": "Каталог текстов",
+    "level": "Уровень",
+    "phrases": {
+      "one": "{} фраза",
+      "few": "{} фразы",
+      "many": "{} фраз",
+      "other": "{} фраз"
+    }
+  },
+  "translationPage": {
+    "screenName": "Перевод текста",
+    "estimation": "Оценка",
+    "correctTranslation": "Правильный перевод"
+  },
+  "listeningPage": {
+    "screenName": " Аудирование",
+    "inputWord": " Введите услышанное",
+    "listenAndWrite": "Прослушайте слово и запишите его",
+    "listeningCompleted": "Аудирование завершено!"
+  },
+  "calendar": {
+    "trainingDays": "Дни тренировок"
+  },
+  "profilePage": {
+    "screenName": "Профиль",
+    "btnRemove": "Удаление профиля",
+    "btnRemoveProfile": "Удалить профиль",
+    "youWantRemove": "Вы действительно хотите удалить профиль? Это действие необратимо и удалит все данные пользователя",
+    "themeDark": "Темная тема",
+    "themeLight": "Светлая тема",
+    "role": "Роль"
+  },
+  "editProfilePage": {
+    "screenName": "Редактировать профиль",
+    "btnSave": "Сохранить изменения",
+    "updated": "Профиль изменен успешно"
+  },
+  "historyPage": {
+    "screenName": "История",
+    "testType": "Тип теста",
+    "questionCount": "Количество вопросов",
+    "cardsCount": "Количество карточек",
+    "correctAnswers": "Правильных ответов",
+    "score": "Счет",
+    "trainings": {
+      "one": "{} тренировка",
+      "few": "{} тренировки",
+      "many": "{} тренировок",
+      "other": "{} тренировок"
+    }
+  },
+  "fieldValidation": {
+    "fieldIsRequired": "Это поле обязательно!"
+  },
+  "errors": {
+    "errors": "Ошибки",
+    "noData": "Нет данных для отображения",
+    "noWords": "Failed to load words",
+    "cacheError": "Ошибка чтения данных с устройства",
+    "assetError": "Ошибка чтения из базы данных",
+    "noText": "Введите текст!",
+    "geminiErrors": {
+      "unknownError": "Произошла неизвестная ошибка. Попробуйте позже.",
+      "serverUnavailable": "Сервер перегружен. Пожалуйста, попробуйте еще раз через пару секунд.",
+      "limitReached": "Слишком много запросов или исчерпан лимит бесплатных запросов. Попробуйте позже или проверьте баланс.",
+      "permissionDenied": "Запрос заблокирован системой безопасности. Проверьте введенный текст.",
+      "formatException": "Не удалось распознать ответ нейросети. Попробуйте отправить запрос еще раз."
+    }
+  }
+}
