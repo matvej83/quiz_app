@@ -23,3 +23,7 @@ https://huggingface.co/datasets/KvaytG/en-ru-filtered-dict-20m-corpus
 ### Third-Party Libraries
 
 - google_generative_ai (Apache License 2.0, Copyright Google LLC)
+
+### Web version is available here:
+
+https://vladimir-matveenko.github.io/quiz_app/
