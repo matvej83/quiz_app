@@ -10,7 +10,7 @@ class AppCalendar extends StatefulWidget {
   });
 
   final List<DateTime> specialDays;
-  final Function(int, int) onMonthChanged;
+  final Function(DateTime) onMonthChanged;
 
   @override
   State<AppCalendar> createState() => _AppCalendarState();
@@ -42,7 +42,7 @@ class _AppCalendarState extends State<AppCalendar> {
         1,
       );
     });
-    widget.onMonthChanged(_currentDate.year, _currentDate.month);
+    widget.onMonthChanged(_currentDate);
   }
 
   List<String> _buildWeekDays() {

@@ -17,16 +17,12 @@ class FetchMonthHistoryUseCase
   Future<Either<Failure, List<HistoryEntity>>> call(
     FetchMonthHistoryParams params,
   ) async {
-    return await repository.fetchMonthHistory(
-      year: params.year,
-      month: params.month,
-    );
+    return await repository.fetchMonthHistory(params.date);
   }
 }
 
 class FetchMonthHistoryParams {
-  FetchMonthHistoryParams({required this.year, required this.month});
+  FetchMonthHistoryParams({required this.date});
 
-  final int year;
-  final int month;
+  final DateTime date;
 }

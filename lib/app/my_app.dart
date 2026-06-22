@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (_) => themeCubit..loadTheme()),
         BlocProvider(create: (_) => profileCubit),
-        BlocProvider(create: (_) => historyCubit),
+        BlocProvider(create: (_) => historyCubit..init()),
         BlocProvider(create: (_) => translationCubit),
         BlocProvider(create: (_) => translationCatalogCubit),
       ],

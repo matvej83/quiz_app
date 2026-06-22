@@ -11,10 +11,7 @@ abstract class HistoryLocalDataSource {
     required int offset,
   });
 
-  Future<List<HistoryModel>?> fetchMonthHistory({
-    required int year,
-    required int month,
-  });
+  Future<List<HistoryModel>?> fetchMonthHistory(DateTime date);
 
   Future<void> saveHistory(HistoryModel history);
 
@@ -64,15 +61,12 @@ class HistoryLocalDataSourceImpl implements HistoryLocalDataSource {
   }
 
   @override
-  Future<List<HistoryModel>?> fetchMonthHistory({
-    required int year,
-    required int month,
-  }) async {
+  Future<List<HistoryModel>?> fetchMonthHistory(DateTime date) async {
     try {
-      final startDate = DateTime(year, month);
-      final endDate = month == 12
-          ? DateTime(year + 1, 1)
-          : DateTime(year, month + 1);
+      final startDate = DateTime(date.year, date.month);
+      final endDate = date.month == 12
+          ? DateTime(date.year + 1, 1)
+          : DateTime(date.year, date.month + 1);
 
       final result =
           await (_database.select(_database.historyTable)

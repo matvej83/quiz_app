@@ -69,9 +69,9 @@ class HistoryCubit extends Cubit<HistoryState> {
     );
   }
 
-  Future<void> loadMonthHistory({required int year, required int month}) async {
+  Future<void> loadMonthHistory(DateTime date) async {
     final data = await _fetchMonthHistoryUseCase(
-      FetchMonthHistoryParams(year: year, month: month),
+      FetchMonthHistoryParams(date: date),
     );
 
     data.fold(
@@ -143,6 +143,7 @@ class HistoryCubit extends Cubit<HistoryState> {
     await _saveHistoryUseCase(SaveHistoryParams(history: history));
     resetPaginationData();
     loadHistory();
+    loadMonthHistory(DateTime.now());
   }
 
   Future<void> deleteHistory() async {
