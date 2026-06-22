@@ -9,10 +9,7 @@ abstract class HistoryRepository {
     required int offset,
   });
 
-  Future<Either<Failure, List<HistoryEntity>>> fetchMonthHistory({
-    required int year,
-    required int month,
-  });
+  Future<Either<Failure, List<HistoryEntity>>> fetchMonthHistory(DateTime date);
 
   Future<Either<Failure, void>> saveHistory({required HistoryEntity history});
 

@@ -67,10 +67,16 @@ class AppDialog {
     return result ?? false;
   }
 
-  static Future empty(BuildContext context, {required Widget content}) {
+  static Future empty(
+    BuildContext context, {
+    required Widget content,
+    VoidCallback? onClose,
+  }) {
     return showDialog(
       context: context,
       builder: (context) => Dialog(child: content),
-    );
+    ).then((_) {
+      onClose?.call();
+    });
   }
 }
