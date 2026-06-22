@@ -104,7 +104,7 @@ class _AppCalendarState extends State<AppCalendar> {
   }) {
     final child = Container(
       alignment: Alignment.center,
-      color: day.isOdd ? Colors.grey.shade100 : null,
+      color: _theme.cardTheme.color,
       child: Text(
         '$day',
         textAlign: .center,
@@ -164,11 +164,13 @@ class _AppCalendarState extends State<AppCalendar> {
 
         /// WEEK DAYS
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          spacing: 1.0,
           children: weekDays
               .map(
                 (d) => Expanded(
-                  child: Center(
+                  child: Container(
+                    alignment: Alignment.center,
+                    color: _theme.cardTheme.color,
                     child: Text(d, style: _theme.textTheme.bodyLarge),
                   ),
                 ),
@@ -176,12 +178,14 @@ class _AppCalendarState extends State<AppCalendar> {
               .toList(),
         ),
 
-        const SizedBox(height: 8),
+        const SizedBox(height: 4),
 
         /// GRID
         GridView.count(
           shrinkWrap: true,
           crossAxisCount: 7,
+          crossAxisSpacing: 1.0,
+          mainAxisSpacing: 1.0,
           physics: const NeverScrollableScrollPhysics(),
           children: calendar,
         ),

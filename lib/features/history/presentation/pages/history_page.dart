@@ -43,7 +43,7 @@ class _HistoryPageState extends State<HistoryPage> {
               AppDialog.empty(
                 context,
                 content: Container(
-                  margin: const .all(16.0),
+                  margin: const .all(24.0),
                   constraints: BoxConstraints(
                     maxHeight: aspectRatio > 1
                         ? screenSize.height - 32.0

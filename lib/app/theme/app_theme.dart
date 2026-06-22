@@ -221,6 +221,7 @@ class AppTheme {
           insetPadding: const .all(16.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadiusGeometry.circular(12.0),
+            side: BorderSide(color: appColors.secondaryText, width: 1.0),
           ),
         ),
       );
