@@ -1,29 +1,48 @@
-## Quiz App
+# 📚 Quiz App
 
-### About
+A Flutter application designed to help users expand their English vocabulary through interactive learning methods,
+including quizzes, flashcards, and practice exercises.
 
-Quiz App is a mobile application for learning English vocabulary through quizzes, flashcards, and interactive practice.
+## Features
 
-The app helps users improve their vocabulary, memorize translations, and track learning progress in a simple and
-convenient way.
+* Vocabulary learning through quizzes
+* Flashcards for efficient memorization
+* English ↔ Russian translations
+* Progress tracking
+* Offline data storage
+* Responsive design for mobile and web platforms
 
-Built with Flutter.
+## Built With
 
-Copyright 2026 KvaytG
+* Flutter
+* Dart
+* Google Generative AI
 
-Licensed under the Apache License, Version 2.0.
-You may obtain a copy of the License at:
+## Dataset
 
-http://www.apache.org/licenses/LICENSE-2.0
-
-### Dataset
+The vocabulary dataset used in this project is available on Hugging Face:
 
 https://huggingface.co/datasets/KvaytG/en-ru-filtered-dict-20m-corpus
 
-### Third-Party Libraries
+## Live Demo
 
-- google_generative_ai (Apache License 2.0, Copyright Google LLC)
-
-### Web version is available here:
+Try the web version of the application:
 
 https://vladimir-matveenko.github.io/quiz_app/
+
+## Third-Party Libraries
+
+### google_generative_ai
+
+* License: Apache License 2.0
+* Copyright: Google LLC
+
+## License
+
+Copyright © 2026 KvaytG
+
+Licensed under the Apache License, Version 2.0.
+
+You may obtain a copy of the License at:
+
+http://www.apache.org/licenses/LICENSE-2.0
