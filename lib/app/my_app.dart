@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/app/router/app_router.dart';
+import 'package:quiz_app/features/auth/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 
 import '../features/history/presentation/cubit/cubit.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final appRouter = getIt<AppRouter>();
   final themeCubit = getIt<ThemeCubit>();
+  final authCubit = getIt<AuthCubit>();
   final profileCubit = getIt<ProfileCubit>();
   final historyCubit = getIt<HistoryCubit>();
   final translationCubit = getIt<TranslationCubit>();
@@ -30,6 +32,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (_) => authCubit),
         BlocProvider(create: (_) => themeCubit..loadTheme()),
         BlocProvider(create: (_) => profileCubit),
         BlocProvider(create: (_) => historyCubit..init()),
