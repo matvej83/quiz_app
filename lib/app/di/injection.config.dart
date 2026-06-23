@@ -16,6 +16,9 @@ import 'package:quiz_app/app/di/modules/ai_module.dart' as _i568;
 import 'package:quiz_app/app/di/modules/database_module.dart' as _i1034;
 import 'package:quiz_app/app/di/modules/shared_pref_module.dart' as _i775;
 import 'package:quiz_app/app/router/app_router.dart' as _i223;
+import 'package:quiz_app/features/auth/domain/usecases/check_auth_usecase.dart'
+    as _i387;
+import 'package:quiz_app/features/auth/presentation/cubit/cubit.dart' as _i1034;
 import 'package:quiz_app/features/dictionary/data/data_sources/dictionary_asset_data_source.dart'
     as _i976;
 import 'package:quiz_app/features/dictionary/data/data_sources/dictionary_local_data_source.dart'
@@ -159,6 +162,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i192.TtsService>(),
       ),
     );
+    gh.lazySingleton<_i387.CheckAuthUseCase>(
+      () => _i387.CheckAuthUseCase(gh<_i1049.ProfileRepository>()),
+    );
     gh.lazySingleton<_i519.DeleteProfileUseCase>(
       () => _i519.DeleteProfileUseCase(gh<_i1049.ProfileRepository>()),
     );
@@ -198,6 +204,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i25.TextCatalogCubit>(
       () => _i25.TextCatalogCubit(gh<_i912.LoadCatalogUseCase>()),
     );
+    gh.lazySingleton<_i1034.AuthCubit>(
+      () => _i1034.AuthCubit(gh<_i387.CheckAuthUseCase>()),
+    );
     gh.lazySingleton<_i61.HistoryCubit>(
       () => _i61.HistoryCubit(
         gh<_i876.FetchHistoryUseCase>(),
@@ -220,7 +229,7 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.lazySingleton<_i223.AppRouter>(
-      () => _i223.AppRouter(gh<_i504.ProfileCubit>()),
+      () => _i223.AppRouter(gh<_i1034.AuthCubit>()),
     );
     return this;
   }

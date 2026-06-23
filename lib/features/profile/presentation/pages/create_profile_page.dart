@@ -1,8 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:quiz_app/app/router/app_routes.dart';
+import 'package:quiz_app/features/auth/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/state.dart';
 
@@ -19,6 +18,7 @@ class CreateProfilePage extends StatefulWidget {
 
 class _CreateProfilePageState extends State<CreateProfilePage> {
   late ProfileCubit cubit;
+  late AuthCubit authCubit;
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -38,6 +38,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   void initState() {
     super.initState();
     cubit = context.read<ProfileCubit>();
+    authCubit = context.read<AuthCubit>();
   }
 
   @override
@@ -137,8 +138,14 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             );
           }
           if (state.success) {
-            context.go(AppRoutes.tests);
-            cubit.disableSuccess();
+            AppMessage.success(
+              context,
+              message: 'profilePage.created'.tr(),
+              onClose: () {
+                cubit.disableSuccess();
+                authCubit.checkAuth();
+              },
+            );
           }
         },
       ),

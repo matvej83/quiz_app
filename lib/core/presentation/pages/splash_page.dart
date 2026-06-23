@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/app/constants/asset_paths.dart';
-import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
+import 'package:quiz_app/features/auth/presentation/cubit/cubit.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -11,15 +11,15 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  late ProfileCubit cubit;
+  late AuthCubit cubit;
 
   @override
   void initState() {
     super.initState();
-    cubit = context.read<ProfileCubit>();
+    cubit = context.read<AuthCubit>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 1), () {
-        cubit.loadProfile();
+        cubit.checkAuth();
       });
     });
   }

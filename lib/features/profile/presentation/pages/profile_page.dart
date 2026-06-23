@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quiz_app/app/router/app_routes.dart';
+import 'package:quiz_app/features/auth/presentation/cubit/cubit.dart';
 
 import '../../../../core/presentation/widgets/app_dialog.dart';
 import '../../../history/presentation/cubit/cubit.dart';
@@ -20,13 +21,16 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late HistoryCubit historyCubit;
   late ProfileCubit cubit;
+  late AuthCubit authCubit;
   final _showSelector = ValueNotifier<bool>(false);
 
   @override
   void initState() {
     super.initState();
     cubit = context.read<ProfileCubit>();
+    cubit.loadProfile();
     historyCubit = context.read<HistoryCubit>();
+    authCubit = context.read<AuthCubit>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         _showSelector.value = true;
@@ -132,6 +136,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   if (result) {
                     historyCubit.deleteHistory();
                     cubit.deleteProfile();
+                    authCubit.disableAuth();
                   }
                 },
                 child: Text('profilePage.btnRemoveProfile'.tr()),

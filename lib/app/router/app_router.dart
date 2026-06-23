@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:quiz_app/app/router/app_routes.dart';
+import 'package:quiz_app/features/auth/presentation/cubit/cubit.dart';
+import 'package:quiz_app/features/auth/presentation/cubit/state.dart';
 import 'package:quiz_app/features/history/presentation/pages/history_page.dart';
 import 'package:quiz_app/features/main/presentation/pages/tests_page.dart';
-import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/pages/create_profile_page.dart';
 import 'package:quiz_app/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:quiz_app/features/profile/presentation/pages/licences_page.dart';
@@ -27,7 +28,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   AppRouter(this.cubit);
 
-  final ProfileCubit cubit;
+  final AuthCubit cubit;
 
   late final GoRouter router = GoRouter(
     initialLocation: AppRoutes.splash,
@@ -35,28 +36,27 @@ class AppRouter {
     refreshListenable: GoRouterRefreshStream(cubit.stream),
     debugLogDiagnostics: true,
     redirect: (context, state) {
-      final initialized = cubit.state.initialized;
-      final hasProfile =
-          cubit.state.profile != null &&
-          cubit.state.profile!.firstName.isNotEmpty;
+      final status = cubit.state.status;
 
       final isSplash = state.matchedLocation == AppRoutes.splash;
-
       final isCreateProfile = state.matchedLocation == AppRoutes.createProfile;
 
-      // loading
-      if (!initialized) {
-        return isSplash ? null : AppRoutes.splash;
+      if (status == AuthStatus.unknown) {
+        return null;
       }
 
-      // no profile
-      if (!hasProfile) {
-        return isCreateProfile ? null : AppRoutes.createProfile;
+      if (status == AuthStatus.unauthenticated) {
+        if (isCreateProfile) {
+          return null;
+        }
+        return AppRoutes.createProfile;
       }
 
-      // has profile
-      if (isSplash || isCreateProfile) {
-        return AppRoutes.tests;
+      if (status == AuthStatus.authenticated) {
+        if (isSplash || isCreateProfile) {
+          return AppRoutes.tests;
+        }
+        return null;
       }
 
       return null;

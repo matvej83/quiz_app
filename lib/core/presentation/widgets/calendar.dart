@@ -178,7 +178,7 @@ class _AppCalendarState extends State<AppCalendar> {
               .toList(),
         ),
 
-        const SizedBox(height: 4),
+        const SizedBox(height: 4.0),
 
         /// GRID
         GridView.count(
@@ -191,7 +191,8 @@ class _AppCalendarState extends State<AppCalendar> {
         ),
 
         /// Footer
-        if (widget.specialDays.isNotEmpty)
+        if (widget.specialDays.isNotEmpty) ...[
+          const SizedBox(height: 8.0),
           Row(
             spacing: 8.0,
             crossAxisAlignment: .center,
@@ -211,6 +212,7 @@ class _AppCalendarState extends State<AppCalendar> {
               ),
             ],
           ),
+        ],
       ],
     );
   }
