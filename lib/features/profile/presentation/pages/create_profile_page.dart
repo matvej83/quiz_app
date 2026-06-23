@@ -23,6 +23,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   int _wordCount = 10;
+  bool created = false;
 
   void _handleCreateProfile() {
     if (_formKey.currentState!.validate()) {
@@ -59,6 +60,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       body: BlocConsumer<ProfileCubit, ProfileState>(
         builder: (context, state) {
           final isLoading = state.isLoading;
+          final isBlocked = created;
           return Center(
             child: SingleChildScrollView(
               padding: .only(
@@ -110,7 +112,9 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                       ],
                     ),
                     ElevatedButton(
-                      onPressed: isLoading ? null : _handleCreateProfile,
+                      onPressed: isLoading || isBlocked
+                          ? null
+                          : _handleCreateProfile,
                       child: isLoading
                           ? const SizedBox(
                               width: 20.0,
@@ -138,6 +142,9 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             );
           }
           if (state.success) {
+            created = true;
+            _firstNameController.text = '';
+            _lastNameController.text = '';
             AppMessage.success(
               context,
               message: 'profilePage.created'.tr(),
