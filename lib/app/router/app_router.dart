@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
@@ -11,6 +12,7 @@ import 'package:quiz_app/features/main/presentation/pages/tests_page.dart';
 import 'package:quiz_app/features/profile/presentation/pages/create_profile_page.dart';
 import 'package:quiz_app/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:quiz_app/features/profile/presentation/pages/licences_page.dart';
+import 'package:quiz_app/features/profile/presentation/pages/profile_page.dart';
 import 'package:quiz_app/features/quiz/presentation/pages/quiz_page.dart';
 import 'package:quiz_app/features/quiz/presentation/pages/test_page.dart';
 import 'package:quiz_app/features/text_catalog/presentation/pages/text_catalog_page.dart';
@@ -18,7 +20,6 @@ import 'package:quiz_app/features/translation/presentation/pages/translation_pag
 
 import '../../core/presentation/pages/splash_page.dart';
 import '../../features/main/presentation/main_screen.dart';
-import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/quiz/presentation/pages/flashcards_page.dart';
 import '../../features/quiz/presentation/pages/listening_page.dart';
 
@@ -34,7 +35,7 @@ class AppRouter {
     initialLocation: AppRoutes.splash,
     navigatorKey: _rootNavigatorKey,
     refreshListenable: GoRouterRefreshStream(cubit.stream),
-    debugLogDiagnostics: true,
+    debugLogDiagnostics: kDebugMode,
     redirect: (context, state) {
       final status = cubit.state.status;
 
@@ -129,6 +130,7 @@ class AppRouter {
             ],
           ),
           StatefulShellBranch(
+            preload: true,
             routes: [
               GoRoute(
                 path: AppRoutes.profile,
