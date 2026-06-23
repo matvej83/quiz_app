@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quiz_app/app/router/app_routes.dart';
+import 'package:quiz_app/core/presentation/widgets/app_loader.dart';
 import 'package:quiz_app/features/auth/presentation/cubit/cubit.dart';
 
 import '../../../../core/presentation/widgets/app_dialog.dart';
@@ -22,7 +23,6 @@ class _ProfilePageState extends State<ProfilePage> {
   late HistoryCubit historyCubit;
   late ProfileCubit cubit;
   late AuthCubit authCubit;
-  final _showSelector = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -31,17 +31,6 @@ class _ProfilePageState extends State<ProfilePage> {
     cubit.loadProfile();
     historyCubit = context.read<HistoryCubit>();
     authCubit = context.read<AuthCubit>();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _showSelector.value = true;
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _showSelector.dispose();
-    super.dispose();
   }
 
   @override
@@ -51,98 +40,97 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (context, state) {
         return ColoredBox(
           color: theme.scaffoldBackgroundColor,
-          child: Column(
-            mainAxisAlignment: .center,
-            spacing: 16.0,
-            children: [
-              Text(
-                state.profile?.firstName ?? '',
-                style: theme.textTheme.headlineSmall,
-              ),
-              Text(
-                state.profile?.lastName ?? '',
-                style: theme.textTheme.headlineSmall,
-              ),
-              ValueListenableBuilder<bool>(
-                valueListenable: _showSelector,
-                builder: (context, visible, child) {
-                  return visible
-                      ? const ThemeSelector()
-                      : const SizedBox(height: 56.0);
-                },
-              ),
-              OutlinedButton(
-                onPressed: () {
-                  context.push(AppRoutes.history);
-                },
-                child: Row(
-                  spacing: 4.0,
-                  mainAxisSize: .min,
+          child: state.isLoading
+              ? const AppLoader()
+              : state.initialized
+              ? Column(
+                  mainAxisAlignment: .center,
+                  spacing: 16.0,
                   children: [
-                    Text('historyPage.screenName'.tr()),
-                    Icon(
-                      Icons.history_outlined,
-                      color: theme.colorScheme.primary,
+                    Text(
+                      state.profile?.firstName ?? '',
+                      style: theme.textTheme.headlineSmall,
+                    ),
+                    Text(
+                      state.profile?.lastName ?? '',
+                      style: theme.textTheme.headlineSmall,
+                    ),
+                    const ThemeSelector(),
+                    OutlinedButton(
+                      onPressed: () {
+                        context.push(AppRoutes.history);
+                      },
+                      child: Row(
+                        spacing: 4.0,
+                        mainAxisSize: .min,
+                        children: [
+                          Text('historyPage.screenName'.tr()),
+                          Icon(
+                            Icons.history_outlined,
+                            color: theme.colorScheme.primary,
+                          ),
+                        ],
+                      ),
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: theme.colorScheme.primary,
+                      ),
+                      onPressed: () {
+                        context.go(
+                          '${AppRoutes.profile}/${AppRoutes.editProfile}',
+                        );
+                      },
+                      child: Row(
+                        spacing: 4.0,
+                        mainAxisSize: .min,
+                        children: [
+                          Text('editProfilePage.screenName'.tr()),
+                          Icon(
+                            Icons.edit,
+                            color: theme.colorScheme.primary,
+                            size: 16.0,
+                          ),
+                        ],
+                      ),
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: theme.colorScheme.primary,
+                        textStyle: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.primary,
+                          decoration: .underline,
+                          decorationColor: theme.colorScheme.primary,
+                        ),
+                      ),
+                      onPressed: () {
+                        context.push(AppRoutes.licenses);
+                      },
+                      child: const Text('Open Source Licenses'),
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: theme.colorScheme.error,
+                      ),
+                      onPressed: () async {
+                        final result = await AppDialog.show(
+                          context,
+                          title: 'profilePage.btnRemove'.tr(),
+                          text: 'profilePage.youWantRemove'.tr(),
+                          cancelText: 'cancelText'.tr(),
+                          okText: 'okText'.tr(),
+                        );
+                        if (result) {
+                          historyCubit.deleteHistory();
+                          cubit.deleteProfile();
+                          authCubit.disableAuth();
+                        }
+                      },
+                      child: Text('profilePage.btnRemoveProfile'.tr()),
                     ),
                   ],
-                ),
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: theme.colorScheme.primary,
-                ),
-                onPressed: () {
-                  context.go('${AppRoutes.profile}/${AppRoutes.editProfile}');
-                },
-                child: Row(
-                  spacing: 4.0,
-                  mainAxisSize: .min,
-                  children: [
-                    Text('editProfilePage.screenName'.tr()),
-                    Icon(
-                      Icons.edit,
-                      color: theme.colorScheme.primary,
-                      size: 16.0,
-                    ),
-                  ],
-                ),
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: theme.colorScheme.primary,
-                  textStyle: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.primary,
-                    decoration: .underline,
-                    decorationColor: theme.colorScheme.primary,
-                  ),
-                ),
-                onPressed: () {
-                  context.push(AppRoutes.licenses);
-                },
-                child: const Text('Open Source Licenses'),
-              ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: theme.colorScheme.error,
-                ),
-                onPressed: () async {
-                  final result = await AppDialog.show(
-                    context,
-                    title: 'profilePage.btnRemove'.tr(),
-                    text: 'profilePage.youWantRemove'.tr(),
-                    cancelText: 'cancelText'.tr(),
-                    okText: 'okText'.tr(),
-                  );
-                  if (result) {
-                    historyCubit.deleteHistory();
-                    cubit.deleteProfile();
-                    authCubit.disableAuth();
-                  }
-                },
-                child: Text('profilePage.btnRemoveProfile'.tr()),
-              ),
-            ],
-          ),
+                )
+              : const SizedBox(),
         );
       },
     );
