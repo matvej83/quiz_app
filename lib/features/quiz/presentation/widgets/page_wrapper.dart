@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/presentation/widgets/app_loader.dart';
@@ -14,8 +16,8 @@ class PageWrapper extends StatelessWidget {
   });
 
   final Color backgroundColor;
-  final Widget Function(QuizCompleted) onCompleted;
-  final Widget Function(QuizLoaded) onLoaded;
+  final Widget Function(QuizState) onCompleted;
+  final Widget Function(QuizState) onLoaded;
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +25,19 @@ class PageWrapper extends StatelessWidget {
       color: backgroundColor,
       child: BlocBuilder<QuizCubit, QuizState>(
         builder: (context, state) {
-          if (state is QuizLoading) {
-            return const AppLoader();
+          if (state.status == QuizStatus.loading) {
+            return const Center(child: AppLoader());
           }
-          if (state is QuizCompleted) {
+          if (state.status == QuizStatus.completed) {
             return onCompleted(state);
           }
-          if (state is QuizLoaded) {
+          if (state.status == QuizStatus.loaded) {
             return onLoaded(state);
           }
+          if (state.status == QuizStatus.error) {
+            return Center(child: Text(state.errorMessage ?? ''));
+          }
+          log(state.status.toString());
           return const SizedBox.shrink();
         },
       ),

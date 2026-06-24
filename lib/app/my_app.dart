@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/app/router/app_router.dart';
 import 'package:quiz_app/features/auth/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
+import 'package:quiz_app/features/quiz/presentation/cubit/cubit.dart';
 
 import '../features/history/presentation/cubit/cubit.dart';
 import '../features/text_catalog/presentation/cubit/cubit.dart';
@@ -27,6 +28,7 @@ class _MyAppState extends State<MyApp> {
   final historyCubit = getIt<HistoryCubit>();
   final translationCubit = getIt<TranslationCubit>();
   final translationCatalogCubit = getIt<TextCatalogCubit>();
+  final quizCubit = getIt<QuizCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => historyCubit..init()),
         BlocProvider(create: (_) => translationCubit),
         BlocProvider(create: (_) => translationCatalogCubit),
+        BlocProvider(create: (_) => quizCubit),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {

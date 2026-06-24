@@ -38,8 +38,8 @@ class FlashcardsPage extends StatelessWidget {
                 onPressed: () {
                   context.read<HistoryCubit>().addHistoryItem(
                     testType: TestType.flashcards,
-                    correctAnswers: state.correctAnswers,
-                    totalAnswers: state.totalQuestions,
+                    correctAnswers: state.correctCount,
+                    totalAnswers: state.words.length,
                   );
                   if (context.canPop()) {
                     context.pop();
