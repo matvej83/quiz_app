@@ -20,15 +20,15 @@ class _HistoryListState extends State<HistoryList> {
   late HistoryCubit cubit;
   final _scrollController = ScrollController();
 
-  bool isBottom(ScrollController scrollController) {
-    if (!scrollController.hasClients) return false;
-    final maxScroll = scrollController.position.maxScrollExtent;
-    final currentScroll = scrollController.offset;
-    return currentScroll >= (maxScroll * 0.9);
+  bool get _isNearBottom {
+    if (!_scrollController.hasClients) return false;
+
+    return _scrollController.offset >=
+        _scrollController.position.maxScrollExtent * 0.9;
   }
 
   void _onScroll() {
-    if (isBottom(_scrollController)) {
+    if (_isNearBottom) {
       cubit.loadMoreHistory();
     }
   }
@@ -49,7 +49,7 @@ class _HistoryListState extends State<HistoryList> {
 
   @override
   Widget build(BuildContext context) {
-    final locale = context.locale;
+    final formatter = DateFormat('yyyy.MM.dd', context.locale.languageCode);
     return BlocBuilder<HistoryCubit, HistoryState>(
       builder: (context, state) {
         return state.isLoading
@@ -65,25 +65,26 @@ class _HistoryListState extends State<HistoryList> {
                     padding: const .symmetric(horizontal: 16.0),
                     itemBuilder: (context, index) {
                       final item = state.history[index];
-                      final currentDate = DateFormat(
-                        'yyyy.MM.dd',
-                        locale.languageCode,
-                      ).format(item.saved);
 
-                      final previousDate = index > 0
-                          ? DateFormat(
-                              'yyyy.MM.dd',
-                              locale.languageCode,
-                            ).format(state.history[index - 1].saved)
+                      final current = item.saved;
+                      final previous = index > 0
+                          ? state.history[index - 1].saved
                           : null;
+                      final shouldShowDate =
+                          previous == null || !current.isSameDay(previous);
 
-                      final shouldShowDate = currentDate != previousDate;
                       return Column(
                         crossAxisAlignment: .stretch,
                         children: [
                           if (shouldShowDate)
-                            Align(alignment: .center, child: Text(currentDate)),
-                          HistoryItem(history: item),
+                            Align(
+                              alignment: .center,
+                              child: Text(formatter.format(current)),
+                            ),
+                          HistoryItem(
+                            key: ValueKey(item.saved.microsecondsSinceEpoch),
+                            history: item,
+                          ),
                         ],
                       );
                     },
@@ -91,7 +92,12 @@ class _HistoryListState extends State<HistoryList> {
                         const SizedBox(height: 8.0),
                   ),
                   if (state.isShowLoader)
-                    const CircularProgressIndicator.adaptive(),
+                    Positioned(
+                      bottom: 16.0,
+                      left: 0,
+                      right: 0,
+                      child: AppLoader.small(),
+                    ),
                 ],
               );
       },

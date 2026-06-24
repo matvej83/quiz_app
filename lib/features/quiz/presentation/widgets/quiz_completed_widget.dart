@@ -17,7 +17,7 @@ class QuizCompletedWidget extends StatelessWidget {
     required this.completedTextKey,
   });
 
-  final QuizCompleted state;
+  final QuizState state;
   final TestType testType;
   final String completedTextKey;
 
@@ -25,20 +25,20 @@ class QuizCompletedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<QuizCubit>();
     final cup = cubit.getCup(
-      total: state.totalQuestions,
-      correct: state.correctAnswers,
+      total: state.words.length,
+      correct: state.correctCount,
     );
     return CompletedWidget(
       cup: cup,
       completedText: completedTextKey.tr(),
-      correctAnswers: state.correctAnswers,
-      incorrectAnswers: state.totalQuestions - state.correctAnswers,
-      totalQuestions: state.totalQuestions,
+      correctAnswers: state.correctCount,
+      incorrectAnswers: state.words.length - state.correctCount,
+      totalQuestions: state.words.length,
       onTap: () {
         context.read<HistoryCubit>().addHistoryItem(
           testType: testType,
-          correctAnswers: state.correctAnswers,
-          totalAnswers: state.totalQuestions,
+          correctAnswers: state.correctCount,
+          totalAnswers: state.words.length,
         );
         if (context.canPop()) {
           context.pop();

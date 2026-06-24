@@ -13,14 +13,20 @@ import '../../../dictionary/data/database/app_database.dart';
 import '../../../dictionary/services/tts_service.dart';
 import 'state.dart';
 
+enum QuizStatus { initial, loading, loaded, completed, error }
+
 @lazySingleton
 class QuizCubit extends Cubit<QuizState> {
-  QuizCubit(this._dataSource, this._ttsService) : super(QuizInitial());
+  QuizCubit(this._dataSource, this._ttsService) : super(const QuizState());
   final DictionaryLocalDataSource _dataSource;
   final TtsService _ttsService;
   TranslationType type = TranslationType.enRu;
 
-  void loadWords({
+  Future<void> setInit() async {
+    emit(state.copyWith(status: QuizStatus.initial));
+  }
+
+  Future<void> loadWords({
     required TranslationType type,
     bool loadAdditionalWords = false,
     int wordCount = 10,
@@ -30,7 +36,7 @@ class QuizCubit extends Cubit<QuizState> {
       List<String> answers = [];
       this.type = type;
       await _ttsService.setLanguage(type.questionFor);
-      emit(QuizLoading());
+      emit(state.copyWith(status: QuizStatus.loading));
       final words = await _dataSource.getQuizWords(wordCount);
       if (loadAdditionalWords) {
         final list = await _dataSource.getWords(wordCount);
@@ -41,10 +47,16 @@ class QuizCubit extends Cubit<QuizState> {
         );
       }
       if (words.isEmpty) {
-        emit(const QuizCompleted(correctAnswers: 0, totalQuestions: 0));
+        emit(
+          state.copyWith(
+            status: QuizStatus.error,
+            errorMessage: 'errors.noWords'.tr(),
+          ),
+        );
       } else {
         emit(
-          QuizLoaded(
+          state.copyWith(
+            status: QuizStatus.loaded,
             words: words,
             additionalWords: additionalWords,
             answers: answers,
@@ -57,7 +69,7 @@ class QuizCubit extends Cubit<QuizState> {
       }
     } catch (e, st) {
       log(st.toString());
-      emit(QuizError('${'errors.noWords'.tr()}: $e'));
+      emit(state.copyWith(errorMessage: '${'errors.noWords'.tr()}: $e'));
     }
   }
 
@@ -80,9 +92,8 @@ class QuizCubit extends Cubit<QuizState> {
   }
 
   Future<void> checkAnswer(String userAnswer, {bool goToNext = false}) async {
-    if (state is! QuizLoaded) return;
-    final loadedState = state as QuizLoaded;
-    final currentWord = loadedState.words[loadedState.currentIndex];
+    if (state.status != QuizStatus.loaded) return;
+    final currentWord = state.words[state.currentIndex];
     final correctAnswer = currentWord.answerFor(type).normalize();
     final isCorrect = userAnswer.normalize() == correctAnswer;
     if (!isCorrect) {
@@ -91,7 +102,7 @@ class QuizCubit extends Cubit<QuizState> {
       }
     }
     emit(
-      loadedState.copyWith(
+      state.copyWith(
         answered: true,
         correct: isCorrect,
         userAnswer: userAnswer.trim(),
@@ -116,37 +127,34 @@ class QuizCubit extends Cubit<QuizState> {
   }
 
   void nextQuestion({bool loadAdditionalWords = false}) {
-    if (state is! QuizLoaded) return;
-    final loadedState = state as QuizLoaded;
-    final nextIndex = loadedState.currentIndex + 1;
-    if (nextIndex >= loadedState.words.length) {
-      final totalQuestions = loadedState.words.length;
-      final finalCorrect =
-          loadedState.correctCount + (loadedState.correct ? 1 : 0);
+    if (state.status != QuizStatus.loaded) return;
+    final nextIndex = state.currentIndex + 1;
+    final correctCount = state.correctCount + (state.correct ? 1 : 0);
+    if (nextIndex >= state.words.length) {
       emit(
-        QuizCompleted(
-          correctAnswers: finalCorrect,
-          totalQuestions: totalQuestions,
+        state.copyWith(
+          status: QuizStatus.completed,
+          correctCount: correctCount,
         ),
       );
     } else {
       List<String> answers = [];
       if (loadAdditionalWords) {
-        final current = loadedState.words[nextIndex];
+        final current = state.words[nextIndex];
         answers = getAnswers(
           current: current,
-          additionalWords: loadedState.additionalWords,
+          additionalWords: state.additionalWords,
         );
       }
       emit(
-        loadedState.copyWith(
+        state.copyWith(
+          status: QuizStatus.loaded,
           answers: answers,
           currentIndex: nextIndex,
           answered: false,
           userAnswer: '',
           correct: false,
-          correctCount:
-              loadedState.correctCount + (loadedState.correct ? 1 : 0),
+          correctCount: correctCount,
         ),
       );
     }
@@ -154,12 +162,12 @@ class QuizCubit extends Cubit<QuizState> {
 
   /// uses for flashcards only
   void previousQuestion() {
-    if (state is! QuizLoaded) return;
-    final loadedState = state as QuizLoaded;
-    if (loadedState.currentIndex == 0) return;
-    final previousIndex = loadedState.currentIndex - 1;
+    if (state.status != QuizStatus.loaded) return;
+    if (state.currentIndex == 0) return;
+    final previousIndex = state.currentIndex - 1;
     emit(
-      loadedState.copyWith(
+      state.copyWith(
+        status: QuizStatus.loaded,
         currentIndex: previousIndex,
         answered: false,
         userAnswer: '',

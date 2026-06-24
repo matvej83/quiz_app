@@ -41,20 +41,20 @@ class _ListeningPageState extends State<ListeningPage> {
       backgroundColor: theme.scaffoldBackgroundColor,
       onCompleted: (state) {
         final cup = quizCubit.getCup(
-          total: state.totalQuestions,
-          correct: state.correctAnswers,
+          total: state.words.length,
+          correct: state.correctCount,
         );
         return CompletedWidget(
           cup: cup,
           completedText: 'listeningPage.listeningCompleted'.tr(),
-          correctAnswers: state.correctAnswers,
-          incorrectAnswers: state.totalQuestions - state.correctAnswers,
-          totalQuestions: state.totalQuestions,
+          correctAnswers: state.correctCount,
+          incorrectAnswers: state.words.length - state.correctCount,
+          totalQuestions: state.words.length,
           onTap: () {
             historyCubit.addHistoryItem(
               testType: TestType.listening,
-              correctAnswers: state.correctAnswers,
-              totalAnswers: state.totalQuestions,
+              correctAnswers: state.correctCount,
+              totalAnswers: state.words.length,
             );
           },
         );

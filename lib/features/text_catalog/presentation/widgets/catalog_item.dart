@@ -10,19 +10,21 @@ class CatalogItem extends StatelessWidget {
     required this.title,
     required this.level,
     required this.phraseCount,
+    required this.onTap,
   });
 
   final String image;
   final String title;
   final int level;
   final int phraseCount;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    return AspectRatio(
-      aspectRatio: 1.0,
+    return GestureDetector(
+      onTap: onTap,
       child: Stack(
         children: [
           Positioned.fill(

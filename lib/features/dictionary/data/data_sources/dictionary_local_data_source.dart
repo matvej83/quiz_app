@@ -16,9 +16,8 @@ class DictionaryLocalDataSource {
   Future<List<Word>> getQuizWords(int limit) async {
     final words =
         await (database.select(database.words)
-              ..where((tbl) => tbl.probability.isBiggerThanValue(0.7))
-              ..orderBy([(t) => OrderingTerm.desc(t.count)])
-              ..limit(100))
+              ..where((tbl) => tbl.probability.isBiggerThanValue(0.6))
+              ..orderBy([(t) => OrderingTerm.desc(t.count)]))
             .get();
 
     words.shuffle();
