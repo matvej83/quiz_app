@@ -22,10 +22,6 @@ class QuizCubit extends Cubit<QuizState> {
   final TtsService _ttsService;
   TranslationType type = TranslationType.enRu;
 
-  Future<void> setInit() async {
-    emit(state.copyWith(status: QuizStatus.initial));
-  }
-
   Future<void> loadWords({
     required TranslationType type,
     bool loadAdditionalWords = false,
