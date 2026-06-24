@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 class OneValueSlider extends StatefulWidget {
-  const OneValueSlider({super.key, this.initValue, required this.onChanged});
+  const OneValueSlider({
+    super.key,
+    this.initValue,
+    this.isActive = true,
+    required this.onChanged,
+  });
 
   final int? initValue;
+  final bool isActive;
   final Function(int) onChanged;
 
   @override
@@ -35,12 +41,14 @@ class _OneValueSliderState extends State<OneValueSlider> {
           min: _minValue,
           divisions: ((_maxValue - _minValue) / _step).round(),
           label: _currentValue.round().toString(),
-          onChanged: (value) {
-            setState(() {
-              _currentValue = value;
-              widget.onChanged(value.toInt());
-            });
-          },
+          onChanged: widget.isActive
+              ? (value) {
+                  setState(() {
+                    _currentValue = value;
+                    widget.onChanged(value.toInt());
+                  });
+                }
+              : null,
         ),
         Padding(
           padding: const .symmetric(horizontal: 10.0),
