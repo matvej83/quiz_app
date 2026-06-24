@@ -17,6 +17,8 @@ class TextCatalogPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final isLandscape = screenSize.width > screenSize.height;
     return Scaffold(
       appBar: AppBar(
         title: Text('textCatalogPage.screenName'.tr()),
@@ -26,29 +28,32 @@ class TextCatalogPage extends StatelessWidget {
         builder: (context, state) {
           return state.isLoading
               ? const AppLoader()
-              : ListView.separated(
+              : GridView.builder(
                   itemCount: state.translations.length,
                   physics: const ClampingScrollPhysics(),
                   padding: const .all(16.0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: isLandscape ? 2 : 1,
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 8.0,
+                    childAspectRatio: 1,
+                  ),
                   itemBuilder: (context, index) {
                     final item = state.translations[index];
-                    return GestureDetector(
+                    return CatalogItem(
+                      key: ValueKey(item.id),
                       onTap: () {
                         context.read<TranslationCubit>().loadRussianText(
                           item.text,
                         );
                         context.push(AppRoutes.translation);
                       },
-                      child: CatalogItem(
-                        image: '${AssetPaths.coversPath}${item.id}.png',
-                        title: item.title,
-                        level: item.level,
-                        phraseCount: item.text.length,
-                      ),
+                      image: '${AssetPaths.coversPath}${item.id}.png',
+                      title: item.title,
+                      level: item.level,
+                      phraseCount: item.text.length,
                     );
                   },
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 8.0),
                 );
         },
       ),

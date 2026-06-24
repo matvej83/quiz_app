@@ -42,8 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
           color: theme.scaffoldBackgroundColor,
           child: state.isLoading
               ? const AppLoader()
-              : state.initialized
-              ? Column(
+              : Column(
                   mainAxisAlignment: .center,
                   spacing: 16.0,
                   children: [
@@ -129,8 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Text('profilePage.btnRemoveProfile'.tr()),
                     ),
                   ],
-                )
-              : const SizedBox(),
+                ),
         );
       },
     );

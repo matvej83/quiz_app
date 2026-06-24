@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quiz_app/core/presentation/widgets/app_loader.dart';
 import 'package:quiz_app/features/profile/domain/entity/profile_entity.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/cubit.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/state.dart';
@@ -123,13 +124,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ElevatedButton(
                       onPressed: state.isLoading ? null : _onSave,
                       child: state.isLoading
-                          ? const SizedBox(
-                              width: 20.0,
-                              height: 20.0,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2.0,
-                              ),
-                            )
+                          ? AppLoader.small()
                           : Text('editProfilePage.btnSave'.tr()),
                     ),
                   ],

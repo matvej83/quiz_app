@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app/core/presentation/widgets/app_back_button.dart';
+import 'package:quiz_app/core/presentation/widgets/app_loader.dart';
 import 'package:quiz_app/enums/app_enums.dart';
 import 'package:quiz_app/features/history/presentation/cubit/cubit.dart';
 
@@ -113,7 +114,7 @@ class _TranslationPageState extends State<TranslationPage> {
                               : 'quizPage.check'.tr(),
                         ),
                       ),
-                      if (isLoading) const CircularProgressIndicator.adaptive(),
+                      if (isLoading) const AppLoader(),
                       if (isAnswered && state.result != null)
                         TranslationResultWidget(result: state.result!),
                     ],

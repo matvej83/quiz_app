@@ -28,12 +28,11 @@ class ProfileCubit extends Cubit<ProfileState> {
           state.copyWith(
             error: AppUtils.parseFailureMessage(l),
             isLoading: false,
-            initialized: true,
           ),
         );
       },
       (r) {
-        emit(state.copyWith(profile: r, isLoading: false, initialized: true));
+        emit(state.copyWith(profile: r, isLoading: false));
       },
     );
   }
