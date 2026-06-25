@@ -78,7 +78,6 @@ import 'package:quiz_app/features/translation/domain/usecases/check_translation_
     as _i806;
 import 'package:quiz_app/features/translation/presentation/cubit/cubit.dart'
     as _i998;
-import 'package:quiz_app/theme/cubit/cubit.dart' as _i29;
 import 'package:quiz_app/theme/data/data_sources/theme_local_data_source.dart'
     as _i593;
 import 'package:quiz_app/theme/data/repository/theme_repository_impl.dart'
@@ -87,6 +86,7 @@ import 'package:quiz_app/theme/domain/repository/theme_repository.dart' as _i37;
 import 'package:quiz_app/theme/domain/usecases/get_theme_usecase.dart' as _i575;
 import 'package:quiz_app/theme/domain/usecases/set_theme_usecase.dart'
     as _i1061;
+import 'package:quiz_app/theme/presentation/cubit/cubit.dart' as _i740;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -216,8 +216,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i519.DeleteProfileUseCase>(),
       ),
     );
-    gh.lazySingleton<_i29.ThemeCubit>(
-      () => _i29.ThemeCubit(
+    gh.lazySingleton<_i740.ThemeCubit>(
+      () => _i740.ThemeCubit(
         gh<_i575.GetThemeUseCase>(),
         gh<_i1061.SetThemeUseCase>(),
       ),

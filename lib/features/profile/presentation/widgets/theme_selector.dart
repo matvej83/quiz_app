@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/presentation/widgets/custom_dropdown_menu.dart';
-import '../../../../theme/cubit/cubit.dart';
 import '../../../../theme/domain/entity/app_theme_mode.dart';
+import '../../../../theme/presentation/cubit/cubit.dart';
 
 class ThemeSelector extends StatefulWidget {
   const ThemeSelector({super.key});
