@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
+import 'package:quiz_app/app/constants/app_constants.dart';
 import 'package:quiz_app/app/utils/app_utils.dart';
 import 'package:quiz_app/features/translation/domain/services/gemini_service.dart';
 
@@ -10,9 +14,7 @@ import '../models/translation_check_result_model.dart';
 
 @LazySingleton(as: GeminiService)
 class GeminiServiceImpl implements GeminiService {
-  GeminiServiceImpl(this._model);
-
-  final GenerativeModel _model;
+  GeminiServiceImpl();
 
   @override
   Future<Either<Failure, TranslationCheckResultEntity>> checkTranslation({
@@ -49,11 +51,32 @@ Provide "reason" value as a text in russian language.
 ''';
 
     try {
-      final response = await _model.generateContent([Content.text(prompt)]);
-      final text = response.text ?? '';
-      final json = AppUtils.parseJson(text);
-      return Right(TranslationCheckResultModel.fromJson(json).toEntity());
+      final response = await http.post(
+        Uri.parse(AppConstants.cloudFlareWorkerUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'X-APP-TOKEN': AppConstants.cloudFlareWorkerToken,
+        },
+        body: jsonEncode({
+          'contents': [
+            {
+              'parts': [
+                {'text': prompt},
+              ],
+            },
+          ],
+        }),
+      );
+
+      final json = jsonDecode(response.body) as Map<String, dynamic>;
+
+      final text = json['candidates'][0]['content']['parts'][0]['text'];
+
+      final parsed = AppUtils.parseJson(text);
+
+      return Right(TranslationCheckResultModel.fromJson(parsed).toEntity());
     } catch (e) {
+      log('error $e');
       final userMessage = AppUtils.parseGeminiError(e);
       return Left(GeminiFailure(message: userMessage));
     }

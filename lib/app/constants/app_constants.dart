@@ -2,7 +2,9 @@ class AppConstants {
   static const assetDbName = 'en_ru_dictionary.db';
   static const profileKey = 'profile';
   static const themeKey = 'theme_mode';
-  static const aiModelName = 'gemini-2.5-flash';
+  static const cloudFlareWorkerUrl =
+      'https://quiz-app-gemini.vladimir-dev.workers.dev/';
+  static const cloudFlareWorkerToken = 'quiz-app-token-123564';
   static const aiSystemPrompt = '''
 You are an English teacher.
 
