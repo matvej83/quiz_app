@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../domain/entity/app_theme_mode.dart';
+import '../../domain/entity/app_theme_mode.dart';
 
 class ThemeState {
   const ThemeState({this.theme, this.mode = AppThemeMode.dark});

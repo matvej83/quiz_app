@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:quiz_app/core/usecases/usecase.dart';
-import 'package:quiz_app/theme/cubit/state.dart';
+import 'package:quiz_app/theme/presentation/cubit/state.dart';
 
-import '../../app/theme/app_theme.dart';
-import '../../app/theme/app_theme_colors.dart';
-import '../domain/entity/app_theme_mode.dart';
-import '../domain/usecases/get_theme_usecase.dart';
-import '../domain/usecases/set_theme_usecase.dart';
+import '../../../app/theme/app_theme.dart';
+import '../../../app/theme/app_theme_colors.dart';
+import '../../domain/entity/app_theme_mode.dart';
+import '../../domain/usecases/get_theme_usecase.dart';
+import '../../domain/usecases/set_theme_usecase.dart';
 
 @lazySingleton
 class ThemeCubit extends Cubit<ThemeState> {

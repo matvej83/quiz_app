@@ -9,8 +9,8 @@ import 'package:quiz_app/features/quiz/presentation/cubit/cubit.dart';
 import '../features/history/presentation/cubit/cubit.dart';
 import '../features/text_catalog/presentation/cubit/cubit.dart';
 import '../features/translation/presentation/cubit/cubit.dart';
-import '../theme/cubit/cubit.dart';
-import '../theme/cubit/state.dart';
+import '../theme/presentation/cubit/cubit.dart';
+import '../theme/presentation/cubit/state.dart';
 import 'di/injection.dart';
 
 class MyApp extends StatefulWidget {
