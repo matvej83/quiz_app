@@ -32928,9 +32928,11 @@ _.x=e
 _.y=f
 _.a=g},
 al3:function al3(){},
-uO:function uO(a,b,c){this.c=a
-this.d=b
-this.a=c},
+uO:function uO(a,b,c,d){var _=this
+_.c=a
+_.d=b
+_.e=c
+_.a=d},
 a8F:function a8F(a){var _=this
 _.d=a
 _.f=_.e=$
@@ -112911,7 +112913,7 @@ if(s!=null)s.iL()},
 $S:49}
 A.uO.prototype={
 ag(){return new A.a8F(new A.cT(Date.now(),0,!1))},
-aLj(a){return this.d.$1(a)}}
+aLj(a){return this.e.$1(a)}}
 A.a8F.prototype={
 bG(){var s,r=this
 r.cL()
@@ -112968,8 +112970,11 @@ l=A.dV(l,B.G,B.Z,B.R,1)
 k=A.bce(m,!0,!0,!0)
 q=m.length
 l=A.b([s,l,B.adN,new A.Ij(new A.M_(7,1,1,1,o),k,o,B.a2,!1,o,o,B.F9,o,!0,o,0,o,o,q,B.fA,B.ao,o,o,B.I,B.aO,o)],r)
-if(p.a.c.length!==0)B.b.K(l,A.b([B.K3,A.dV(A.b([A.jy(o,o,B.E,o,o,new A.fL(p.f.ax.fy,o,o,o,o,o,B.iE),12,o,o,12),A.aU(A.aI("calendar.trainingDays"),o,o,o,o,o,o,o,p.f.ok.z,o,o,o)],r),B.G,B.b6,B.R,8)],r))
-return A.ds(l,B.G,B.Z,B.b_,0)}}
+k=p.a
+if(k.c.length!==0){s=p.f
+q=A.jy(o,o,B.E,o,o,new A.fL(s.ax.fy,o,o,o,o,o,B.iE),12,o,o,12)
+k=k.d
+B.b.K(l,A.b([B.K3,A.dV(A.b([q,A.aU(k,o,o,o,o,o,o,o,s.ok.z,o,o,o)],r),B.G,B.b6,B.R,8)],r))}return A.ds(l,B.G,B.Z,B.b_,0)}}
 A.aMG.prototype={
 $1(a){var s=this.a
 return A.fU(a)===A.fU(s)&&A.el(a)===A.el(s)&&A.ny(a)===A.ny(s)},
@@ -113808,7 +113813,7 @@ A.bls(a,A.jy(o,A.z7(o,o,new A.auZ(),m,t.IL),B.E,o,new A.an(0,n,0,p),o,o,B.U9,o,o
 J(a){var s=null,r=A.aU(A.aI("historyPage.screenName"),s,s,s,s,s,s,s,s,s,s,s)
 return A.pO(A.oq(A.b([A.AG(s,s,s,B.V3,s,s,s,new A.av_(this,a),s,s,s,s)],t.p),s,s,!0,!0,s,s,1,!0,s,s,!1,s,!1,s,s,B.ix,s,!0,s,s,s,s,s,r,s,s,s,1,s,!0),s,B.UI,s,s,s)}}
 A.auZ.prototype={
-$2(a,b){return new A.uO(b.b,new A.auY(a),null)},
+$2(a,b){return new A.uO(b.b,A.aI("calendar.trainingDays"),new A.auY(a),null)},
 $S:769}
 A.auY.prototype={
 $1(a){A.cj(this.a,!1,t.c9).w7(a)},
