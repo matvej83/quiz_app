@@ -33,6 +33,7 @@ class HistoryPage extends StatelessWidget {
           builder: (context, state) {
             return AppCalendar(
               specialDays: state.trainingDays,
+              specialDaysText: 'calendar.trainingDays'.tr(),
               onMonthChanged: (date) {
                 context.read<HistoryCubit>().loadMonthHistory(date);
               },
