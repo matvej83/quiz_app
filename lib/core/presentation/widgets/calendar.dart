@@ -6,10 +6,12 @@ class AppCalendar extends StatefulWidget {
   const AppCalendar({
     super.key,
     this.specialDays = const [],
+    this.specialDaysText,
     required this.onMonthChanged,
   });
 
   final List<DateTime> specialDays;
+  final String? specialDaysText;
   final Function(DateTime) onMonthChanged;
 
   @override
@@ -207,7 +209,7 @@ class _AppCalendarState extends State<AppCalendar> {
                 ),
               ),
               Text(
-                'calendar.trainingDays'.tr(),
+                widget.specialDaysText ?? '',
                 style: _theme.textTheme.bodyMedium,
               ),
             ],
