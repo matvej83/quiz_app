@@ -68,6 +68,11 @@ Provide "reason" value as a text in russian language.
         }),
       );
 
+      if (response.statusCode != 200) {
+        final userMessage = AppUtils.parseHttpError(response.statusCode);
+        return Left(GeminiFailure(message: userMessage));
+      }
+
       final json = jsonDecode(response.body) as Map<String, dynamic>;
 
       final text = json['candidates'][0]['content']['parts'][0]['text'];
@@ -76,8 +81,8 @@ Provide "reason" value as a text in russian language.
 
       return Right(TranslationCheckResultModel.fromJson(parsed).toEntity());
     } catch (e) {
-      log('error $e');
-      final userMessage = AppUtils.parseGeminiError(e);
+      log('Gemini Error: $e');
+      final userMessage = AppUtils.parseClientError(e);
       return Left(GeminiFailure(message: userMessage));
     }
   }
