@@ -1,33 +1,14 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:quiz_app/features/profile/domain/entity/profile_entity.dart';
 
-class ProfileState extends Equatable {
-  const ProfileState({
-    this.profile,
-    this.error,
-    this.isLoading = false,
-    this.success = false,
-  });
+part 'state.freezed.dart';
 
-  final ProfileEntity? profile;
-  final String? error;
-  final bool isLoading;
-  final bool success;
-
-  ProfileState copyWith({
+@freezed
+abstract class ProfileState with _$ProfileState {
+  const factory ProfileState({
     ProfileEntity? profile,
     String? error,
-    bool? isLoading,
-    bool? success,
-  }) {
-    return ProfileState(
-      profile: profile ?? this.profile,
-      error: error ?? this.error,
-      isLoading: isLoading ?? this.isLoading,
-      success: success ?? this.success,
-    );
-  }
-
-  @override
-  List<dynamic> get props => [profile, error, isLoading, success];
+    @Default(false) bool isLoading,
+    @Default(false) bool success,
+  }) = _ProfileState;
 }

@@ -1,54 +1,18 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../domain/entity/history_entity.dart';
 
-class HistoryState extends Equatable {
-  const HistoryState({
-    this.history = const [],
-    this.trainingDays = const [],
-    this.error,
-    this.isLoading = false,
-    this.isShowLoader = false,
-    this.success = false,
-    this.initialized = false,
-  });
+part 'state.freezed.dart';
 
-  final List<HistoryEntity> history;
-  final List<DateTime> trainingDays;
-  final String? error;
-  final bool isLoading;
-  final bool isShowLoader;
-  final bool success;
-  final bool initialized;
-
-  HistoryState copyWith({
-    List<HistoryEntity>? history,
-    List<DateTime>? trainingDays,
+@freezed
+abstract class HistoryState with _$HistoryState {
+  const factory HistoryState({
+    @Default([]) List<HistoryEntity> history,
+    @Default([]) List<DateTime> trainingDays,
     String? error,
-    bool? isLoading,
-    bool? isShowLoader,
-    bool? success,
-    bool? initialized,
-  }) {
-    return HistoryState(
-      history: history ?? this.history,
-      trainingDays: trainingDays ?? this.trainingDays,
-      error: error ?? this.error,
-      isLoading: isLoading ?? this.isLoading,
-      isShowLoader: isShowLoader ?? this.isShowLoader,
-      success: success ?? this.success,
-      initialized: initialized ?? this.initialized,
-    );
-  }
-
-  @override
-  List<dynamic> get props => [
-    history,
-    trainingDays,
-    error,
-    isLoading,
-    isShowLoader,
-    success,
-    initialized,
-  ];
+    @Default(false) bool isLoading,
+    @Default(false) bool isShowLoader,
+    @Default(false) bool success,
+    @Default(false) bool initialized,
+  }) = _HistoryState;
 }
