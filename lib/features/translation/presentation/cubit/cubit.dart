@@ -50,14 +50,14 @@ class TranslationCubit extends Cubit<TranslationState> {
           status: TranslationStatus.loaded,
           currentIndex: nextIndex,
           totalScore: totalScore,
-          error: '',
+          error: null,
         ),
       );
     }
   }
 
   Future<void> disableError() async {
-    emit(state.copyWith(error: ''));
+    emit(state.copyWith(error: null));
   }
 
   Future<void> resetData() async {
@@ -66,7 +66,7 @@ class TranslationCubit extends Cubit<TranslationState> {
         status: TranslationStatus.initial,
         currentIndex: 0,
         totalScore: 0,
-        error: '',
+        error: null,
       ),
     );
   }

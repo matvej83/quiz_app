@@ -1,12 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:quiz_app/app/utils/app_utils.dart';
-import 'package:quiz_app/core/usecases/usecase.dart';
 import 'package:quiz_app/features/profile/domain/entity/profile_entity.dart';
 import 'package:quiz_app/features/profile/domain/usecases/delete_profile_usecase.dart';
 import 'package:quiz_app/features/profile/domain/usecases/fetch_profile_usecase.dart';
 import 'package:quiz_app/features/profile/domain/usecases/save_profile_usecase.dart';
 import 'package:quiz_app/features/profile/presentation/cubit/state.dart';
+
+import '../../../../core/domain/usecases/usecase.dart';
 
 @lazySingleton
 class ProfileCubit extends Cubit<ProfileState> {
@@ -72,19 +73,11 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> deleteProfile() async {
     await _deleteProfileUseCase(NoParams());
-    emit(
-      state.copyWith(
-        profile: const ProfileEntity(
-          firstName: '',
-          lastName: '',
-          wordCount: 10,
-        ),
-      ),
-    );
+    emit(state.copyWith(profile: null));
   }
 
   Future<void> disableError() async {
-    emit(state.copyWith(error: ''));
+    emit(state.copyWith(error: null));
   }
 
   Future<void> disableSuccess() async {

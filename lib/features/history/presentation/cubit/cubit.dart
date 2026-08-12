@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:quiz_app/app/utils/app_utils.dart';
-import 'package:quiz_app/core/usecases/usecase.dart';
 import 'package:quiz_app/enums/app_enums.dart';
 import 'package:quiz_app/features/history/presentation/cubit/state.dart';
 
+import '../../../../core/domain/usecases/usecase.dart';
 import '../../domain/entity/history_entity.dart';
 import '../../domain/usecases/delete_history_usecase.dart';
 import '../../domain/usecases/fetch_history_usecase.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:quiz_app/core/usecases/usecase.dart';
 import 'package:quiz_app/features/text_catalog/presentation/cubit/state.dart';
 
+import '../../../../core/domain/usecases/usecase.dart';
 import '../../domain/usecases/load_catalog_usecase.dart';
 
 @lazySingleton
