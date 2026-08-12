@@ -3,8 +3,8 @@ import 'package:injectable/injectable.dart';
 import 'package:quiz_app/features/history/domain/entity/history_entity.dart';
 import 'package:quiz_app/features/history/domain/repository/history_repository.dart';
 
+import '../../../../core/domain/usecases/usecase.dart';
 import '../../../../core/error/failure.dart';
-import '../../../../core/usecases/usecase.dart';
 
 @lazySingleton
 class FetchMonthHistoryUseCase

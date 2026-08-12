@@ -148,7 +148,7 @@ class QuizCubit extends Cubit<QuizState> {
           answers: answers,
           currentIndex: nextIndex,
           answered: false,
-          userAnswer: '',
+          userAnswer: null,
           correct: false,
           correctCount: correctCount,
         ),
@@ -166,7 +166,7 @@ class QuizCubit extends Cubit<QuizState> {
         status: QuizStatus.loaded,
         currentIndex: previousIndex,
         answered: false,
-        userAnswer: '',
+        userAnswer: null,
         correct: false,
       ),
     );

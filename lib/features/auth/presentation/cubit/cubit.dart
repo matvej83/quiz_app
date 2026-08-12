@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:quiz_app/core/usecases/usecase.dart';
 import 'package:quiz_app/features/auth/domain/usecases/check_auth_usecase.dart';
 import 'package:quiz_app/features/auth/presentation/cubit/state.dart';
+
+import '../../../../core/domain/usecases/usecase.dart';
 
 @lazySingleton
 class AuthCubit extends Cubit<AuthState> {
