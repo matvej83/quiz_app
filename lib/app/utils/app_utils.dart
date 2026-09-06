@@ -3,10 +3,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:quiz_app/core/error/failure.dart';
 
+@immutable
 class AppUtils {
+  const AppUtils._();
+
   static String? parseFailureMessage(Failure failure) {
     if (failure is CacheFailure) {
       return 'errors.cacheError'.tr();

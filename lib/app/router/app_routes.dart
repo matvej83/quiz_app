@@ -1,4 +1,9 @@
+import 'package:flutter/material.dart';
+
+@immutable
 class AppRoutes {
+  const AppRoutes._();
+
   static const splash = '/splash';
   static const createProfile = '/create-profile';
   static const editProfile = 'edit-profile';
