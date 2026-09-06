@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../app/constants/app_constants.dart';
+import '../../../app/constants/asset_paths.dart';
 import '../../dictionary/data/data_sources/dictionary_asset_data_source.dart';
 
 @lazySingleton
@@ -15,7 +15,7 @@ class DictionaryService {
       final exists = await assetDataSource.databaseExists();
 
       if (!exists) {
-        await assetDataSource.copyDatabaseFromAssets(AppConstants.assetDbName);
+        await assetDataSource.copyDatabaseFromAssets(AssetPaths.assetDbName);
       }
     }
   }

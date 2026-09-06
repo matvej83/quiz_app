@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:quiz_app/app/constants/app_constants.dart';
 
 import '../../../../app/constants/asset_paths.dart';
 
@@ -13,7 +12,7 @@ class DictionaryAssetDataSource {
   Future<String> getDatabasePath() async {
     final dir = await getApplicationDocumentsDirectory();
 
-    return p.join(dir.path, AppConstants.assetDbName);
+    return p.join(dir.path, AssetPaths.assetDbName);
   }
 
   Future<bool> databaseExists() async {

@@ -1,5 +1,9 @@
+import 'package:flutter/material.dart';
+
+@immutable
 class AppConstants {
-  static const assetDbName = 'en_ru_dictionary.db';
+  const AppConstants._();
+
   static const profileKey = 'profile';
   static const themeKey = 'theme_mode';
   static const cloudFlareWorkerUrl =
