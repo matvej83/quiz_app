@@ -12,7 +12,7 @@ class PronounceButton extends StatelessWidget {
     final theme = Theme.of(context);
     return IconButton(
       style: IconButton.styleFrom(
-        backgroundColor: theme.isDark()
+        backgroundColor: theme.isDark
             ? Colors.grey.shade800
             : Colors.grey.shade400,
       ),

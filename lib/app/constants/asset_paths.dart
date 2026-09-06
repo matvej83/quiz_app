@@ -1,4 +1,10 @@
+import 'package:flutter/material.dart';
+
+@immutable
 class AssetPaths {
+  const AssetPaths._();
+
+  static const assetDbName = 'en_ru_dictionary.db';
   static const assetDbPath = 'assets/database/';
   static const assetTextsPath = 'assets/texts/texts.json';
   static const assetTranslationsPath = 'assets/translations';

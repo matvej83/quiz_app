@@ -38,9 +38,9 @@ extension DateX on DateTime {
 }
 
 extension ThemeDataX on ThemeData {
-  bool isDark() => brightness == Brightness.dark;
+  bool get isDark => brightness == Brightness.dark;
 
-  bool isLight() => brightness == Brightness.light;
+  bool get isLight => brightness == Brightness.light;
 }
 
 extension TestTypeX on TestType {

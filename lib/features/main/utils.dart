@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quiz_app/app/router/app_routes.dart';
 
+@immutable
 class MainScreenUtils {
+  const MainScreenUtils._();
+
   static String getAppBarTitle(BuildContext context) {
     final location = GoRouterState.of(context).uri;
     if (location.pathSegments.length == 2) {
